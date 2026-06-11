@@ -1,0 +1,6 @@
+# Core dependencies (minimal, no LLMs!)
+# Optional packages for visualization and computer vision
+matplotlib>=3.7.0
+networkx>=3.0
+PyQt6>=6.4.0
+opencv-python>=4.8.0
