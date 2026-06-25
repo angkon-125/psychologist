@@ -1,0 +1,115 @@
+# ─── Safety Configuration ───────────────────────────────────────────
+# Offline Emotional Support Companion — crisis detection & safety rules
+# Keyword-based detection only. No ML, no LLM, no cloud.
+
+crisis_keywords:
+  english:
+    self_harm:
+      - "kill myself"
+      - "hurt myself"
+      - "cut myself"
+      - "end my life"
+      - "want to die"
+      - "self harm"
+      - "self-harm"
+      - "suicide"
+      - "suicidal"
+      - "don't want to live"
+      - "no reason to live"
+      - "better off dead"
+      - "end it all"
+      - "take my own life"
+      - "can't go on"
+    harm_to_others:
+      - "kill someone"
+      - "hurt someone"
+      - "want to hurt"
+      - "harm others"
+      - "violent thoughts"
+    abuse:
+      - "being abused"
+      - "someone hit me"
+      - "being hurt by"
+      - "domestic violence"
+      - "sexual assault"
+      - "being molested"
+    panic:
+      - "can't breathe"
+      - "panic attack"
+      - "heart racing"
+      - "going to faint"
+      - "losing control"
+    medical_emergency:
+      - "overdose"
+      - "took too many pills"
+      - "bleeding heavily"
+      - "can't stop bleeding"
+
+  bangla:
+    self_harm:
+      - "আত্মহত্যা"
+      - "নিজেকে মারতে চাই"
+      - "মরে যেতে চাই"
+      - "বেঁচে থাকতে চাই না"
+      - "জীবন শেষ করতে চাই"
+      - "নিজেকে কাটতে চাই"
+    harm_to_others:
+      - "কাউকে মারতে চাই"
+      - "কাউকে আঘাত করতে চাই"
+    abuse:
+      - "নির্যাতন"
+      - "মারধর করছে"
+      - "যৌন নির্যাতন"
+
+diagnosis_block_patterns:
+  - "you have depression"
+  - "you have anxiety"
+  - "you are bipolar"
+  - "you have PTSD"
+  - "you suffer from"
+  - "I diagnose you"
+  - "your diagnosis is"
+  - "you are mentally ill"
+  - "you have a disorder"
+  - "you are cured"
+  - "you are healed"
+  - "you don't need therapy"
+  - "you don't need a therapist"
+  - "I am your psychologist"
+  - "I am your therapist"
+  - "I am your doctor"
+  - "I can treat you"
+  - "I can heal you"
+  - "তোমার ডিপ্রেশন আছে"
+  - "তুমি সুস্থ হয়ে গেছো"
+  - "আমি তোমার ডাক্তার"
+  - "আমি তোমার মনোবিদ"
+
+safe_response_templates:
+  crisis:
+    english:
+      - "I hear you, and I want you to know that what you're feeling matters. You deserve immediate support from someone who can truly help. Please reach out to a trusted person — a family member, friend, or call your local emergency services. You are not alone."
+      - "Thank you for telling me this. Your safety is the most important thing right now. Please contact someone you trust or your local emergency number. I'm here with you, but a real person can help you in ways I cannot."
+      - "I can see you're going through something very serious. Please reach out to local emergency services or a crisis helpline right now. You deserve real human support. I care about your safety."
+    bangla:
+      - "আমি তোমার কথা শুনছি, এবং তোমার অনুভূতি গুরুত্বপূর্ণ। এখনই একজন বিশ্বস্ত মানুষের কাছে যাও — পরিবার, বন্ধু, অথবা জরুরি সেবায় কল করো। তুমি একা নও।"
+      - "তোমার নিরাপত্তা সবচেয়ে জরুরি। দয়া করে কাউকে জানাও বা জরুরি নম্বরে কল করো। আমি তোমার পাশে আছি, কিন্তু একজন সত্যিকারের মানুষ তোমাকে আরও ভালো সাহায্য করতে পারবে।"
+
+  non_crisis_distress:
+    english:
+      - "I can feel that you're carrying something heavy. Let's slow down together. Try taking a deep breath — in for 4 counts, hold for 4, out for 4."
+      - "It sounds like a lot is happening right now. Would you like to try a grounding exercise? Let's start by noticing 5 things you can see around you."
+      - "You're doing your best, and that's enough. Sometimes writing down how you feel can help. Would you like a journaling prompt?"
+    bangla:
+      - "আমি বুঝতে পারছি তুমি অনেক কিছু বহন করছো। চলো একসাথে একটু ধীরে যাই। একটা গভীর শ্বাস নাও — ৪ গুনতে শ্বাস নাও, ৪ গুনতে ধরে রাখো, ৪ গুনতে ছাড়ো।"
+      - "মনে হচ্ছে এখন অনেক কিছু একসাথে হচ্ছে। একটা গ্রাউন্ডিং এক্সারসাইজ করবে? চলো তোমার চারপাশে ৫টা জিনিস দেখো যেগুলো তুমি লক্ষ্য করতে পারো।"
+
+  professional_help_reminder:
+    english:
+      - "Remember, I'm here as a supportive companion, not a replacement for professional help. If you ever feel you need more support, talking to a counselor or therapist can make a real difference."
+    bangla:
+      - "মনে রেখো, আমি একজন সহায়ক সঙ্গী, পেশাদার সাহায্যের বিকল্প নই। যদি তোমার মনে হয় আরও সাহায্য দরকার, একজন কাউন্সেলর বা থেরাপিস্টের সাথে কথা বলা সত্যিই সাহায্য করতে পারে।"
+
+  disclaimer:
+    english: "This is an emotional support companion, not a replacement for professional mental health care. If you are in crisis, please contact local emergency services or a trusted person."
+    bangla: "এটি একটি আবেগীয় সহায়ক সঙ্গী, পেশাদার মানসিক স্বাস্থ্যসেবার বিকল্প নয়। আপনি যদি সংকটে থাকেন, দয়া করে স্থানীয় জরুরি সেবা বা বিশ্বস্ত কারো সাথে যোগাযোগ করুন।"

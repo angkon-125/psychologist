@@ -1,0 +1,27 @@
+privacy:
+  allow_cloud_audio: false
+  allow_voice_cloning: false
+  offline_only: true
+  store_audio_files: false
+speech_recognition:
+  continuous_listening: false
+  default_engine: vosk
+  fallback_engine: whisper
+  language: en
+  sample_rate: 16000
+  save_raw_audio: false
+tts:
+  default_engine: piper
+  fallback_engine: espeak
+  pitch: 1.0
+  save_output: true
+  speed: 1.0
+  voice_id: default
+  volume: 0.9
+voice_emotion:
+  confidence_threshold: 0.45
+  enabled: true
+  fusion_enabled: true
+  memory_weight: 0.1
+  text_weight: 0.55
+  voice_weight: 0.35

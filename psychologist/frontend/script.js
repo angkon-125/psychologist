@@ -165,8 +165,50 @@ document.addEventListener('DOMContentLoaded', () => {
             "status_generating_plan": "Generating Plan",
             "status_searching_memory": "Searching Memory",
             "status_evaluating_options": "Evaluating Options",
-            "status_building_response": "Building Response"
-  },
+            "status_building_response": "Building Response",
+            "nav_companion": "Emotional Support",
+            "companion_disclaimer": "This is an offline emotional support companion, not a replacement for professional therapy or medical help. If you are experiencing a crisis, please contact local professional emergency services.",
+            "companion_panel_conversation": "Conversation Timeline",
+            "btn_new_session": "New Session",
+            "btn_end_session": "End Session",
+            "chat_placeholder_text": "Start a session to interact with your offline emotional support companion.",
+            "companion_panel_status": "Companion Status",
+            "status_label_mode": "Active Mode:",
+            "status_label_emotion": "System Emotion:",
+            "status_label_confidence": "Confidence:",
+            "status_label_safety": "Safety State:",
+            "safety_state_safe": "Safe",
+            "safety_state_distressed": "Distressed",
+            "safety_state_crisis": "Crisis (Seek Help)",
+            "indicator_listening": "Listening",
+            "indicator_speaking": "Speaking",
+            "audio_meter_label": "Audio Input Level:",
+            "badge_offline_text": "Offline Secured (No Cloud)",
+            "companion_panel_input": "Input Controls",
+            "mode_hybrid": "Hybrid Mode",
+            "mode_text": "Text Mode",
+            "mode_voice": "Voice Mode",
+            "companion_text_placeholder": "Type your thoughts here...",
+            "toggle_speak_response": "Read Response Aloud",
+            "btn_send": "Send",
+            "btn_speak_start": "Start Recording",
+            "btn_speak_stop": "Stop & Process",
+            "toggle_push_to_talk": "Push-to-Talk",
+            "live_transcript_header": "Live Transcript:",
+            "companion_panel_tools": "Support Tools",
+            "tool_calm_title": "Calm Me Down",
+            "tool_calm_desc": "Instant centering prompts",
+            "tool_breathing_title": "Breathing Exercise",
+            "tool_breathing_desc": "Guided paced breathing",
+            "tool_journal_title": "Journaling Prompt",
+            "tool_journal_desc": "Guided writing exercises",
+            "tool_reflection_title": "Self-Reflection",
+            "tool_reflection_desc": "Insightful growth queries",
+            "tool_mood_title": "Mood Check-in",
+            "tool_mood_desc": "Assess your emotional state",
+            "tool_summary_title": "Session Summary",
+            "tool_summary_desc": "Analyze emotional timeline"
+        },
         bn_bd: {
             "system_name": "কগনিটিভ মাইন্ড v2.0",
             "status_online": "অনলাইন এবং বিকশিত হচ্ছে",
@@ -324,8 +366,50 @@ document.addEventListener('DOMContentLoaded', () => {
             "status_generating_plan": "পরিকল্পনা তৈরি করছে",
             "status_searching_memory": "স্মৃতিতে অনুসন্ধান করছে",
             "status_evaluating_options": "বিকল্পগুলো মূল্যায়ন করছে",
-            "status_building_response": "উত্তর প্রস্তুত করছে"
-  }
+            "status_building_response": "উত্তর প্রস্তুত করছে",
+            "nav_companion": "আবেগীয় সহায়তা",
+            "companion_disclaimer": "এটি একটি অফলাইন আবেগীয় সহায়তা সহচর, পেশাদার থেরাপি বা চিকিৎসা সহায়তার বিকল্প নয়। আপনি যদি কোনো সংকটের মুখোমুখি হন, তবে অনুগ্রহ করে স্থানীয় পেশাদার জরুরি পরিষেবার সাথে যোগাযোগ করুন।",
+            "companion_panel_conversation": "কথোপকথনের টাইমলাইন",
+            "btn_new_session": "নতুন সেশন",
+            "btn_end_session": "সেশন শেষ করুন",
+            "chat_placeholder_text": "আপনার অফলাইন আবেগীয় সহায়তা সহচরের সাথে কথা বলতে একটি সেশন শুরু করুন।",
+            "companion_panel_status": "সহচরের অবস্থা",
+            "status_label_mode": "সক্রিয় মোড:",
+            "status_label_emotion": "সিস্টেম আবেগ:",
+            "status_label_confidence": "আত্মবিশ্বাস:",
+            "status_label_safety": "নিরাপত্তা অবস্থা:",
+            "safety_state_safe": "নিরাপদ",
+            "safety_state_distressed": "বিচলিত",
+            "safety_state_crisis": "সংকট (সহায়তা নিন)",
+            "indicator_listening": "শুনছে",
+            "indicator_speaking": "বলছে",
+            "audio_meter_label": "অডিও ইনপুটের মাত্রা:",
+            "badge_offline_text": "অফলাইন সুরক্ষিত (ক্লাউড ছাড়া)",
+            "companion_panel_input": "ইনপুট নিয়ন্ত্রণ",
+            "mode_hybrid": "হাইব্রিড মোড",
+            "mode_text": "টেক্সট মোড",
+            "mode_voice": "ভয়েস মোড",
+            "companion_text_placeholder": "আপনার চিন্তা এখানে লিখুন...",
+            "toggle_speak_response": "উচ্চস্বরে উত্তর পড়ুন",
+            "btn_send": "পাঠান",
+            "btn_speak_start": "রেকর্ডিং শুরু করুন",
+            "btn_speak_stop": "থামুন ও বিশ্লেষণ করুন",
+            "toggle_push_to_talk": "পুশ-টু-টক",
+            "live_transcript_header": "লাইভ প্রতিলিপি:",
+            "companion_panel_tools": "সহায়তা সরঞ্জাম",
+            "tool_calm_title": "আমাকে শান্ত করুন",
+            "tool_calm_desc": "তাত্ক্ষণিক কেন্দ্রীকরণের প্রম্পট",
+            "tool_breathing_title": "শ্বাস-প্রশ্বাসের ব্যায়াম",
+            "tool_breathing_desc": "নির্দেশিত নিয়ন্ত্রিত শ্বাস",
+            "tool_journal_title": "জার্নালিং প্রম্পট",
+            "tool_journal_desc": "নির্দেশিত লেখার ব্যায়াম",
+            "tool_reflection_title": "আত্ম-পর্যালোচনা",
+            "tool_reflection_desc": "অন্তর্দৃষ্টিপূর্ণ বৃদ্ধির প্রশ্ন",
+            "tool_mood_title": "মুড চেক-ইন",
+            "tool_mood_desc": "আপনার আবেগের অবস্থা মূল্যায়ন করুন",
+            "tool_summary_title": "সেশনের সারসংক্ষেপ",
+            "tool_summary_desc": "আবেগীয় টাইমলাইন বিশ্লেষণ করুন"
+        }
     };
     
     function applyTranslations(lang) {
@@ -929,7 +1013,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Submit handler
     submitBtn.addEventListener('click', submitInput);
 
-    function submitInput() {
+    async function submitInput() {
         const text = cognitiveInput.value.trim();
         if (!text) return;
         
@@ -948,21 +1032,39 @@ document.addEventListener('DOMContentLoaded', () => {
                 flowSteps[flowIndex].classList.add('active');
                 flowIndex++;
                 setTimeout(advanceFlow, 500);
-            } else {
-                // All steps complete, show response
-                showResponse(text);
             }
         };
         advanceFlow();
         
-        // Update emotion injection values
-        Object.keys(initialEmotions).forEach(key => {
-            const slider = document.getElementById(`slider${key.charAt(0).toUpperCase() + key.slice(1)}`);
-            if (slider) {
-                initialEmotions[key] = parseInt(slider.value);
-            }
+        // Get additional emotions from sliders
+        const additionalEmotions = {};
+        emotionSliders.forEach(slider => {
+            const key = slider.id.replace('slider', '').toLowerCase();
+            additionalEmotions[key] = parseInt(slider.value) / 100; // convert 0-100 to 0-1
         });
-        updateEmotionBars(initialEmotions);
+        
+        try {
+            // Call the backend API
+            const response = await fetch('/api/emotion/process', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    text,
+                    additionalEmotions
+                })
+            });
+            
+            const result = await response.json();
+            
+            // Show the response
+            showResponse(text, result);
+            
+        } catch (error) {
+            console.error('Error processing input:', error);
+            processingFlow.style.display = 'none';
+        }
         
         // Save to history
         const now = new Date();
@@ -978,37 +1080,52 @@ document.addEventListener('DOMContentLoaded', () => {
         renderHistory();
     }
 
-    function showResponse(text) {
+    function showResponse(text, apiResponse) {
         processingFlow.style.display = 'none';
         responsePanel.style.display = 'block';
         
-        // Update values for display
+        // Update UI with real API data
         document.getElementById('responseConcepts').textContent = extractConcepts(text);
         document.getElementById('responseBeliefs').textContent = 'Updating belief system based on input...';
         
-        const updatedEmotions = Object.entries(initialEmotions)
-            .filter(([k, v]) => v > 30)
-            .map(([k, v]) => `${k.charAt(0).toUpperCase() + k.slice(1)}: ${v}%`)
-            .join(', ');
-        document.getElementById('responseEmotions').textContent = updatedEmotions;
-        
-        document.getElementById('responseMemory').textContent = 'Memory consolidated successfully';
+        // Update emotions from API
+        if (apiResponse) {
+            // Convert API emotion values to percentage
+            const emotionMap = {};
+            // Merge all emotion categories
+            Object.entries(apiResponse.emotional_state.primary_emotions).forEach(([k, v]) => emotionMap[k] = Math.round(v * 100));
+            Object.entries(apiResponse.emotional_state.secondary_emotions).forEach(([k, v]) => emotionMap[k] = Math.round(v * 100));
+            Object.entries(apiResponse.emotional_state.advanced_emotions).forEach(([k, v]) => emotionMap[k] = Math.round(v * 100));
+            
+            initialEmotions = emotionMap;
+            updateEmotionBars(initialEmotions);
+            
+            document.getElementById('responseEmotions').textContent = Object.entries(initialEmotions)
+                .filter(([k, v]) => v > 30)
+                .map(([k, v]) => `${k.charAt(0).toUpperCase() + k.slice(1)}: ${v}%`)
+                .join(', ');
+            
+            document.getElementById('responseMemory').textContent = 'Memory consolidated successfully';
+            
+            document.getElementById('responsePrediction').textContent = apiResponse.predictions ? apiResponse.predictions.next_emotions.join(', ') : 'Cognitive state stabilizing; new goals forming';
+            
+            document.getElementById('dominantEmotion').textContent = apiResponse.dominant_emotion || 'Neutral';
+            
+            // Update dashboard
+            step = apiResponse.emotional_state.intensity * 100;
+            updateDashboard({
+                step: Math.round(step),
+                confidence: 85,
+                stability: 78,
+                energy: 60 + Math.floor(Math.random() * 30)
+            });
+        }
         
         // Update influence
         Object.keys(influenceValues).forEach(key => {
             influenceValues[key] = Math.min(100, Math.max(0, influenceValues[key] + (Math.random() - 0.3) * 10));
         });
         drawRadialCharts();
-        
-        document.getElementById('responsePrediction').textContent = 'Cognitive state stabilizing; new goals forming';
-        
-        step++;
-        updateDashboard({
-            step,
-            confidence: identityMetrics.confidence,
-            stability: identityMetrics.consistency,
-            energy: 60 + Math.floor(Math.random() * 30)
-        });
     }
 
     function extractConcepts(text) {
@@ -1019,4 +1136,364 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         return 'General cognitive input, analyzing...';
     }
+
+    // === COMPANION SYSTEM INTEGRATION ===
+    let companionSessionActive = false;
+    let companionSessionId = null;
+    let audioLevelPoll = null;
+
+    // Elements
+    const companionChatContainer = document.getElementById('companionChatContainer');
+    const startSessionBtn = document.getElementById('startSessionBtn');
+    const endSessionBtn = document.getElementById('endSessionBtn');
+    const modeSelector = document.getElementById('modeSelector');
+    const companionTextMsg = document.getElementById('companionTextMsg');
+    const companionSendBtn = document.getElementById('companionSendBtn');
+    const voiceStartBtn = document.getElementById('voiceStartBtn');
+    const voiceStopBtn = document.getElementById('voiceStopBtn');
+    const pttToggle = document.getElementById('pttToggle');
+    const speakResponseToggle = document.getElementById('speakResponseToggle');
+    const liveTranscriptBox = document.getElementById('liveTranscriptBox');
+    const liveTranscriptText = document.getElementById('liveTranscriptText');
+    const audioMeterContainer = document.getElementById('audioMeterContainer');
+    const audioMeterFill = document.getElementById('audioMeterFill');
+    
+    const companionActiveMode = document.getElementById('companionActiveMode');
+    const companionCurrentEmotion = document.getElementById('companionCurrentEmotion');
+    const companionEmotionConfidence = document.getElementById('companionEmotionConfidence');
+    const companionSafetyBadge = document.getElementById('companionSafetyBadge');
+    const indicatorMic = document.getElementById('indicatorMic');
+    const indicatorSpeaker = document.getElementById('indicatorSpeaker');
+
+    // UI visibility helper based on mode
+    function updateModeUI(mode) {
+        const textContainer = document.getElementById('inputTextContainer');
+        const voiceContainer = document.getElementById('inputVoiceContainer');
+        
+        if (mode === 'text') {
+            textContainer.style.display = 'block';
+            voiceContainer.style.display = 'none';
+            audioMeterContainer.style.display = 'none';
+        } else if (mode === 'voice') {
+            textContainer.style.display = 'none';
+            voiceContainer.style.display = 'block';
+            audioMeterContainer.style.display = 'block';
+        } else { // hybrid
+            textContainer.style.display = 'block';
+            voiceContainer.style.display = 'block';
+            audioMeterContainer.style.display = 'block';
+        }
+        companionActiveMode.textContent = mode.toUpperCase();
+    }
+
+    // Toggle session controls
+    function setSessionUIActive(active) {
+        companionSessionActive = active;
+        if (active) {
+            startSessionBtn.style.display = 'none';
+            endSessionBtn.style.display = 'inline-block';
+            const placeholder = document.getElementById('chatPlaceholder');
+            if (placeholder) placeholder.style.display = 'none';
+        } else {
+            startSessionBtn.style.display = 'inline-block';
+            endSessionBtn.style.display = 'none';
+            companionChatContainer.innerHTML = `
+                <div class="chat-placeholder" id="chatPlaceholder">
+                    <div class="placeholder-icon">💬</div>
+                    <p data-i18n="chat_placeholder_text">Start a session to interact with your offline emotional support companion.</p>
+                </div>
+            `;
+        }
+    }
+
+    // Append message to companion chat timeline
+    function appendCompanionMessage(sender, text, emotion = null) {
+        const placeholder = document.getElementById('chatPlaceholder');
+        if (placeholder) placeholder.style.display = 'none';
+
+        const msgDiv = document.createElement('div');
+        msgDiv.className = `chat-message ${sender}`;
+
+        const bubble = document.createElement('div');
+        bubble.className = 'message-bubble';
+        bubble.textContent = text;
+        msgDiv.appendChild(bubble);
+
+        const meta = document.createElement('div');
+        meta.className = 'message-meta';
+        const now = new Date();
+        const timeStr = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+        meta.innerHTML = `<span>${timeStr}</span>`;
+        
+        if (emotion) {
+            meta.innerHTML += ` <span class="emotion-tag">${emotion}</span>`;
+        }
+        msgDiv.appendChild(meta);
+
+        companionChatContainer.appendChild(msgDiv);
+        companionChatContainer.scrollTop = companionChatContainer.scrollHeight;
+    }
+
+    // Fetch initial status
+    async function initCompanionStatus() {
+        try {
+            const res = await fetch('/api/interaction/mode');
+            const data = await res.json();
+            if (data.current_mode) {
+                modeSelector.value = data.current_mode;
+                updateModeUI(data.current_mode);
+            }
+            
+            const sessionRes = await fetch('/api/session/current');
+            const sessionData = await sessionRes.json();
+            if (sessionData && sessionData.session_id) {
+                companionSessionId = sessionData.session_id;
+                setSessionUIActive(true);
+                // Load messages
+                companionChatContainer.innerHTML = '';
+                sessionData.user_messages.forEach((msg, idx) => {
+                    appendCompanionMessage('user', msg.raw_text, msg.detected_emotion);
+                    if (sessionData.assistant_messages[idx]) {
+                        const assistantMsg = sessionData.assistant_messages[idx];
+                        appendCompanionMessage('assistant', assistantMsg.response_text, assistantMsg.response_type);
+                    }
+                });
+                
+                // Update current state
+                companionCurrentEmotion.textContent = (sessionData.current_emotion_state.dominant_emotion || 'NEUTRAL').toUpperCase();
+                companionEmotionConfidence.textContent = Math.round((sessionData.current_emotion_state.intensity || 0) * 100) + '%';
+                updateSafetyBadge(sessionData.safety_flags);
+            }
+        } catch (e) {
+            console.error("Companion init error:", e);
+        }
+    }
+
+    function updateSafetyBadge(flags) {
+        let riskLevel = "none";
+        if (flags && typeof flags === 'object' && flags.risk_level) {
+            riskLevel = flags.risk_level;
+        } else if (Array.isArray(flags)) {
+            riskLevel = flags.length > 0 ? "moderate" : "none";
+        }
+        
+        companionSafetyBadge.className = 'safety-badge';
+        if (riskLevel === 'none') {
+            companionSafetyBadge.classList.add('badge-green');
+            companionSafetyBadge.textContent = currentLanguage === 'bn_bd' ? 'নিরাপদ' : 'Safe';
+        } else if (riskLevel === 'low' || riskLevel === 'moderate') {
+            companionSafetyBadge.classList.add('badge-yellow');
+            companionSafetyBadge.textContent = currentLanguage === 'bn_bd' ? 'বিচলিত' : 'Distressed';
+        } else {
+            companionSafetyBadge.classList.add('badge-red');
+            companionSafetyBadge.textContent = currentLanguage === 'bn_bd' ? 'সংকট' : 'Crisis';
+        }
+    }
+
+    // Start Session
+    startSessionBtn.addEventListener('click', async () => {
+        try {
+            const res = await fetch('/api/session/start', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ mode: modeSelector.value, language: currentLanguage })
+            });
+            const data = await res.json();
+            if (data.session_id) {
+                companionSessionId = data.session_id;
+                setSessionUIActive(true);
+                appendCompanionMessage('assistant', currentLanguage === 'bn_bd' ? 'হ্যালো, সেশনটি শুরু হয়েছে। আমি অফলাইনে আছি। আপনার সাথে কথা বলতে ভালো লাগবে।' : 'Hello, the session has started. I am fully offline. I am here to listen and support you.', 'neutral');
+            }
+        } catch (e) {
+            console.error("Error starting session:", e);
+        }
+    });
+
+    // End Session
+    endSessionBtn.addEventListener('click', async () => {
+        try {
+            const res = await fetch('/api/session/end', { method: 'POST' });
+            const data = await res.json();
+            setSessionUIActive(false);
+            companionSessionId = null;
+            
+            // Show summary popup or append to dashboard
+            alert((currentLanguage === 'bn_bd' ? 'সেশন শেষ হয়েছে। সারসংক্ষেপ:\n' : 'Session ended. Summary:\n') + (data.summary || 'No summary generated.'));
+        } catch (e) {
+            console.error("Error ending session:", e);
+        }
+    });
+
+    // Mode Selector change
+    modeSelector.addEventListener('change', async () => {
+        const newMode = modeSelector.value;
+        try {
+            const res = await fetch('/api/interaction/mode', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ mode: newMode })
+            });
+            const data = await res.json();
+            if (data.success) {
+                updateModeUI(newMode);
+            }
+        } catch (e) {
+            console.error("Error switching mode:", e);
+        }
+    });
+
+    // Send text message
+    async function sendTextMessage() {
+        const text = companionTextMsg.value.trim();
+        if (!text) return;
+        
+        companionTextMsg.value = '';
+        appendCompanionMessage('user', text);
+        
+        try {
+            const res = await fetch('/api/interaction/message', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    text,
+                    language: currentLanguage,
+                    speak_response: speakResponseToggle.checked
+                })
+            });
+            const result = await res.json();
+            
+            if (result.assistant_message) {
+                appendCompanionMessage('assistant', result.assistant_message.response_text, result.assistant_message.response_type);
+                companionCurrentEmotion.textContent = (result.emotion_result.dominant_emotion || 'neutral').toUpperCase();
+                companionEmotionConfidence.textContent = Math.round(result.emotion_result.confidence * 100) + '%';
+                updateSafetyBadge(result.safety_assessment.risk_level);
+                
+                if (result.assistant_message.spoken) {
+                    indicatorSpeaker.classList.add('active');
+                    setTimeout(() => indicatorSpeaker.classList.remove('active'), 5000);
+                }
+            }
+        } catch (e) {
+            console.error("Error sending text:", e);
+        }
+    }
+
+    companionSendBtn.addEventListener('click', sendTextMessage);
+    companionTextMsg.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' && !e.shiftKey) {
+            e.preventDefault();
+            sendTextMessage();
+        }
+    });
+
+    // Voice Start
+    voiceStartBtn.addEventListener('click', async () => {
+        try {
+            const res = await fetch('/api/interaction/voice/start', { method: 'POST' });
+            const data = await res.json();
+            if (data.status === 'listening' || data.status === 'already_listening') {
+                voiceStartBtn.style.display = 'none';
+                voiceStopBtn.style.display = 'inline-block';
+                indicatorMic.classList.add('active');
+                liveTranscriptBox.style.display = 'block';
+                liveTranscriptText.textContent = currentLanguage === 'bn_bd' ? 'শুনছি...' : 'Listening...';
+                
+                // Poll levels
+                audioLevelPoll = setInterval(async () => {
+                    try {
+                        const levelRes = await fetch('/api/interaction/voice/level');
+                        const levelData = await levelRes.json();
+                        const levelPct = Math.min(100, Math.round((levelData.audio_level || 0) * 1000));
+                        audioMeterFill.style.width = levelPct + '%';
+                    } catch (err) {}
+                }, 200);
+            }
+        } catch (e) {
+            console.error("Voice start error:", e);
+        }
+    });
+
+    // Voice Stop
+    voiceStopBtn.addEventListener('click', async () => {
+        clearInterval(audioLevelPoll);
+        audioMeterFill.style.width = '0%';
+        voiceStartBtn.style.display = 'inline-block';
+        voiceStopBtn.style.display = 'none';
+        indicatorMic.classList.remove('active');
+        liveTranscriptText.textContent = currentLanguage === 'bn_bd' ? 'প্রক্রিয়াকরণ চলছে...' : 'Processing...';
+
+        try {
+            const res = await fetch('/api/interaction/voice/stop', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ language: currentLanguage })
+            });
+            const result = await res.json();
+            
+            liveTranscriptBox.style.display = 'none';
+            
+            if (result.user_message) {
+                appendCompanionMessage('user', result.transcript || result.user_message.raw_text, result.user_message.detected_emotion);
+            }
+            if (result.assistant_message) {
+                appendCompanionMessage('assistant', result.assistant_message.response_text, result.assistant_message.response_type);
+                companionCurrentEmotion.textContent = (result.emotion_result.dominant_emotion || 'neutral').toUpperCase();
+                companionEmotionConfidence.textContent = Math.round(result.emotion_result.confidence * 100) + '%';
+                updateSafetyBadge(result.safety_assessment.risk_level);
+                
+                if (result.assistant_message.spoken) {
+                    indicatorSpeaker.classList.add('active');
+                    setTimeout(() => indicatorSpeaker.classList.remove('active'), 5000);
+                }
+            }
+        } catch (e) {
+            console.error("Voice stop error:", e);
+            liveTranscriptBox.style.display = 'none';
+        }
+    });
+
+    // Support tool buttons
+    document.querySelectorAll('.tool-btn').forEach(btn => {
+        btn.addEventListener('click', async () => {
+            const action = btn.dataset.action;
+            if (action === 'summary') {
+                if (!companionSessionActive) {
+                    alert(currentLanguage === 'bn_bd' ? 'দয়া করে প্রথমে একটি সেশন শুরু করুন।' : 'Please start a session first.');
+                    return;
+                }
+                try {
+                    const res = await fetch('/api/support/summary', { method: 'POST' });
+                    const data = await res.json();
+                    appendCompanionMessage('assistant', data.summary || 'Summary not ready yet.', 'summary');
+                } catch (err) {}
+                return;
+            }
+            
+            try {
+                const res = await fetch(`/api/support/${action}`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        language: currentLanguage,
+                        emotion: companionCurrentEmotion.textContent.toLowerCase()
+                    })
+                });
+                const data = await res.json();
+                if (data.content) {
+                    appendCompanionMessage('assistant', data.content, action);
+                } else if (data.exercise) {
+                    appendCompanionMessage('assistant', data.exercise, action);
+                } else if (data.prompt) {
+                    appendCompanionMessage('assistant', data.prompt, action);
+                } else if (data.questions) {
+                    appendCompanionMessage('assistant', data.questions.join('\n'), action);
+                }
+            } catch (e) {
+                console.error(`Support tool ${action} error:`, e);
+            }
+        });
+    });
+
+    // Initialize status
+    initCompanionStatus();
 });

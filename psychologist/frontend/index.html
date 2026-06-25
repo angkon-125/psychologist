@@ -35,6 +35,7 @@
             <aside class="sidebar">
                 <nav class="sidebar-nav">
                     <button class="nav-btn active" data-section="dashboard" data-i18n="nav_dashboard">Main Dashboard</button>
+                    <button class="nav-btn" data-section="companion" data-i18n="nav_companion">Emotional Support</button>
                     <button class="nav-btn" data-section="emotions" data-i18n="nav_emotions">Emotion Panel</button>
                     <button class="nav-btn" data-section="needs" data-i18n="nav_needs">Internal Needs</button>
                     <button class="nav-btn" data-section="beliefs" data-i18n="nav_beliefs">Belief System</button>
@@ -365,6 +366,172 @@
                         </select>
                     </div>
                     <div class="history-list" id="historyList"></div>
+                </section>
+
+                <!-- Emotional Support Companion Section -->
+                <section id="companion" class="section">
+                    <div class="companion-layout">
+                        <!-- Crisis Disclaimer Banner -->
+                        <div class="companion-disclaimer" id="companionDisclaimer">
+                            <span class="disclaimer-icon">⚠️</span>
+                            <span class="disclaimer-text" data-i18n="companion_disclaimer">This is an offline emotional support companion, not a replacement for professional therapy or medical help. If you are experiencing a crisis, please contact local professional emergency services.</span>
+                        </div>
+
+                        <div class="companion-grid">
+                            <!-- Panel A: Conversation Panel -->
+                            <div class="companion-panel panel-conversation">
+                                <div class="panel-header">
+                                    <h3 data-i18n="companion_panel_conversation">Conversation Timeline</h3>
+                                    <div class="session-controls">
+                                        <button class="session-btn start-session-btn" id="startSessionBtn" data-i18n="btn_new_session">New Session</button>
+                                        <button class="session-btn end-session-btn" id="endSessionBtn" data-i18n="btn_end_session">End Session</button>
+                                    </div>
+                                </div>
+                                <div class="chat-container" id="companionChatContainer">
+                                    <!-- Messages will be injected here -->
+                                    <div class="chat-placeholder" id="chatPlaceholder">
+                                        <div class="placeholder-icon">💬</div>
+                                        <p data-i18n="chat_placeholder_text">Start a session to interact with your offline emotional support companion.</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Panel D: Status Panel -->
+                            <div class="companion-panel panel-status">
+                                <div class="panel-header">
+                                    <h3 data-i18n="companion_panel_status">Companion Status</h3>
+                                </div>
+                                <div class="status-content">
+                                    <div class="status-item">
+                                        <span class="status-label" data-i18n="status_label_mode">Active Mode:</span>
+                                        <span class="status-value highlight-mode" id="companionActiveMode">Hybrid</span>
+                                    </div>
+                                    <div class="status-item">
+                                        <span class="status-label" data-i18n="status_label_emotion">System Emotion:</span>
+                                        <span class="status-value highlight-emotion" id="companionCurrentEmotion">Neutral</span>
+                                    </div>
+                                    <div class="status-item">
+                                        <span class="status-label" data-i18n="status_label_confidence">Confidence:</span>
+                                        <span class="status-value" id="companionEmotionConfidence">0%</span>
+                                    </div>
+                                    <div class="status-item">
+                                        <span class="status-label" data-i18n="status_label_safety">Safety State:</span>
+                                        <span class="safety-badge badge-green" id="companionSafetyBadge" data-i18n="safety_state_safe">Safe</span>
+                                    </div>
+                                    <div class="status-indicators">
+                                        <div class="indicator-mic" id="indicatorMic">
+                                            <span class="indicator-dot"></span>
+                                            <span class="indicator-label" data-i18n="indicator_listening">Listening</span>
+                                        </div>
+                                        <div class="indicator-speaker" id="indicatorSpeaker">
+                                            <span class="indicator-dot"></span>
+                                            <span class="indicator-label" data-i18n="indicator_speaking">Speaking</span>
+                                        </div>
+                                    </div>
+                                    <div class="audio-meter-container" id="audioMeterContainer" style="display:none;">
+                                        <span class="meter-label" data-i18n="audio_meter_label">Audio Input Level:</span>
+                                        <div class="meter-bar">
+                                            <div class="meter-fill" id="audioMeterFill"></div>
+                                        </div>
+                                    </div>
+                                    <div class="badge-offline">
+                                        <span class="offline-dot"></span>
+                                        <span data-i18n="badge_offline_text">Offline Secured (No Cloud)</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Panel B: Input Panel -->
+                            <div class="companion-panel panel-input">
+                                <div class="panel-header">
+                                    <h3 data-i18n="companion_panel_input">Input Controls</h3>
+                                    <div class="mode-toggles">
+                                        <select class="mode-select" id="modeSelector" title="Select Interaction Mode">
+                                            <option value="hybrid" data-i18n="mode_hybrid">Hybrid Mode</option>
+                                            <option value="text" data-i18n="mode_text">Text Mode</option>
+                                            <option value="voice" data-i18n="mode_voice">Voice Mode</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="input-content">
+                                    <!-- Text Input Area -->
+                                    <div class="input-text-area" id="inputTextContainer">
+                                        <textarea class="companion-textarea" id="companionTextMsg" data-i18n-placeholder="companion_text_placeholder" placeholder="Type your thoughts here..." title="Type your message"></textarea>
+                                        <div class="input-actions-row">
+                                            <div class="speech-checkbox">
+                                                <label class="toggle-switch">
+                                                    <input type="checkbox" id="speakResponseToggle" checked>
+                                                    <span class="slider round"></span>
+                                                </label>
+                                                <span class="checkbox-label" data-i18n="toggle_speak_response">Read Response Aloud</span>
+                                            </div>
+                                            <button class="send-btn" id="companionSendBtn" data-i18n="btn_send">Send</button>
+                                        </div>
+                                    </div>
+
+                                    <!-- Voice Input Area -->
+                                    <div class="input-voice-area" id="inputVoiceContainer">
+                                        <div class="voice-buttons">
+                                            <button class="voice-action-btn record-start-btn" id="voiceStartBtn" data-i18n="btn_speak_start">Start Recording</button>
+                                            <button class="voice-action-btn record-stop-btn" id="voiceStopBtn" style="display:none;" data-i18n="btn_speak_stop">Stop & Process</button>
+                                        </div>
+                                        <div class="voice-options">
+                                            <div class="ptt-toggle">
+                                                <label class="toggle-switch">
+                                                    <input type="checkbox" id="pttToggle" checked>
+                                                    <span class="slider round"></span>
+                                                </label>
+                                                <span class="checkbox-label" data-i18n="toggle_push_to_talk">Push-to-Talk</span>
+                                            </div>
+                                        </div>
+                                        <div class="live-transcript-box" id="liveTranscriptBox" style="display:none;">
+                                            <span class="transcript-header" data-i18n="live_transcript_header">Live Transcript:</span>
+                                            <p class="transcript-text" id="liveTranscriptText">...</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Panel C: Support Tools Panel -->
+                            <div class="companion-panel panel-tools">
+                                <div class="panel-header">
+                                    <h3 data-i18n="companion_panel_tools">Support Tools</h3>
+                                </div>
+                                <div class="tools-content">
+                                    <button class="tool-btn" id="toolCalm" data-action="calm">
+                                        <span class="tool-icon">🧘</span>
+                                        <span class="tool-title" data-i18n="tool_calm_title">Calm Me Down</span>
+                                        <span class="tool-desc" data-i18n="tool_calm_desc">Instant centering prompts</span>
+                                    </button>
+                                    <button class="tool-btn" id="toolBreathing" data-action="breathing">
+                                        <span class="tool-icon">🌬️</span>
+                                        <span class="tool-title" data-i18n="tool_breathing_title">Breathing Exercise</span>
+                                        <span class="tool-desc" data-i18n="tool_breathing_desc">Guided paced breathing</span>
+                                    </button>
+                                    <button class="tool-btn" id="toolJournal" data-action="journal">
+                                        <span class="tool-icon">📝</span>
+                                        <span class="tool-title" data-i18n="tool_journal_title">Journaling Prompt</span>
+                                        <span class="tool-desc" data-i18n="tool_journal_desc">Guided writing exercises</span>
+                                    </button>
+                                    <button class="tool-btn" id="toolReflection" data-action="reflection">
+                                        <span class="tool-icon">❓</span>
+                                        <span class="tool-title" data-i18n="tool_reflection_title">Self-Reflection</span>
+                                        <span class="tool-desc" data-i18n="tool_reflection_desc">Insightful growth queries</span>
+                                    </button>
+                                    <button class="tool-btn" id="toolMoodCheck" data-action="mood-checkin">
+                                        <span class="tool-icon">📊</span>
+                                        <span class="tool-title" data-i18n="tool_mood_title">Mood Check-in</span>
+                                        <span class="tool-desc" data-i18n="tool_mood_desc">Assess your emotional state</span>
+                                    </button>
+                                    <button class="tool-btn" id="toolSummary" data-action="summary">
+                                        <span class="tool-icon">📋</span>
+                                        <span class="tool-title" data-i18n="tool_summary_title">Session Summary</span>
+                                        <span class="tool-desc" data-i18n="tool_summary_desc">Analyze emotional timeline</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </section>
             </main>
         </div>

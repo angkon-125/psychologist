@@ -1,0 +1,60 @@
+tts:
+  enabled: true
+  mode: "single_voice"
+  primary_engine: "piper"
+  fallback_engine: "espeak"
+  backup_engine: "pyttsx3"
+  auto_play: true
+  save_audio: true
+  output_directory: "audio_outputs"
+  max_text_length: 1000
+
+single_voice:
+  voice_id: "default_local_voice"
+  voice_model_path: "models/tts/default_voice.onnx"
+  voice_config_path: "models/tts/default_voice.onnx.json"
+  language: "en"
+  locked: true
+  allow_switching: false
+
+voice:
+  mode: "single_voice"
+  voice_name: "default_local_voice"
+  language: "en"
+  engine: "piper"
+  allow_voice_switching: false
+  allow_voice_cloning: false
+  allow_online_tts: false
+  speed: 1.0
+  pitch: 1.0
+  volume: 0.9
+
+emotion_style:
+  enabled: true
+  calm:
+    speed: 1.0
+    pitch: 1.0
+    volume: 0.9
+  happy:
+    speed: 1.08
+    pitch: 1.03
+    volume: 0.95
+  sad:
+    speed: 0.88
+    pitch: 0.95
+    volume: 0.75
+  serious:
+    speed: 0.92
+    pitch: 0.98
+    volume: 0.88
+  supportive:
+    speed: 0.9
+    pitch: 0.98
+    volume: 0.82
+
+safety:
+  offline_only: true
+  allow_cloud_tts: false
+  allow_voice_cloning: false
+  allow_voice_imitation: false
+  allow_uploaded_voice_training: false

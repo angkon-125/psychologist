@@ -1,6 +1,20 @@
 # Core dependencies (minimal, no LLMs!)
+flask>=2.3.0
+flask-cors>=4.0.0
 # Optional packages for visualization and computer vision
 matplotlib>=3.7.0
 networkx>=3.0
 PyQt6>=6.4.0
 opencv-python>=4.8.0
+# Voice system dependencies
+sounddevice>=0.4.6
+numpy>=1.26.0
+scipy>=1.11.0
+librosa>=0.10.0
+vosk>=0.3.45
+faster-whisper>=1.0.0
+pyttsx3>=2.90
+pyaudio>=0.2.14
+webrtcvad>=2.0.10
+pyyaml>=6.0
+wave>=0.0.2

@@ -1,0 +1,59 @@
+# ─── Interaction System Configuration ───────────────────────────────
+# Offline Emotional Support Companion — dual-mode interaction settings
+# No cloud APIs, no LLMs, no external services.
+
+interaction:
+  default_mode: "hybrid"
+  allow_text_mode: true
+  allow_voice_mode: true
+  allow_hybrid_mode: true
+  auto_save_sessions: true
+  max_session_minutes: 60
+  sessions_directory: "sessions"
+  max_stored_sessions: 50
+
+text_mode:
+  enabled: true
+  allow_long_responses: true
+  show_emotion_label: true
+  max_response_length: 500
+
+voice_mode:
+  enabled: true
+  push_to_talk: true
+  continuous_conversation: false
+  auto_speak_response: true
+  max_voice_response_seconds: 25
+  auto_listen_after_response: false
+  max_response_length: 200
+  silence_timeout_seconds: 3.0
+
+hybrid_mode:
+  enabled: true
+  preserve_context_when_switching: true
+
+support_tools:
+  breathing_exercise: true
+  journaling_prompt: true
+  reflection_questions: true
+  mood_checkin: true
+  session_summary: true
+  calm_down: true
+  grounding_exercise: true
+
+safety:
+  crisis_detection_enabled: true
+  diagnosis_block_enabled: true
+  medical_claim_block_enabled: true
+  professional_help_reminder_enabled: true
+  show_disclaimer_banner: true
+
+privacy:
+  offline_only: true
+  store_audio_files: false
+  store_transcripts: true
+  allow_export_session: true
+
+activity_stream:
+  enabled: true
+  max_entries: 30
