@@ -6,6 +6,7 @@ Sessions are stored as JSON files in a local directory.
 """
 
 import json
+import logging
 import os
 from datetime import datetime
 from pathlib import Path
@@ -17,6 +18,10 @@ from .interaction_models import (
     AssistantMessage,
 )
 
+logger = logging.getLogger("zara.session")
+
+from system_constants import SESSION_HISTORY_LIMIT, SESSION_MAX_MINUTES
+
 
 class SessionManager:
     """Manages session lifecycle: create, update, save, load, summarise."""
@@ -24,8 +29,8 @@ class SessionManager:
     def __init__(
         self,
         sessions_dir: Optional[str] = None,
-        max_stored_sessions: int = 50,
-        max_session_minutes: int = 60,
+        max_stored_sessions: int = SESSION_HISTORY_LIMIT,
+        max_session_minutes: int = SESSION_MAX_MINUTES,
         auto_save: bool = True,
     ):
         if sessions_dir:
@@ -281,7 +286,7 @@ class SessionManager:
                 encoding="utf-8",
             )
         except OSError as e:
-            print(f"Failed to save session: {e}")
+            logger.error("Failed to save session: %s", e)
 
     def _cleanup_old_sessions(self):
         """Remove oldest sessions if we exceed the max count."""

@@ -2,6 +2,7 @@
 import numpy as np
 import wave
 import threading
+import logging
 from pathlib import Path
 from typing import Optional, Callable
 from .models import AudioInputConfig, SpeechRecognitionResult
@@ -9,6 +10,8 @@ from .whisper_engine import WhisperEngine
 from .audio_config import AudioConfig
 from .microphone import Microphone
 from .audio_preprocessor import AudioPreprocessor
+
+logger = logging.getLogger("zara.voice.stt")
 
 
 class STTManager:
@@ -55,7 +58,7 @@ class STTManager:
                 if chunk is not None:
                     audio_buffer.append(chunk)
         except Exception as e:
-            print(f"Listening loop error: {e}")
+            logger.error("Listening loop error: %s", e)
         finally:
             self.is_listening = False
             self.microphone.stop_recording()

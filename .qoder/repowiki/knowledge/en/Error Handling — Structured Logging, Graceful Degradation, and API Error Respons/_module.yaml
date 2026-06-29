@@ -1,0 +1,14 @@
+schema_version: 1
+module_path: error_handling
+title: Error Handling — Structured Logging, Graceful Degradation, and API Error Responses
+scope: []
+source_files:
+    - psychologist/logger.py
+    - psychologist/app.py
+    - psychologist/rate_limiter.py
+    - psychologist/emotion_engine/interaction/safety_support_layer.py
+    - psychologist/emotion_engine/interaction/session_manager.py
+    - psychologist/emotion_engine/voice_output/tts_manager.py
+    - psychologist/tests/test_safety_edge_cases.py
+depends_on: []
+related_to: []

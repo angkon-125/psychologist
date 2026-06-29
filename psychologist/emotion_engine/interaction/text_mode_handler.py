@@ -17,6 +17,8 @@ from .interaction_models import (
 from .safety_support_layer import SafetySupportLayer
 from .session_manager import SessionManager
 
+from system_constants import MAX_TEXT_RESPONSE_LENGTH
+
 
 class TextModeHandler:
     """Handles the full text-mode interaction cycle."""
@@ -27,7 +29,7 @@ class TextModeHandler:
         tts_manager=None,
         safety_layer: Optional[SafetySupportLayer] = None,
         session_manager: Optional[SessionManager] = None,
-        max_response_length: int = 500,
+        max_response_length: int = MAX_TEXT_RESPONSE_LENGTH,
     ):
         self._emotion_engine = emotion_engine
         self._tts_manager = tts_manager

@@ -1,8 +1,11 @@
 
 from typing import List, Optional
+import logging
 from .base_tts_engine import BaseTTSEngine
 from .models import TTSRequest, TTSResult
 import os
+
+logger = logging.getLogger("zara.tts.espeak")
 
 
 class ESpeakEngine(BaseTTSEngine):
@@ -34,7 +37,7 @@ class ESpeakEngine(BaseTTSEngine):
                         voices.append(parts[1])
             return voices
         except Exception as e:
-            print(f"Failed to get eSpeak voices: {e}")
+            logger.warning("Failed to get eSpeak voices: %s", e)
             return []
 
     def synthesize(self, request: TTSRequest) -> TTSResult:

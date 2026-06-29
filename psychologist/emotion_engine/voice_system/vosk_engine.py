@@ -1,10 +1,13 @@
 
 import os
 import numpy as np
+import logging
 from typing import Optional
 from pathlib import Path
 from .models import SpeechRecognitionResult
 from .audio_config import AudioConfig
+
+logger = logging.getLogger("zara.voice.vosk")
 
 
 class VoskEngine:
@@ -25,7 +28,7 @@ class VoskEngine:
             # Try to find model
             model_dir = model_path or self._downloaded_models_path
             if not os.path.exists(model_dir) or not os.listdir(model_dir):
-                print(f"Warning: No Vosk model found at {model_dir}. Using simple fallback.")
+                logger.warning("No Vosk model found at %s. Using simple fallback.", model_dir)
                 self._initialized = False
                 return
 
@@ -35,10 +38,10 @@ class VoskEngine:
             self.rec.SetWords(True)
             self._initialized = True
         except ImportError:
-            print("Vosk not installed. Install with: pip install vosk")
+            logger.info("Vosk not installed. Install with: pip install vosk")
             self._initialized = False
         except Exception as e:
-            print(f"Error initializing Vosk: {e}")
+            logger.error("Error initializing Vosk: %s", e)
             self._initialized = False
 
     def is_available(self) -> bool:
@@ -76,7 +79,7 @@ class VoskEngine:
                     result.partial = True
                     result.confidence = 0.5
         except Exception as e:
-            print(f"Vosk processing error: {e}")
+            logger.error("Vosk processing error: %s", e)
         return result
 
     def reset(self):

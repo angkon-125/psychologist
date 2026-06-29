@@ -9,12 +9,16 @@ Uses keyword-based matching only — no ML, no LLM, no cloud.
 
 import os
 import re
+import logging
+import random
 from pathlib import Path
 from typing import Dict, List, Optional, Callable
 
 import yaml
 
 from .interaction_models import SafetyAssessment, RiskLevel
+
+logger = logging.getLogger("zara.safety")
 
 
 class SafetySupportLayer:
@@ -60,8 +64,11 @@ class SafetySupportLayer:
             try:
                 with open(self._config_path, "r", encoding="utf-8") as f:
                     self._config = yaml.safe_load(f) or {}
-            except Exception as e:
-                print(f"Failed to load safety config: {e}")
+            except (yaml.YAMLError, OSError) as e:
+                logger.warning("Failed to load safety config: %s", e)
+                self._config = {}
+            except ValueError as e:
+                logger.warning("Invalid safety config format: %s", e)
                 self._config = {}
 
         self._crisis_keywords = self._config.get("crisis_keywords", {})
@@ -75,8 +82,19 @@ class SafetySupportLayer:
         Analyse user input for safety concerns.
 
         Returns a SafetyAssessment with risk level and recommended action.
+        Handles None or empty input gracefully by returning a NONE assessment.
         """
         self._log_activity("Checking safety")
+        
+        if not text or not isinstance(text, str):
+            return SafetyAssessment(
+                risk_level=RiskLevel.NONE.value,
+                detected_signals=[],
+                recommended_response_type="supportive",
+                should_escalate=False,
+                safe_response_template="",
+            )
+        
         text_lower = text.lower().strip()
 
         # Check for crisis signals
@@ -219,7 +237,6 @@ class SafetySupportLayer:
             .get(lang_key, [])
         )
         if templates:
-            import random
             return random.choice(templates)
         # Hardcoded fallback
         return (
@@ -237,7 +254,6 @@ class SafetySupportLayer:
             .get(lang_key, [])
         )
         if templates:
-            import random
             return random.choice(templates)
         return (
             "I can feel that things are heavy right now. "

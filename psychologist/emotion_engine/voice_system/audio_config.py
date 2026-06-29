@@ -1,8 +1,11 @@
 
 import yaml
 import os
+import logging
 from typing import Optional, Dict
 from pathlib import Path
+
+logger = logging.getLogger("zara.voice.audio_config")
 
 
 class AudioConfig:
@@ -61,7 +64,7 @@ class AudioConfig:
             with open(self.config_path, 'w', encoding='utf-8') as f:
                 yaml.safe_dump(config, f, allow_unicode=True, default_flow_style=False)
         except Exception as e:
-            print(f"Warning: Could not save config to {self.config_path}: {e}")
+            logger.warning("Could not save config to %s: %s", self.config_path, e)
 
     def get(self, key: str, default=None):
         keys = key.split('.')

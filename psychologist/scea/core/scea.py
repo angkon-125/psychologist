@@ -19,6 +19,13 @@ from scea.emotional_evolution import EmotionalEvolutionEngine
 from scea.consciousness_layer import ConsciousnessLayer
 from datetime import datetime
 
+from system_constants import (
+    SCEA_DECISION_HISTORY_LIMIT,
+    SCEA_MEMORY_LIMIT,
+    SCEA_IDENTITY_UPDATE_INTERVAL,
+    SCEA_MEMORY_IMPORTANCE_WEIGHT,
+)
+
 
 class SCEA:
     def __init__(self):
@@ -119,26 +126,26 @@ class SCEA:
             emotional_state=self.state.emotions
         )
         self.state.decision_history.append(decision_record)
-        if len(self.state.decision_history) > 100:
-            self.state.decision_history = self.state.decision_history[-100:]
+        if len(self.state.decision_history) > SCEA_DECISION_HISTORY_LIMIT:
+            self.state.decision_history = self.state.decision_history[-SCEA_DECISION_HISTORY_LIMIT:]
         
         memory = Memory(
             content=decision['description'],
             emotional_state=self.state.emotions,
-            importance=0.5 + self.state.emotions.intensity * 0.3,
+            importance=0.5 + self.state.emotions.intensity * SCEA_MEMORY_IMPORTANCE_WEIGHT,
             context=decision['context']
         )
         self.state.memories.append(memory)
-        if len(self.state.memories) > 500:
+        if len(self.state.memories) > SCEA_MEMORY_LIMIT:
             self.state.memories = sorted(
                 self.state.memories,
                 key=lambda m: m.importance,
                 reverse=True
-            )[:500]
+            )[:SCEA_MEMORY_LIMIT]
         
         self.meta_cognition.reflect_on_decisions(self.state.decision_history)
         
-        if self.state.step % 10 == 0:
+        if self.state.step % SCEA_IDENTITY_UPDATE_INTERVAL == 0:
             self.state.identity = self.identity_engine.update_from_experiences(
                 self.state.decision_history,
                 self.state.memories,

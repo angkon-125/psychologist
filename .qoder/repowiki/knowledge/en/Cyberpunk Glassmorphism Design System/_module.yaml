@@ -1,0 +1,12 @@
+schema_version: 1
+module_path: frontend_style
+title: Cyberpunk Glassmorphism Design System
+scope: []
+source_files:
+    - psychologist/frontend/style.css
+    - psychologist/frontend/index.html
+    - psychologist/frontend/script.js
+    - psychologist/frontend/languages/en.json
+    - psychologist/frontend/languages/bn_bd.json
+depends_on: []
+related_to: []

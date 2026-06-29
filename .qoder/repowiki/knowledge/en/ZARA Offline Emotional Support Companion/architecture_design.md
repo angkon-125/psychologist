@@ -1,0 +1,7 @@
+- **API Layer**: Flask application (`app.py`) serving REST endpoints with CORS, rate limiting, and input validation.
+- **Interaction Layer**: Manages text, voice, and hybrid modes via `TextModeHandler`, `VoiceModeHandler`, and `HybridModeHandler`, coordinated by `InteractionModeManager` and `SessionManager`.
+- **Emotion Engine**: Core processing pipeline combining keyword-based sentiment analysis, fuzzy logic, Bayesian reasoning, and emotional memory to generate template-based responses.
+- **SCEA System**: Self-Cognitive & Emotional Architecture simulating neurochemistry, needs, goals, identity, and meta-cognition to provide deeper contextual awareness.
+- **Voice Subsystems**: Modular TTS (Piper/eSpeak/pyttsx3 fallback) and STT (Vosk/Whisper) engines with voice activity detection and emotion fusion.
+- **Safety Layer**: Multi-stage safety enforcement including crisis detection, diagnosis blocking, and response filtering configured via YAML.
+- **Persistence**: File-based JSON storage for sessions and YAML for configuration, ensuring complete offline operation.

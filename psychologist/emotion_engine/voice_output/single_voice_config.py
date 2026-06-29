@@ -7,8 +7,11 @@ only one fixed local voice is ever used.
 """
 
 import yaml
+import logging
 from pathlib import Path
 from typing import Dict, Any, Optional
+
+logger = logging.getLogger("zara.tts.config")
 
 
 class SingleVoiceConfig:
@@ -35,7 +38,7 @@ class SingleVoiceConfig:
                     loaded = yaml.safe_load(f) or {}
                 self._config = self._merge(defaults, loaded)
             except Exception as e:
-                print(f"Warning: Could not load single voice config: {e}")
+                logger.warning("Could not load single voice config: %s", e)
                 self._config = defaults
         else:
             self._config = defaults
@@ -46,7 +49,7 @@ class SingleVoiceConfig:
                     yaml.dump(defaults, f, allow_unicode=True,
                               default_flow_style=False, sort_keys=False)
             except Exception as e:
-                print(f"Warning: Could not write default config: {e}")
+                logger.warning("Could not write default config: %s", e)
 
     @staticmethod
     def _get_defaults() -> Dict[str, Any]:

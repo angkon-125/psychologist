@@ -1,0 +1,11 @@
+schema_version: 1
+module_path: build_system
+title: Manual Python Build & Deployment
+scope: []
+source_files:
+    - psychologist/requirements.txt
+    - psychologist/run_app.py
+    - psychologist/README.md
+    - psychologist/system_constants.py
+depends_on: []
+related_to: []

@@ -85,50 +85,6 @@ class VoiceEmotionResult:
 
 
 @dataclass
-class TTSRequest:
-    text: str = ""
-    language: str = "en"
-    voice_id: str = "default"
-    speed: float = 1.0
-    pitch: float = 1.0
-    volume: float = 0.9
-    emotion_style: Optional[str] = None
-    save_to_file: bool = False
-
-    def to_dict(self) -> Dict:
-        return {
-            "text": self.text,
-            "language": self.language,
-            "voice_id": self.voice_id,
-            "speed": self.speed,
-            "pitch": self.pitch,
-            "volume": self.volume,
-            "emotion_style": self.emotion_style,
-            "save_to_file": self.save_to_file,
-        }
-
-
-@dataclass
-class TTSResult:
-    audio_path: Optional[str] = None
-    duration: float = 0.0
-    engine_name: str = ""
-    success: bool = False
-    error_message: Optional[str] = None
-    timestamp: datetime = field(default_factory=datetime.now)
-
-    def to_dict(self) -> Dict:
-        return {
-            "audio_path": self.audio_path,
-            "duration": self.duration,
-            "engine_name": self.engine_name,
-            "success": self.success,
-            "error_message": self.error_message,
-            "timestamp": self.timestamp.isoformat(),
-        }
-
-
-@dataclass
 class MultimodalEmotionState:
     text_emotion: Dict[str, float] = field(default_factory=dict)
     voice_emotion: Dict[str, float] = field(default_factory=dict)

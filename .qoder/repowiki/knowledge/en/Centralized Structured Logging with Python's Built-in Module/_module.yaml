@@ -1,0 +1,12 @@
+schema_version: 1
+module_path: logging_system
+title: Centralized Structured Logging with Python's Built-in Module
+scope: []
+source_files:
+    - psychologist/logger.py
+    - psychologist/run_app.py
+    - psychologist/app.py
+    - psychologist/emotion_engine/interaction/safety_support_layer.py
+    - psychologist/emotion_engine/interaction/session_manager.py
+depends_on: []
+related_to: []

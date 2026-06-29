@@ -3,9 +3,12 @@ import sounddevice as sd
 import numpy as np
 import threading
 import queue
+import logging
 from typing import Optional, List, Callable, Dict
 from .models import AudioInputConfig
 from datetime import datetime
+
+logger = logging.getLogger("zara.voice.microphone")
 
 
 class Microphone:
@@ -50,11 +53,11 @@ class Microphone:
             self.stream.start()
             self.is_recording = True
         except Exception as e:
-            print(f"Error starting microphone: {e}")
+            logger.error("Error starting microphone: %s", e)
 
     def _audio_callback(self, indata, frames, time, status):
         if status:
-            print(f"Audio status: {status}")
+            logger.debug("Audio status: %s", status)
         # Compute audio level
         audio_np = indata.copy().flatten()
         level = np.sqrt(np.mean(audio_np**2))

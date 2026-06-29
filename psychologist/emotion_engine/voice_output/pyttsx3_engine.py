@@ -1,10 +1,13 @@
 
 from typing import List, Optional
+import logging
 from .base_tts_engine import BaseTTSEngine
 from .models import TTSRequest, TTSResult
 import os
 import wave
 import numpy as np
+
+logger = logging.getLogger("zara.tts.pyttsx3")
 
 
 class Pyttsx3Engine(BaseTTSEngine):
@@ -31,7 +34,7 @@ class Pyttsx3Engine(BaseTTSEngine):
             self._load_voices()
             self._initialized = True
         except Exception as e:
-            print(f"Failed to initialize pyttsx3: {e}")
+            logger.warning("Failed to initialize pyttsx3: %s", e)
             self._initialized = False
 
     def _load_voices(self):

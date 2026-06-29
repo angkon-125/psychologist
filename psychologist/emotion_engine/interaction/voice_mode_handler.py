@@ -22,6 +22,8 @@ from .interaction_models import (
 from .safety_support_layer import SafetySupportLayer
 from .session_manager import SessionManager
 
+from system_constants import MAX_VOICE_RESPONSE_LENGTH
+
 
 class VoiceModeHandler:
     """Handles the full voice-mode interaction cycle."""
@@ -36,7 +38,7 @@ class VoiceModeHandler:
         emotion_fusion=None,
         safety_layer: Optional[SafetySupportLayer] = None,
         session_manager: Optional[SessionManager] = None,
-        max_response_length: int = 200,
+        max_response_length: int = MAX_VOICE_RESPONSE_LENGTH,
     ):
         self._emotion_engine = emotion_engine
         self._stt_manager = stt_manager

@@ -1,0 +1,1 @@
+An offline-first, privacy-preserving emotional support system using rule-based emotion engines and a self-cognitive architecture without LLMs or cloud APIs.

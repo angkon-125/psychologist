@@ -2,7 +2,10 @@
 import threading
 import wave
 import time
+import logging
 from typing import Optional
+
+logger = logging.getLogger("zara.tts.audio_player")
 
 
 try:
@@ -10,7 +13,7 @@ try:
     PYAUDIO_AVAILABLE = True
 except ImportError:
     PYAUDIO_AVAILABLE = False
-    print("pyaudio not available, audio playback will be limited")
+    logger.info("pyaudio not available, audio playback will be limited")
 
 try:
     import pygame
@@ -54,7 +57,7 @@ class AudioPlayer:
             self._current_audio.start()
             return True
         else:
-            print("No audio playback libraries available")
+            logger.warning("No audio playback libraries available")
             self._is_playing = False
             return False
 
@@ -78,7 +81,7 @@ class AudioPlayer:
             stream.stop_stream()
             stream.close()
         except Exception as e:
-            print(f"Pyaudio playback error: {e}")
+            logger.error("Pyaudio playback error: %s", e)
         finally:
             self._is_playing = False
 
@@ -91,7 +94,7 @@ class AudioPlayer:
                 time.sleep(0.1)
             pygame.mixer.music.stop()
         except Exception as e:
-            print(f"Pygame playback error: {e}")
+            logger.error("Pygame playback error: %s", e)
         finally:
             self._is_playing = False
 

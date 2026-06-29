@@ -1,0 +1,4 @@
+- Centralized configuration constants in `system_constants.py` to eliminate magic numbers across emotion decay, session limits, and rate limiting.
+- Graceful degradation of optional subsystems (voice I/O, emotion detection) using try/except blocks during initialization to allow the app to run without specific hardware or models.
+- Structured logging using the `zara.*` namespace via a dedicated `logger.py` module for consistent log formatting and filtering across all components.
+- In-memory sliding window rate limiting applied via decorators to API endpoints to prevent abuse while maintaining stateless request handling.

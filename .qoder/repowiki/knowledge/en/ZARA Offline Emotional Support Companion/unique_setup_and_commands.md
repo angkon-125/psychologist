@@ -1,0 +1,4 @@
+- **Installation**: `pip install -r requirements.txt` inside the `psychologist/` directory.
+- **Execution**: `python run_app.py` starts the server on `http://127.0.0.1:5000`.
+- **Production**: Deploy using `gunicorn -w 4 -b 0.0.0.0:5000 run_app:app`.
+- **Testing**: Run the full suite with `python -m pytest tests/ -v`, covering API, safety, session, and interaction pipelines.

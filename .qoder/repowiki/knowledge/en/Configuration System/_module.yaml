@@ -1,0 +1,14 @@
+schema_version: 1
+module_path: configuration_system
+title: Configuration System
+scope: []
+source_files:
+    - psychologist/config/safety_config.yaml
+    - psychologist/config/interaction_config.yaml
+    - psychologist/config/tts_config.yaml
+    - psychologist/system_constants.py
+    - psychologist/emotion_engine/voice_output/single_voice_config.py
+    - psychologist/emotion_engine/interaction/safety_support_layer.py
+    - psychologist/app.py
+depends_on: []
+related_to: []

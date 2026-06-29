@@ -3,6 +3,8 @@ from ..sentiment_analysis import SentimentAnalyzer
 from typing import List, Dict
 import re
 
+from system_constants import CONVERSATION_HISTORY_LIMIT, EMOTIONAL_TREND_LIMIT
+
 
 class ContextEngine:
     def __init__(self):
@@ -21,7 +23,7 @@ class ContextEngine:
 
     def update_context(self, text: str, emotional_state: EmotionalState) -> ConversationContext:
         self.conversation_history.append(text)
-        if len(self.conversation_history) > 20:
+        if len(self.conversation_history) > CONVERSATION_HISTORY_LIMIT:
             self.conversation_history.pop(0)
         
         sentiment_result = self.sentiment_analyzer.analyze_text(text)
@@ -30,10 +32,10 @@ class ContextEngine:
         self.context.emotional_trend.append(sentiment_result['sentiment'])
         self.context.intensity_trend.append(emotional_state.intensity)
         
-        if len(self.context.emotional_trend) > 10:
-            self.context.emotional_trend = self.context.emotional_trend[-10:]
-        if len(self.context.intensity_trend) > 10:
-            self.context.intensity_trend = self.context.intensity_trend[-10:]
+        if len(self.context.emotional_trend) > EMOTIONAL_TREND_LIMIT:
+            self.context.emotional_trend = self.context.emotional_trend[-EMOTIONAL_TREND_LIMIT:]
+        if len(self.context.intensity_trend) > EMOTIONAL_TREND_LIMIT:
+            self.context.intensity_trend = self.context.intensity_trend[-EMOTIONAL_TREND_LIMIT:]
         
         self.context.topic = self._detect_topic(text)
         self.context.current_topic_keywords = self._extract_topic_keywords(text)

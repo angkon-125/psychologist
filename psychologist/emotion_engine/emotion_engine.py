@@ -8,6 +8,17 @@ from .behavior_predictor import BehaviorPredictor
 from .response_generator import ResponseGenerator
 from typing import Dict, List, Optional
 
+from system_constants import (
+    EMOTION_DECAY_FACTOR,
+    EMOTION_HISTORY_LIMIT,
+    REASONING_BLEND_CURRENT,
+    REASONING_BLEND_BAYESIAN,
+    SENTIMENT_BOOST_PER_KEYWORD,
+    SENTIMENT_BOOST_MAX,
+    SENTIMENT_INFLUENCE_FACTOR,
+    EMOTION_HISTORY_IMPORTANCE_WEIGHT,
+)
+
 
 class EmotionEngine:
     def __init__(self, personality_traits: Optional[PersonalityTraits] = None):
@@ -42,14 +53,14 @@ class EmotionEngine:
         self._apply_reasoning_to_emotions(reasoning_result)
         
         self.emotional_history.append(self.current_emotional_state)
-        if len(self.emotional_history) > 100:
-            self.emotional_history = self.emotional_history[-100:]
+        if len(self.emotional_history) > EMOTION_HISTORY_LIMIT:
+            self.emotional_history = self.emotional_history[-EMOTION_HISTORY_LIMIT:]
         
         memory_entry = MemoryEntry(
             interaction=text,
             emotional_state=self.current_emotional_state,
             context=self.context_engine.get_context_summary(),
-            importance=0.5 + self.current_emotional_state.intensity * 0.5,
+            importance=EMOTION_HISTORY_IMPORTANCE_WEIGHT + self.current_emotional_state.intensity * EMOTION_HISTORY_IMPORTANCE_WEIGHT,
             tags=list(emotion_keywords.keys())
         )
         self.emotional_memory.add_memory(memory_entry)
@@ -86,14 +97,14 @@ class EmotionEngine:
         
         if sentiment > 0:
             self.current_emotional_state.primary_emotions['happiness'] = min(1.0, 
-                self.current_emotional_state.primary_emotions['happiness'] + sentiment * 0.3)
+                self.current_emotional_state.primary_emotions['happiness'] + sentiment * SENTIMENT_INFLUENCE_FACTOR)
         else:
             self.current_emotional_state.primary_emotions['sadness'] = min(1.0,
-                self.current_emotional_state.primary_emotions['sadness'] + abs(sentiment) * 0.3)
+                self.current_emotional_state.primary_emotions['sadness'] + abs(sentiment) * SENTIMENT_INFLUENCE_FACTOR)
         
         for emotion, keywords in emotion_keywords.items():
             if keywords:
-                boost = min(0.8, len(keywords) * 0.2)
+                boost = min(SENTIMENT_BOOST_MAX, len(keywords) * SENTIMENT_BOOST_PER_KEYWORD)
                 if emotion in self.current_emotional_state.primary_emotions:
                     self.current_emotional_state.primary_emotions[emotion] = min(1.0,
                         self.current_emotional_state.primary_emotions[emotion] + boost)
@@ -122,19 +133,19 @@ class EmotionEngine:
         for emotion, value in bayesian.items():
             if emotion in self.current_emotional_state.primary_emotions:
                 self.current_emotional_state.primary_emotions[emotion] = (
-                    self.current_emotional_state.primary_emotions[emotion] * 0.7 + value * 0.3
+                    self.current_emotional_state.primary_emotions[emotion] * REASONING_BLEND_CURRENT + value * REASONING_BLEND_BAYESIAN
                 )
             elif emotion in self.current_emotional_state.secondary_emotions:
                 self.current_emotional_state.secondary_emotions[emotion] = (
-                    self.current_emotional_state.secondary_emotions[emotion] * 0.7 + value * 0.3
+                    self.current_emotional_state.secondary_emotions[emotion] * REASONING_BLEND_CURRENT + value * REASONING_BLEND_BAYESIAN
                 )
             elif emotion in self.current_emotional_state.advanced_emotions:
                 self.current_emotional_state.advanced_emotions[emotion] = (
-                    self.current_emotional_state.advanced_emotions[emotion] * 0.7 + value * 0.3
+                    self.current_emotional_state.advanced_emotions[emotion] * REASONING_BLEND_CURRENT + value * REASONING_BLEND_BAYESIAN
                 )
 
     def _decay_emotions(self, state: EmotionalState) -> EmotionalState:
-        decay_factor = 0.85
+        decay_factor = EMOTION_DECAY_FACTOR
         new_state = EmotionalState()
         
         for emotion, value in state.primary_emotions.items():

@@ -1,0 +1,1 @@
+Python 3.10+ with Flask for the web server; Vosk and faster-whisper for offline speech-to-text; Piper, eSpeak, and pyttsx3 for text-to-speech; librosa and webrtcvad for audio feature extraction and voice activity detection; PyYAML for configuration management.

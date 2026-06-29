@@ -1,8 +1,11 @@
 
 import numpy as np
 import librosa
+import logging
 from typing import Dict, List
 from .models import VoiceEmotionFeatures
+
+logger = logging.getLogger("zara.voice.features")
 
 
 class VoiceFeatureExtractor:
@@ -26,7 +29,7 @@ class VoiceFeatureExtractor:
                 features.pitch_mean = np.mean(pitch_values)
                 features.pitch_variance = np.var(pitch_values)
         except Exception as e:
-            print(f"Pitch extraction error: {e}")
+            logger.warning("Pitch extraction error: %s", e)
 
         # Energy
         energy = np.sum(audio**2) / len(audio)
@@ -37,14 +40,14 @@ class VoiceFeatureExtractor:
             spectral_centroids = librosa.feature.spectral_centroid(y=audio, sr=sample_rate)[0]
             features.spectral_centroid = np.mean(spectral_centroids)
         except Exception as e:
-            print(f"Spectral centroid error: {e}")
+            logger.warning("Spectral centroid error: %s", e)
 
         # MFCC summary
         try:
             mfccs = librosa.feature.mfcc(y=audio, sr=sample_rate, n_mfcc=13)
             features.mfcc_summary = list(np.mean(mfccs, axis=1))
         except Exception as e:
-            print(f"MFCC error: {e}")
+            logger.warning("MFCC error: %s", e)
 
         # Intensity score
         rms = librosa.feature.rms(y=audio)[0]

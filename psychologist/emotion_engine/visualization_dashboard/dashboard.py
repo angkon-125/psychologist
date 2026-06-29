@@ -7,9 +7,12 @@ try:
 except ImportError:
     VIZ_AVAILABLE = False
 
+import logging
 from typing import Dict, List
 import json
 from datetime import datetime
+
+logger = logging.getLogger("zara.dashboard")
 
 
 class EmotionDashboard:
@@ -63,7 +66,7 @@ class EmotionDashboard:
             plt.close()
             return True
         except Exception as e:
-            print(f"Error plotting: {e}")
+            logger.error("Error plotting: %s", e)
             return False
 
     def plot_personality_radar(self, personality: Dict[str, float], output_path: str = "personality_radar.png"):
@@ -95,7 +98,7 @@ class EmotionDashboard:
             plt.close()
             return True
         except Exception as e:
-            print(f"Error plotting: {e}")
+            logger.error("Error plotting: %s", e)
             return False
 
     def plot_emotion_network(self, output_path: str = "emotion_network.png"):
@@ -132,7 +135,7 @@ class EmotionDashboard:
             plt.close()
             return True
         except Exception as e:
-            print(f"Error plotting: {e}")
+            logger.error("Error plotting: %s", e)
             return False
 
     def export_report(self, output_path: str = "emotion_report.json"):

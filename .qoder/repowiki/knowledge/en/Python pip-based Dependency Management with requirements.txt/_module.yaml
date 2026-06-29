@@ -1,0 +1,9 @@
+schema_version: 1
+module_path: dependency_management
+title: Python pip-based Dependency Management with requirements.txt
+scope: []
+source_files:
+    - psychologist/requirements.txt
+    - psychologist/README.md
+depends_on: []
+related_to: []

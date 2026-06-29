@@ -1,0 +1,231 @@
+# 知识卡导出索引文件
+schema_version: 1
+locale: en-US
+branch: main
+nodes_managed: true
+exported_at: "2026-06-29T10:40:22Z"
+modules:
+    "":
+        dir_name: ZARA Offline Emotional Support Companion
+        title: ZARA Offline Emotional Support Companion
+        scope:
+            - README.md
+            - .zed/
+            - .zed\settings.json
+            - audio_outputs\tts_1.wav
+            - audio_outputs\tts_2.wav
+            - audio_outputs\tts_3.wav
+            - psychologist\README.md
+            - psychologist\app.py
+            - psychologist\app_log.txt
+            - psychologist\config\interaction_config.yaml
+            - psychologist\config\safety_config.yaml
+            - psychologist\config\single_voice_tts.yaml
+            - psychologist\config\tts_config.yaml
+            - psychologist\config\voice_config.yaml
+            - psychologist\docs\API.md
+            - psychologist\docs\ARCHITECTURE.md
+            - psychologist\emotion_engine\__init__.py
+            - psychologist\emotion_engine\bayesian_engine\__init__.py
+            - psychologist\emotion_engine\bayesian_engine\bayesian_network.py
+            - psychologist\emotion_engine\behavior_predictor\__init__.py
+            - psychologist\emotion_engine\behavior_predictor\behavior_predictor.py
+            - psychologist\emotion_engine\computer_vision\__init__.py
+            - psychologist\emotion_engine\computer_vision\facial_emotion_detector.py
+            - psychologist\emotion_engine\context_engine\__init__.py
+            - psychologist\emotion_engine\context_engine\context_engine.py
+            - psychologist\emotion_engine\emotion_engine.py
+            - psychologist\emotion_engine\emotional_memory\__init__.py
+            - psychologist\emotion_engine\emotional_memory\emotional_memory.py
+            - psychologist\emotion_engine\fuzzy_logic\__init__.py
+            - psychologist\emotion_engine\fuzzy_logic\fuzzy_engine.py
+            - psychologist\emotion_engine\interaction\__init__.py
+            - psychologist\emotion_engine\interaction\hybrid_mode_handler.py
+            - psychologist\emotion_engine\interaction\interaction_mode_manager.py
+            - psychologist\emotion_engine\interaction\interaction_models.py
+            - psychologist\emotion_engine\interaction\safety_support_layer.py
+            - psychologist\emotion_engine\interaction\session_manager.py
+            - psychologist\emotion_engine\interaction\support_tools.py
+            - psychologist\emotion_engine\interaction\tests\__init__.py
+            - psychologist\emotion_engine\interaction\tests\test_interaction_mode_manager.py
+            - psychologist\emotion_engine\interaction\tests\test_safety_support_layer.py
+            - psychologist\emotion_engine\interaction\tests\test_session_manager.py
+            - psychologist\emotion_engine\interaction\tests\test_support_tools.py
+            - psychologist\emotion_engine\interaction\tests\test_text_mode_handler.py
+            - psychologist\emotion_engine\interaction\text_mode_handler.py
+            - psychologist\emotion_engine\interaction\voice_mode_handler.py
+            - psychologist\emotion_engine\learning_system\__init__.py
+            - psychologist\emotion_engine\learning_system\learning_system.py
+            - psychologist\emotion_engine\models.py
+            - psychologist\emotion_engine\personality_engine\__init__.py
+            - psychologist\emotion_engine\personality_engine\personality_engine.py
+            - psychologist\emotion_engine\reasoning_engine\__init__.py
+            - psychologist\emotion_engine\reasoning_engine\reasoning_engine.py
+            - psychologist\emotion_engine\response_generator\__init__.py
+            - psychologist\emotion_engine\response_generator\response_generator.py
+            - psychologist\emotion_engine\sentiment_analysis\__init__.py
+            - psychologist\emotion_engine\sentiment_analysis\sentiment_analyzer.py
+            - psychologist\emotion_engine\state_machine\__init__.py
+            - psychologist\emotion_engine\state_machine\emotion_state_machine.py
+            - psychologist\emotion_engine\tests\test_emotion_engine.py
+            - psychologist\emotion_engine\visualization_dashboard\__init__.py
+            - psychologist\emotion_engine\visualization_dashboard\dashboard.py
+            - psychologist\emotion_engine\voice_emotion\__init__.py
+            - psychologist\emotion_engine\voice_emotion\voice_emotion_analyzer.py
+            - psychologist\emotion_engine\voice_output\__init__.py
+            - psychologist\emotion_engine\voice_output\audio_player.py
+            - psychologist\emotion_engine\voice_output\base_tts_engine.py
+            - psychologist\emotion_engine\voice_output\espeak_engine.py
+            - psychologist\emotion_engine\voice_output\models.py
+            - psychologist\emotion_engine\voice_output\piper_engine.py
+            - psychologist\emotion_engine\voice_output\pyttsx3_engine.py
+            - psychologist\emotion_engine\voice_output\single_voice_config.py
+            - psychologist\emotion_engine\voice_output\tests\__init__.py
+            - psychologist\emotion_engine\voice_output\tests\test_single_voice.py
+            - psychologist\emotion_engine\voice_output\tts_manager.py
+            - psychologist\emotion_engine\voice_output\voice_config.py
+            - psychologist\emotion_engine\voice_output\voice_lock.py
+            - psychologist\emotion_engine\voice_output\voice_style_mapper.py
+            - psychologist\emotion_engine\voice_system\__init__.py
+            - psychologist\emotion_engine\voice_system\audio_config.py
+            - psychologist\emotion_engine\voice_system\audio_preprocessor.py
+            - psychologist\emotion_engine\voice_system\emotion_fusion.py
+            - psychologist\emotion_engine\voice_system\microphone.py
+            - psychologist\emotion_engine\voice_system\models.py
+            - psychologist\emotion_engine\voice_system\stt_manager.py
+            - psychologist\emotion_engine\voice_system\vad.py
+            - psychologist\emotion_engine\voice_system\voice_emotion_detector.py
+            - psychologist\emotion_engine\voice_system\voice_feature_extractor.py
+            - psychologist\emotion_engine\voice_system\vosk_engine.py
+            - psychologist\emotion_engine\voice_system\whisper_engine.py
+            - psychologist\example.py
+            - psychologist\example_scea.py
+            - psychologist\frontend\index.html
+            - psychologist\frontend\languages\bn_bd.json
+            - psychologist\frontend\languages\en.json
+            - psychologist\frontend\script.js
+            - psychologist\frontend\style.css
+            - psychologist\logger.py
+            - psychologist\rate_limiter.py
+            - psychologist\requirements.txt
+            - psychologist\run_app.py
+            - psychologist\scea\__init__.py
+            - psychologist\scea\cognitive_dissonance\__init__.py
+            - psychologist\scea\cognitive_dissonance\cognitive_dissonance_engine.py
+            - psychologist\scea\conflict_engine\__init__.py
+            - psychologist\scea\conflict_engine\emotional_conflict_engine.py
+            - psychologist\scea\consciousness_layer\__init__.py
+            - psychologist\scea\consciousness_layer\consciousness_system.py
+            - psychologist\scea\core\__init__.py
+            - psychologist\scea\core\models.py
+            - psychologist\scea\core\scea.py
+            - psychologist\scea\emotional_evolution\__init__.py
+            - psychologist\scea\emotional_evolution\emotional_evolution_system.py
+            - psychologist\scea\emotional_physics\__init__.py
+            - psychologist\scea\emotional_physics\emotional_physics_engine.py
+            - psychologist\scea\goal_generation\__init__.py
+            - psychologist\scea\goal_generation\goal_system.py
+            - psychologist\scea\identity_formation\__init__.py
+            - psychologist\scea\identity_formation\identity_system.py
+            - psychologist\scea\imagination\__init__.py
+            - psychologist\scea\imagination\imagination_system.py
+            - psychologist\scea\meta_cognition\__init__.py
+            - psychologist\scea\meta_cognition\meta_cognition_system.py
+            - psychologist\scea\needs_engine\__init__.py
+            - psychologist\scea\needs_engine\needs_system.py
+            - psychologist\scea\neurochemistry\__init__.py
+            - psychologist\scea\neurochemistry\neurochemical_system.py
+            - psychologist\scea\relationship_engine\__init__.py
+            - psychologist\scea\relationship_engine\relationship_system.py
+            - psychologist\scea\tests\test_scea.py
+            - psychologist\scea\world_model\__init__.py
+            - psychologist\scea\world_model\world_model_system.py
+            - psychologist\system_constants.py
+            - psychologist\tests\__init__.py
+            - psychologist\tests\conftest.py
+            - psychologist\tests\test_api_endpoints.py
+            - psychologist\tests\test_interaction_pipeline.py
+            - psychologist\tests\test_safety_edge_cases.py
+            - psychologist\tests\test_session_persistence.py
+        source_files: []
+        children: []
+        depends_on: []
+        related_to: []
+    build_system:
+        dir_name: Manual Python Build & Deployment
+        title: Manual Python Build & Deployment
+        scope: []
+        source_files:
+            - psychologist/requirements.txt
+            - psychologist/run_app.py
+            - psychologist/README.md
+            - psychologist/system_constants.py
+        children: []
+        depends_on: []
+        related_to: []
+    configuration_system:
+        dir_name: Configuration System
+        title: Configuration System
+        scope: []
+        source_files:
+            - psychologist/config/safety_config.yaml
+            - psychologist/config/interaction_config.yaml
+            - psychologist/config/tts_config.yaml
+            - psychologist/system_constants.py
+            - psychologist/emotion_engine/voice_output/single_voice_config.py
+            - psychologist/emotion_engine/interaction/safety_support_layer.py
+            - psychologist/app.py
+        children: []
+        depends_on: []
+        related_to: []
+    dependency_management:
+        dir_name: Python pip-based Dependency Management with requirements.txt
+        title: Python pip-based Dependency Management with requirements.txt
+        scope: []
+        source_files:
+            - psychologist/requirements.txt
+            - psychologist/README.md
+        children: []
+        depends_on: []
+        related_to: []
+    error_handling:
+        dir_name: Error Handling — Structured Logging, Graceful Degradation, and API Error Respons
+        title: Error Handling — Structured Logging, Graceful Degradation, and API Error Responses
+        scope: []
+        source_files:
+            - psychologist/logger.py
+            - psychologist/app.py
+            - psychologist/rate_limiter.py
+            - psychologist/emotion_engine/interaction/safety_support_layer.py
+            - psychologist/emotion_engine/interaction/session_manager.py
+            - psychologist/emotion_engine/voice_output/tts_manager.py
+            - psychologist/tests/test_safety_edge_cases.py
+        children: []
+        depends_on: []
+        related_to: []
+    frontend_style:
+        dir_name: Cyberpunk Glassmorphism Design System
+        title: Cyberpunk Glassmorphism Design System
+        scope: []
+        source_files:
+            - psychologist/frontend/style.css
+            - psychologist/frontend/index.html
+            - psychologist/frontend/script.js
+            - psychologist/frontend/languages/en.json
+            - psychologist/frontend/languages/bn_bd.json
+        children: []
+        depends_on: []
+        related_to: []
+    logging_system:
+        dir_name: Centralized Structured Logging with Python's Built-in Module
+        title: Centralized Structured Logging with Python's Built-in Module
+        scope: []
+        source_files:
+            - psychologist/logger.py
+            - psychologist/run_app.py
+            - psychologist/app.py
+            - psychologist/emotion_engine/interaction/safety_support_layer.py
+            - psychologist/emotion_engine/interaction/session_manager.py
+        children: []
+        depends_on: []
+        related_to: []

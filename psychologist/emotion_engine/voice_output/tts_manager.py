@@ -14,6 +14,7 @@ no cloud TTS, no voice uploads.
 """
 
 from typing import Dict, Optional, Callable, List
+import logging
 from .models import TTSRequest, TTSResult
 from .single_voice_config import SingleVoiceConfig
 from .voice_style_mapper import VoiceStyleMapper
@@ -23,6 +24,8 @@ from .base_tts_engine import BaseTTSEngine
 from .piper_engine import PiperEngine
 from .espeak_engine import ESpeakEngine
 from .pyttsx3_engine import Pyttsx3Engine
+
+logger = logging.getLogger("zara.tts")
 
 
 class TTSManager:
@@ -60,9 +63,9 @@ class TTSManager:
                 if engine.is_available():
                     engine.initialize()
                     self._engines[engine.name] = engine
-                    print(f"  [OK] TTS engine ready: {engine.name}")
+                    logger.info("TTS engine ready: %s", engine.name)
             except Exception as e:
-                print(f"  [SKIP] TTS engine skipped ({cls.name}): {e}")
+                logger.debug("TTS engine skipped (%s): %s", cls.name, e)
 
         # Determine which engine will be used (priority order from config)
         priority = [
@@ -182,9 +185,9 @@ class TTSManager:
                         result.engine_name = engine_name
                         return result
                     else:
-                        print(f"Engine {engine_name} failed: {result.error_message}")
+                        logger.warning("Engine %s failed: %s", engine_name, result.error_message)
                 except Exception as e:
-                    print(f"Engine {engine_name} exception: {e}")
+                    logger.warning("Engine %s exception: %s", engine_name, e)
 
         return TTSResult(error_message="No TTS engines available")
 

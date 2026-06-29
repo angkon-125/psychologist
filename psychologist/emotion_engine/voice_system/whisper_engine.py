@@ -1,10 +1,13 @@
 
 import os
 import numpy as np
+import logging
 from typing import Optional
 from pathlib import Path
 from .models import SpeechRecognitionResult
 from .audio_config import AudioConfig
+
+logger = logging.getLogger("zara.voice.whisper")
 
 
 class WhisperEngine:
@@ -24,10 +27,10 @@ class WhisperEngine:
             self.model = WhisperModel(model_name, device=device, compute_type="int8")
             self._initialized = True
         except ImportError:
-            print("Faster Whisper not installed. Install with: pip install faster-whisper")
+            logger.info("Faster Whisper not installed. Install with: pip install faster-whisper")
             self._initialized = False
         except Exception as e:
-            print(f"Error initializing Whisper: {e}")
+            logger.error("Error initializing Whisper: %s", e)
             self._initialized = False
 
     def is_available(self) -> bool:
@@ -56,6 +59,6 @@ class WhisperEngine:
             result.normalized_text = full_text
             result.confidence = info.language_probability if hasattr(info, 'language_probability') else 0.9
         except Exception as e:
-            print(f"Whisper transcription error: {e}")
+            logger.error("Whisper transcription error: %s", e)
         return result
 

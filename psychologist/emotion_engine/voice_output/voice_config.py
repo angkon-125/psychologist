@@ -7,8 +7,11 @@ use SingleVoiceConfig directly.
 """
 
 import yaml
+import logging
 from pathlib import Path
 from typing import Dict, Any, Optional
+
+logger = logging.getLogger("zara.tts.config")
 
 
 class TTSConfig:
@@ -99,14 +102,14 @@ class TTSConfig:
                 if loaded:
                     self.config = self._merge_dicts(self.config, loaded)
         except Exception as e:
-            print(f"Warning: could not load TTS config: {e}")
+            logger.warning("Could not load TTS config: %s", e)
 
     def _save_config(self, config: Dict[str, Any]):
         try:
             with open(self.config_path, 'w', encoding='utf-8') as f:
                 yaml.dump(config, f, allow_unicode=True, default_flow_style=False, sort_keys=False)
         except Exception as e:
-            print(f"Warning: could not save TTS config: {e}")
+            logger.warning("Could not save TTS config: %s", e)
 
     def _merge_dicts(self, base: Dict[str, Any], overlay: Dict[str, Any]) -> Dict[str, Any]:
         merged = base.copy()
