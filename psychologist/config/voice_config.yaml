@@ -3,6 +3,7 @@ privacy:
   allow_voice_cloning: false
   offline_only: true
   store_audio_files: false
+
 speech_recognition:
   continuous_listening: false
   default_engine: vosk
@@ -10,6 +11,7 @@ speech_recognition:
   language: en
   sample_rate: 16000
   save_raw_audio: false
+
 tts:
   default_engine: piper
   fallback_engine: espeak
@@ -18,6 +20,7 @@ tts:
   speed: 1.0
   voice_id: default
   volume: 0.9
+
 voice_emotion:
   confidence_threshold: 0.45
   enabled: true
@@ -25,3 +28,37 @@ voice_emotion:
   memory_weight: 0.1
   text_weight: 0.55
   voice_weight: 0.35
+
+# ── Conversation Engine ───────────────────────────────────────────
+conversation:
+  pause_thresholds:
+    short_pause_max_ms: 1000
+    thinking_pause_max_ms: 3500
+    long_pause_max_ms: 6000
+    noise_threshold: 0.02
+  barge_in:
+    enabled: true
+    min_speech_frames: 3
+    interruption_phrases:
+      - stop
+      - wait
+      - hold on
+      - cancel
+      - zara
+      - that's all
+      - never mind
+      - skip
+  auto_return_to_listening: true
+  max_conversation_turns: 50
+
+# ── Ollama LLM (optional) ────────────────────────────────────────
+ollama:
+  enabled: false
+  base_url: "http://localhost:11434"
+  model: "llama3.2"
+  timeout_seconds: 5
+  system_prompt: >
+    You are ZARA, an offline AI emotional support companion.
+    You are warm, empathetic, and non-judgmental.
+    Keep responses concise for voice — no more than 2-3 sentences.
+    Never claim to be a therapist or replace professional help.

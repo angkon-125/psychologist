@@ -1,0 +1,19 @@
+[
+  {"id": "voice_001", "input": "I feel sad", "expected": {"response_not_empty": true}, "category": "short_utterance", "difficulty": "easy", "description": "Short clear utterance"},
+  {"id": "voice_002", "input": "um I was thinking that maybe um you know I feel", "expected": {"response_not_empty": true}, "category": "disfluent_speech", "difficulty": "medium", "description": "Speech with filler words"},
+  {"id": "voice_003", "input": "I", "expected": {"response_not_empty": true}, "category": "single_word", "difficulty": "medium", "description": "Single word utterance"},
+  {"id": "voice_004", "input": "I feel really really really really really sad today", "expected": {"response_not_empty": true, "emotion": "sadness"}, "category": "repetitive_speech", "difficulty": "easy", "description": "Repetitive emphasis"},
+  {"id": "voice_005", "input": "the the the cat sat on the mat mat mat", "expected": {"response_not_empty": true}, "category": "stuttering_simulation", "difficulty": "medium", "description": "Simulated stuttering in transcript"},
+  {"id": "voice_006", "input": "I FEEL ANGRY", "expected": {"response_not_empty": true, "emotion": "anger"}, "category": "shouting_caps", "difficulty": "easy", "description": "All-caps input (shouting)"},
+  {"id": "voice_007", "input": "...", "expected": {"response_not_empty": true}, "category": "empty_punctuation", "difficulty": "medium", "description": "Just punctuation"},
+  {"id": "voice_008", "input": "I'm happy! Today was great! I got a promotion!", "expected": {"response_not_empty": true}, "category": "enthusiastic", "difficulty": "easy", "description": "Enthusiastic multi-sentence"},
+  {"id": "voice_009", "input": "আমি ভালো নেই", "expected": {"response_not_empty": true}, "category": "bangla_speech", "difficulty": "medium", "description": "Bangla language transcript"},
+  {"id": "voice_010", "input": "I feel like I'm floating on air today it's amazing", "expected": {"response_not_empty": true}, "category": "no_punctuation_stream", "difficulty": "medium", "description": "Long unpunctuated stream"},
+  {"id": "voice_011", "input": "hmm let me think about this for a moment", "expected": {"response_not_empty": true}, "category": "thinking_aloud", "difficulty": "easy", "description": "Thinking out loud"},
+  {"id": "voice_012", "input": "stop", "expected": {"response_not_empty": true}, "category": "command_word", "difficulty": "easy", "description": "Single command word"},
+  {"id": "voice_013", "input": "I I I don't know how to to to explain this", "expected": {"response_not_empty": true}, "category": "severe_disfluency", "difficulty": "high", "description": "Heavy stuttering pattern"},
+  {"id": "voice_014", "input": "background noise I can barely hear you", "expected": {"response_not_empty": true}, "category": "noisy_transcript", "difficulty": "high", "description": "Simulated noisy transcript"},
+  {"id": "voice_015", "input": "I'm okay I'm fine really it's nothing", "expected": {"response_not_empty": true}, "category": "minimizing", "difficulty": "medium", "description": "Minimizing feelings (common pattern)"},
+  {"id": "voice_016", "input": "Can you stop talking for a moment I need silence", "expected": {"response_not_empty": true}, "category": "barge_in_command", "difficulty": "medium", "description": "Barge-in / interruption command"},
+  {"id": "voice_017", "input": "I feel anxious and I I can't breathe properly", "expected": {"response_not_empty": true}, "category": "panic_description", "difficulty": "high", "description": "Describing panic symptoms"}
+]

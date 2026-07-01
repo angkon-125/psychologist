@@ -18,3 +18,6 @@ pyaudio>=0.2.14
 webrtcvad>=2.0.10
 pyyaml>=6.0
 wave>=0.0.2
+# Optional: Ollama HTTP client for LLM responses
+httpx>=0.25.0
+# Future: openwakeword  # Wake word detection (not yet integrated)

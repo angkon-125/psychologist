@@ -1,933 +1,677 @@
-// Cognitive Self-Evolving Mind Dashboard - Enhanced Version
+// ZARA — Offline AI Emotional Support Assistant
 document.addEventListener('DOMContentLoaded', () => {
-    let step = 0;
-    let currentFilter = 'all';
+    // ===== STATE =====
+    let currentView = 'assistant'; // 'assistant' | 'voice' | 'advanced'
+    let currentLanguage = localStorage.getItem('cognitiveMindLanguage') || 'en';
+    let companionSessionActive = false;
+    let companionSessionId = null;
+    let voiceState = 'idle'; // 'idle' | 'listening' | 'pause_analysis' | 'thinking' | 'speaking' | 'error'
     let selectedInputType = 'Observation';
     let inputHistory = JSON.parse(localStorage.getItem('cognitiveMindHistory') || '[]');
-    let currentLanguage = localStorage.getItem('cognitiveMindLanguage') || 'en';
-    
-    // i18n System - Embedded translations
+    let currentFilter = 'all';
+    let step = 0;
+
+    // ===== i18n TRANSLATIONS =====
     const translations = {
         en: {
-            "system_name": "Cognitive Mind v2.0",
-            "status_online": "ONLINE & EVOLVING",
-            "nav_dashboard": "Main Dashboard",
-            "nav_emotions": "Emotion Panel",
-            "nav_needs": "Internal Needs",
-            "nav_beliefs": "Belief System",
-            "nav_goals": "Goal Generation",
-            "nav_conflicts": "Cognitive Conflicts",
-            "nav_identity": "Self-Identity",
-            "nav_memory": "Memory Timeline",
-            "nav_graph": "Knowledge Graph",
-            "nav_debate": "Internal Debate",
-            "nav_simulation": "Simulation Panel",
-            "nav_history": "Input History",
-            "title_dashboard": "Cognitive State Overview",
-            "title_emotions": "Emotion State",
-            "title_needs": "Internal Needs",
-            "title_beliefs": "Belief System",
-            "title_goals": "Autonomous Goals",
-            "title_conflicts": "Cognitive Conflicts",
-            "title_identity": "Self-Identity Model",
-            "title_memory": "Memory Timeline",
-            "title_graph": "Knowledge Graph",
-            "title_debate": "Internal Debate",
-            "title_simulation": "Future Simulation",
-            "title_history": "Input History",
-            "card_header_cognitive_state": "CURRENT COGNITIVE STATE",
-            "card_header_active_emotional": "ACTIVE EMOTIONAL STATE",
-            "card_header_dominant_goal": "CURRENT DOMINANT GOAL",
-            "card_header_system_metrics": "SYSTEM METRICS",
-            "sub_exploring": "Adapting to new data",
-            "sub_priority_high": "Priority: HIGH",
-            "metric_confidence": "CONFIDENCE LEVEL",
-            "metric_stability": "INTERNAL STABILITY",
-            "metric_energy": "COGNITIVE ENERGY",
-            "filter_all": "All Beliefs",
-            "filter_strong": "Strong Beliefs",
-            "filter_weak": "Weak Beliefs",
-            "filter_conflicted": "Conflicted",
-            "filter_new": "New Beliefs",
-            "badge_new": "NEW",
-            "badge_conflicted": "CONFLICTED",
-            "priority_high": "HIGH",
-            "priority_medium": "MEDIUM",
-            "priority_low": "LOW",
-            "status_active": "Active",
-            "status_paused": "Paused",
-            "status_completed": "Completed",
-            "status_abandoned": "Abandoned",
-            "source_need_exploration": "Exploration",
-            "source_need_social": "Social",
-            "source_need_knowledge": "Knowledge",
-            "source_need_achievement": "Achievement",
-            "emotion_influence_curiosity": "Curiosity",
-            "emotion_influence_trust": "Trust",
-            "emotion_influence_confidence": "Confidence",
-            "emotion_influence_pride": "Pride",
-            "emotion_influence_fear": "Fear",
-            "identity_self_confidence": "SELF-CONFIDENCE",
-            "identity_self_consistency": "SELF-CONSISTENCY",
-            "identity_knowledge_gaps": "KNOWLEDGE GAPS",
-            "identity_decision_quality": "DECISION QUALITY",
-            "identity_emotional_balance": "EMOTIONAL BALANCE",
-            "identity_value_stability": "VALUE STABILITY",
-            "sim_scenario_header": "Possible Future Outcome",
-            "sim_scenario_text": "Explore new social interaction will build trust",
-            "sim_risk_score": "Risk Score",
-            "sim_reward_score": "Reward Score",
-            "sim_consequence_header": "Emotional Consequence",
-            "sim_consequence_text": "Increased trust and curiosity; mild excitement",
-            "sim_action_header": "Recommended Action",
-            "sim_action_text": "Engage in the social interaction",
-            "history_search_placeholder": "Search inputs...",
-            "history_filter_all": "All Types",
-            "history_filter_observation": "Observation",
-            "history_filter_emotion": "Emotion",
-            "history_filter_memory": "Memory",
-            "history_filter_belief": "Belief",
-            "history_filter_goal": "Goal",
-            "history_filter_question": "Question",
-            "history_filter_experience": "Experience",
-            "history_filter_relationship": "Relationship Event",
-            "history_filter_environmental": "Environmental Event",
-            "history_meta_impact": "Impact",
-            "console_thought_stream": "Real-Time Thought Stream",
-            "console_input_interface": "Cognitive Input Interface",
-            "console_classification_label": "Select Input Type:",
-            "console_input_placeholder": "Enter observation, event, emotion, memory, belief, question, or experience...",
-            "console_emotion_injection": "Emotion Injection Controls",
-            "console_submit_button": "Inject Into Mind",
-            "console_response_title": "Cognitive Response Analysis",
-            "console_response_concepts": "Detected Concepts",
-            "console_response_beliefs": "Affected Beliefs",
-            "console_response_emotions": "Updated Emotions",
-            "console_response_memory": "Memory Impact",
-            "console_response_prediction": "Predicted Outcome",
-            "flow_step_1": "Input Received",
-            "flow_step_2": "Context Analysis",
-            "flow_step_3": "Belief Evaluation",
-            "flow_step_4": "Memory Storage",
-            "flow_step_5": "Emotion Update",
-            "flow_step_6": "Goal Assessment",
-            "flow_step_7": "Identity Impact",
-            "type_observation": "Observation",
-            "type_emotion": "Emotion",
-            "type_memory": "Memory",
-            "type_belief": "Belief",
-            "type_goal": "Goal",
-            "type_question": "Question",
-            "type_experience": "Experience",
-            "type_relationship": "Relationship Event",
-            "type_environmental": "Environmental Event",
-            "slider_happiness": "Happiness",
-            "slider_sadness": "Sadness",
-            "slider_fear": "Fear",
-            "slider_anger": "Anger",
-            "slider_curiosity": "Curiosity",
-            "slider_trust": "Trust",
-            "slider_motivation": "Motivation",
-            "slider_stress": "Stress",
-            "influence_emotions": "Emotions",
-            "influence_goals": "Goals",
-            "influence_identity": "Identity",
-            "influence_beliefs": "Beliefs",
-            "influence_memory": "Memory",
+            "app_name": "ZARA",
+            "badge_offline_text": "Offline Secured",
+            "btn_voice_mode": "Voice Mode",
+            "btn_advanced": "Advanced Mind View",
+            "btn_back_assistant": "Back to Chat",
             "language_toggle_bangla": "বাংলা",
             "language_toggle_english": "English",
-            "thought_current_thought": "Current Thought",
-            "thought_internal_reasoning": "Internal Reasoning",
-            "thought_decision_process": "Decision Process",
-            "thought_active_goal": "Active Goal",
-            "thought_goal_queue": "Goal Queue",
-            "thought_emotional_state": "Emotional State",
-            "thought_attention_focus": "Attention Focus",
-            "thought_memory_recall": "Memory Recall",
-            "thought_context_analysis": "Context Analysis",
-            "thought_task_planning": "Task Planning",
-            "thought_risk_assessment": "Risk Assessment",
-            "thought_confidence_score": "Confidence Score",
-            "thought_learning_progress": "Learning Progress",
-            "thought_self_reflection": "Self Reflection",
-            "thought_priority_level": "Priority Level",
-            "thought_system_status": "System Status",
-            "thought_observation": "Observation",
-            "thought_prediction": "Prediction",
-            "thought_action_selection": "Action Selection",
-            "status_processing": "Processing",
-            "status_completed_alt": "Completed",
-            "status_waiting": "Waiting",
-            "status_thinking": "Thinking",
-            "status_analyzing": "Analyzing",
-            "status_learning": "Learning",
-            "status_monitoring": "Monitoring",
-            "status_generating_plan": "Generating Plan",
-            "status_searching_memory": "Searching Memory",
-            "status_evaluating_options": "Evaluating Options",
-            "status_building_response": "Building Response",
-            "nav_companion": "Emotional Support",
-            "companion_disclaimer": "This is an offline emotional support companion, not a replacement for professional therapy or medical help. If you are experiencing a crisis, please contact local professional emergency services.",
-            "companion_panel_conversation": "Conversation Timeline",
-            "btn_new_session": "New Session",
-            "btn_end_session": "End Session",
-            "chat_placeholder_text": "Start a session to interact with your offline emotional support companion.",
-            "companion_panel_status": "Companion Status",
-            "status_label_mode": "Active Mode:",
-            "status_label_emotion": "System Emotion:",
-            "status_label_confidence": "Confidence:",
-            "status_label_safety": "Safety State:",
-            "safety_state_safe": "Safe",
-            "safety_state_distressed": "Distressed",
-            "safety_state_crisis": "Crisis (Seek Help)",
-            "indicator_listening": "Listening",
-            "indicator_speaking": "Speaking",
-            "audio_meter_label": "Audio Input Level:",
-            "badge_offline_text": "Offline Secured (No Cloud)",
-            "companion_panel_input": "Input Controls",
-            "mode_hybrid": "Hybrid Mode",
-            "mode_text": "Text Mode",
-            "mode_voice": "Voice Mode",
-            "companion_text_placeholder": "Type your thoughts here...",
-            "toggle_speak_response": "Read Response Aloud",
+            "chip_talk": "Talk to Zara",
+            "chip_help_think": "Help me think",
+            "chip_explain_mood": "Explain my mood",
+            "mood_how_feeling": "How are you feeling?",
+            "mood_great": "Great", "mood_okay": "Okay", "mood_low": "Low", "mood_anxious": "Anxious", "mood_angry": "Angry",
+            "welcome_text": "Hi, I'm Zara — your offline emotional support companion. How can I help you today?",
+            "welcome_sub": "Type a message or tap the mic to speak.",
+            "chat_placeholder": "Message Zara...",
             "btn_send": "Send",
-            "btn_speak_start": "Start Recording",
-            "btn_speak_stop": "Stop & Process",
+            "toggle_speak_response": "Read aloud",
             "toggle_push_to_talk": "Push-to-Talk",
+            "voice_idle": "Tap the mic and speak to Zara",
+            "voice_listening": "I'm listening...",
+            "voice_processing": "Thinking locally...",
+            "voice_speaking": "Zara is speaking...",
+            "voice_error": "Microphone unavailable. Please check permission.",
+            "voice_take_your_time": "Take your time.",
+            "voice_thinking": "Thinking locally...",
+            "voice_interrupted": "Interrupted. I'm listening.",
+            "voice_settings": "Voice Settings",
+            "voice_speed": "Speech Speed",
+            "voice_volume": "Volume",
+            "voice_continuous": "Continuous Listening",
+            "voice_playback_speed": "Playback Speed",
             "live_transcript_header": "Live Transcript:",
-            "companion_panel_tools": "Support Tools",
-            "tool_calm_title": "Calm Me Down",
-            "tool_calm_desc": "Instant centering prompts",
+            "nav_dashboard": "Dashboard", "nav_emotions": "Emotions", "nav_needs": "Needs",
+            "nav_beliefs": "Beliefs", "nav_goals": "Goals", "nav_conflicts": "Inner Conflicts",
+            "nav_identity": "Self-Identity", "nav_memory": "Memory", "nav_graph": "Knowledge Graph",
+            "nav_debate": "Internal Debate", "nav_simulation": "Future Preview", "nav_history": "Input History",
+            "nav_thoughts": "Zara's Thinking",
+            "title_dashboard": "Cognitive State Overview", "title_emotions": "Emotion State",
+            "title_needs": "Internal Needs", "title_beliefs": "Belief System",
+            "title_goals": "Goals", "title_conflicts": "Inner Conflicts",
+            "title_identity": "Self-Identity", "title_memory": "Memory Timeline",
+            "title_graph": "Knowledge Graph", "title_debate": "Internal Debate",
+            "title_simulation": "Future Preview", "title_history": "Input History",
+            "card_header_cognitive_state": "COGNITIVE STATE", "card_header_active_emotional": "EMOTIONAL STATE",
+            "card_header_dominant_goal": "DOMINANT GOAL", "card_header_system_metrics": "SYSTEM METRICS",
+            "sub_exploring": "Adapting to new data", "sub_priority_high": "Priority: HIGH",
+            "metric_confidence": "CONFIDENCE", "metric_stability": "STABILITY", "metric_energy": "ENERGY",
+            "filter_all": "All", "filter_strong": "Strong", "filter_weak": "Weak",
+            "filter_conflicted": "Conflicted", "filter_new": "New",
+            "identity_self_confidence": "SELF-CONFIDENCE", "identity_self_consistency": "SELF-CONSISTENCY",
+            "identity_knowledge_gaps": "KNOWLEDGE GAPS", "identity_decision_quality": "DECISION QUALITY",
+            "identity_emotional_balance": "EMOTIONAL BALANCE", "identity_value_stability": "VALUE STABILITY",
+            "sim_scenario_header": "Possible Future Outcome", "sim_risk_score": "Risk",
+            "sim_reward_score": "Reward", "sim_consequence_header": "Emotional Consequence",
+            "sim_action_header": "Recommended Action",
+            "history_search_placeholder": "Search...", "history_filter_all": "All Types",
+            "type_observation": "Observation", "type_emotion": "Emotion", "type_memory": "Memory",
+            "type_belief": "Belief", "type_goal": "Goal", "type_question": "Question",
+            "type_experience": "Experience",
+            "console_classification_label": "Input Type:",
+            "console_input_placeholder": "Send to Zara...",
+            "console_submit_button": "Send to Zara",
+            "slider_happiness": "Happy", "slider_sadness": "Sad", "slider_fear": "Fear",
+            "slider_anger": "Anger", "slider_curiosity": "Curious", "slider_trust": "Trust",
+            "slider_motivation": "Motivation", "slider_stress": "Stress",
+            "tool_calm_title": "Calm me down", "tool_journal_title": "Start journal",
             "tool_breathing_title": "Breathing Exercise",
-            "tool_breathing_desc": "Guided paced breathing",
-            "tool_journal_title": "Journaling Prompt",
-            "tool_journal_desc": "Guided writing exercises",
-            "tool_reflection_title": "Self-Reflection",
-            "tool_reflection_desc": "Insightful growth queries",
-            "tool_mood_title": "Mood Check-in",
-            "tool_mood_desc": "Assess your emotional state",
-            "tool_summary_title": "Session Summary",
-            "tool_summary_desc": "Analyze emotional timeline"
+            "breathing_breathe_in": "Breathe In...", "breathing_breathe_out": "Breathe Out...",
+            "breathing_instruction": "Follow the circle. Breathe in as it expands, breathe out as it contracts.",
+            "journal_placeholder": "Write your thoughts here...",
+            "journal_save": "Save Entry",
+            "safety_banner": "If you're in crisis, please reach out to a local professional helpline. Zara is an offline support tool, not a replacement for professional help.",
+            "session_welcome_bn": "হ্যালো, আমি ঝারা। আমি সম্পূর্ণ অফলাইনে আছি। আজ আপনাকে কীভাবে সাহায্য করতে পারি?",
+            "session_welcome_en": "Hello, I'm Zara. I'm fully offline and here to listen. How can I help you today?",
+            "mood_response_great": "That's wonderful to hear! What's been making you feel great?",
+            "mood_response_okay": "Okay is perfectly fine. Is there anything on your mind you'd like to talk about?",
+            "mood_response_low": "I'm sorry you're feeling low. I'm here for you. Want to talk about what's bothering you?",
+            "mood_response_anxious": "I understand anxiety can be overwhelming. Let's take it one step at a time. Would you like to try a breathing exercise?",
+            "mood_response_angry": "It's okay to feel angry. Want to talk about what's frustrating you? Sometimes putting it into words helps.",
+            "thought_observation": "Analyzing emotional input...",
+            "thought_memory_recall": "Searching memory for patterns...",
+            "thought_prediction": "Simulating possible outcomes...",
+            "thought_emotional_state": "Monitoring emotional balance...",
+            "thought_context_analysis": "Processing context...",
+            "thought_self_reflection": "Reflecting on identity...",
+            "status_processing": "Processing", "status_thinking": "Thinking",
+            "status_analyzing": "Analyzing", "status_learning": "Learning",
+            "accuracy_title": "System Accuracy", "accuracy_overall": "Overall Accuracy",
+            "accuracy_stt": "Speech Recognition", "accuracy_intent": "Intent Detection",
+            "accuracy_safety": "Safety Detection", "accuracy_tool": "Tool Routing",
+            "accuracy_response": "Response Quality",
+            "accuracy_run_tests": "Run Tests",
+            "accuracy_recent_failures": "Recent Failures",
+            "accuracy_suggestions": "Suggestions",
         },
         bn_bd: {
-            "system_name": "কগনিটিভ মাইন্ড v2.0",
-            "status_online": "অনলাইন এবং বিকশিত হচ্ছে",
-            "nav_dashboard": "প্রধান ড্যাশবোর্ড",
-            "nav_emotions": "আবেগ প্যানেল",
-            "nav_needs": "অন্তর্নিহিত প্রয়োজনীয়তা",
-            "nav_beliefs": "বিশ্বাস ব্যবস্থা",
-            "nav_goals": "লক্ষ্য উৎপাদন",
-            "nav_conflicts": "কগনিটিভ দ্বন্দ্ব",
-            "nav_identity": "আত্ম-পরিচয়",
-            "nav_memory": "স্মৃতি টাইমলাইন",
-            "nav_graph": "জ্ঞান গ্রাফ",
-            "nav_debate": "অন্তর্নিহিত বিতর্ক",
-            "nav_simulation": "সিমুলেশন প্যানেল",
-            "nav_history": "ইনপুট ইতিহাস",
-            "title_dashboard": "কগনিটিভ অবস্থার ওভারভিউ",
-            "title_emotions": "আবেগের অবস্থা",
-            "title_needs": "অন্তর্নিহিত প্রয়োজনীয়তা",
-            "title_beliefs": "বিশ্বাস ব্যবস্থা",
-            "title_goals": "স্বায়ত্তশাসিত লক্ষ্য",
-            "title_conflicts": "কগনিটিভ দ্বন্দ্ব",
-            "title_identity": "আত্ম-পরিচয় মডেল",
-            "title_memory": "স্মৃতি টাইমলাইন",
-            "title_graph": "জ্ঞান গ্রাফ",
-            "title_debate": "অন্তর্নিহিত বিতর্ক",
-            "title_simulation": "ভবিষ্যৎ সিমুলেশন",
-            "title_history": "ইনপুট ইতিহাস",
-            "card_header_cognitive_state": "বর্তমান কগনিটিভ অবস্থা",
-            "card_header_active_emotional": "সক্রিয় আবেগের অবস্থা",
-            "card_header_dominant_goal": "বর্তমান প্রধান লক্ষ্য",
-            "card_header_system_metrics": "সিস্টেম মেট্রিক্স",
-            "sub_exploring": "নতুন ডেটার সাথে খাপ খাইয়ে নিচ্ছে",
-            "sub_priority_high": "অগ্রাধিকার: উচ্চ",
-            "metric_confidence": "আত্মবিশ্বাসের মাত্রা",
-            "metric_stability": "অন্তর্নিহিত স্থিতিশীলতা",
-            "metric_energy": "কগনিটিভ শক্তি",
-            "filter_all": "সব বিশ্বাস",
-            "filter_strong": "শক্তিশালী বিশ্বাস",
-            "filter_weak": "দুর্বল বিশ্বাস",
-            "filter_conflicted": "দ্বন্দ্বিত",
-            "filter_new": "নতুন বিশ্বাস",
-            "badge_new": "নতুন",
-            "badge_conflicted": "দ্বন্দ্বিত",
-            "priority_high": "উচ্চ",
-            "priority_medium": "মাঝারি",
-            "priority_low": "কম",
-            "status_active": "সক্রিয়",
-            "status_paused": "স্থগিত",
-            "status_completed": "সম্পন্ন",
-            "status_abandoned": "পরিত্যক্ত",
-            "source_need_exploration": "অন্বেষণ",
-            "source_need_social": "সামাজিক",
-            "source_need_knowledge": "জ্ঞান",
-            "source_need_achievement": "অর্জন",
-            "emotion_influence_curiosity": "কৌতূহল",
-            "emotion_influence_trust": "বিশ্বাস",
-            "emotion_influence_confidence": "আত্মবিশ্বাস",
-            "emotion_influence_pride": "অহংকার",
-            "emotion_influence_fear": "ভয়",
-            "identity_self_confidence": "আত্মবিশ্বাস",
-            "identity_self_consistency": "আত্ম-সামঞ্জস্য",
-            "identity_knowledge_gaps": "জ্ঞানের ফাঁক",
-            "identity_decision_quality": "সিদ্ধান্তের গুণমান",
-            "identity_emotional_balance": "আবেগের ভারসাম্য",
-            "identity_value_stability": "মূল্যের স্থিতিশীলতা",
-            "sim_scenario_header": "সম্ভাব্য ভবিষ্যৎ ফলাফল",
-            "sim_scenario_text": "নতুন সামাজিক মিথস্ক্রিয়া বিশ্বাস বাড়াবে",
-            "sim_risk_score": "ঝুঁকি স্কোর",
-            "sim_reward_score": "পুরস্কার স্কোর",
-            "sim_consequence_header": "আবেগের পরিণতি",
-            "sim_consequence_text": "বৃদ্ধি পাওয়া বিশ্বাস ও কৌতূহল; হালকা উত্তেজনা",
-            "sim_action_header": "সুপারিশকৃত পদক্ষেপ",
-            "sim_action_text": "সামাজিক মিথস্ক্রিয়াতে অংশগ্রহণ করুন",
-            "history_search_placeholder": "ইনপুট সার্চ করুন...",
-            "history_filter_all": "সব ধরন",
-            "history_filter_observation": "পর্যবেক্ষণ",
-            "history_filter_emotion": "আবেগ",
-            "history_filter_memory": "স্মৃতি",
-            "history_filter_belief": "বিশ্বাস",
-            "history_filter_goal": "লক্ষ্য",
-            "history_filter_question": "প্রশ্ন",
-            "history_filter_experience": "অভিজ্ঞতা",
-            "history_filter_relationship": "সম্পর্কের ঘটনা",
-            "history_filter_environmental": "পরিবেশের ঘটনা",
-            "history_meta_impact": "প্রভাব",
-            "console_thought_stream": "রিয়েল-টাইম চিন্তার প্রবাহ",
-            "console_input_interface": "কগনিটিভ ইনপুট ইন্টারফেস",
-            "console_classification_label": "ইনপুটের ধরন নির্বাচন করুন:",
-            "console_input_placeholder": "পর্যবেক্ষণ, ঘটনা, আবেগ, স্মৃতি, বিশ্বাস, প্রশ্ন বা অভিজ্ঞতা লিখুন...",
-            "console_emotion_injection": "আবেগ ইনজেকশন কন্ট্রোল",
-            "console_submit_button": "মস্তিষ্কে ইনজেক্ট করুন",
-            "console_response_title": "কগনিটিভ প্রতিক্রিয়া বিশ্লেষণ",
-            "console_response_concepts": "সনাক্তকৃত ধারণা",
-            "console_response_beliefs": "প্রভাবিত বিশ্বাস",
-            "console_response_emotions": "আপডেট করা আবেগ",
-            "console_response_memory": "স্মৃতির প্রভাব",
-            "console_response_prediction": "পূর্বাভাসিত ফলাফল",
-            "flow_step_1": "ইনপুট প্রাপ্ত হয়েছে",
-            "flow_step_2": "কনটেক্সট বিশ্লেষণ",
-            "flow_step_3": "বিশ্বাস মূল্যায়ন",
-            "flow_step_4": "স্মৃতি সংরক্ষণ",
-            "flow_step_5": "আবেগ আপডেট",
-            "flow_step_6": "লক্ষ্য মূল্যায়ন",
-            "flow_step_7": "পরিচয়ের প্রভাব",
-            "type_observation": "পর্যবেক্ষণ",
-            "type_emotion": "আবেগ",
-            "type_memory": "স্মৃতি",
-            "type_belief": "বিশ্বাস",
-            "type_goal": "লক্ষ্য",
-            "type_question": "প্রশ্ন",
-            "type_experience": "অভিজ্ঞতা",
-            "type_relationship": "সম্পর্কের ঘটনা",
-            "type_environmental": "পরিবেশের ঘটনা",
-            "slider_happiness": "সুখ",
-            "slider_sadness": "দুঃখ",
-            "slider_fear": "ভয়",
-            "slider_anger": "রাগ",
-            "slider_curiosity": "কৌতূহল",
-            "slider_trust": "বিশ্বাস",
-            "slider_motivation": "উদ্দীপনা",
-            "slider_stress": "চাপ",
-            "influence_emotions": "আবেগ",
-            "influence_goals": "লক্ষ্য",
-            "influence_identity": "পরিচয়",
-            "influence_beliefs": "বিশ্বাস",
-            "influence_memory": "স্মৃতি",
+            "app_name": "ঝারা",
+            "badge_offline_text": "অফলাইন সুরক্ষিত",
+            "btn_voice_mode": "ভয়েস মোড",
+            "btn_advanced": "অ্যাডভান্সড মাইন্ড ভিউ",
+            "btn_back_assistant": "চ্যাটে ফিরুন",
             "language_toggle_bangla": "বাংলা",
             "language_toggle_english": "English",
-            "thought_current_thought": "বর্তমান চিন্তা",
-            "thought_internal_reasoning": "অভ্যন্তরীণ বিশ্লেষণ",
-            "thought_decision_process": "সিদ্ধান্ত গ্রহণ প্রক্রিয়া",
-            "thought_active_goal": "সক্রিয় লক্ষ্য",
-            "thought_goal_queue": "লক্ষ্য তালিকা",
-            "thought_emotional_state": "আবেগীয় অবস্থা",
-            "thought_attention_focus": "মনোযোগের কেন্দ্র",
-            "thought_memory_recall": "স্মৃতি পুনরুদ্ধার",
-            "thought_context_analysis": "প্রেক্ষাপট বিশ্লেষণ",
-            "thought_task_planning": "কাজের পরিকল্পনা",
-            "thought_risk_assessment": "ঝুঁকি মূল্যায়ন",
-            "thought_confidence_score": "আত্মবিশ্বাসের মাত্রা",
-            "thought_learning_progress": "শেখার অগ্রগতি",
-            "thought_self_reflection": "আত্ম-পর্যালোচনা",
-            "thought_priority_level": "অগ্রাধিকারের স্তর",
-            "thought_system_status": "সিস্টেমের অবস্থা",
-            "thought_observation": "পর্যবেক্ষণ",
-            "thought_prediction": "পূর্বাভাস",
-            "thought_action_selection": "কর্ম নির্বাচন",
-            "status_processing": "প্রক্রিয়াকরণ চলছে",
-            "status_completed_alt": "সম্পন্ন হয়েছে",
-            "status_waiting": "অপেক্ষমাণ",
-            "status_thinking": "চিন্তা করছে",
-            "status_analyzing": "বিশ্লেষণ করছে",
-            "status_learning": "শিখছে",
-            "status_monitoring": "পর্যবেক্ষণ করছে",
-            "status_generating_plan": "পরিকল্পনা তৈরি করছে",
-            "status_searching_memory": "স্মৃতিতে অনুসন্ধান করছে",
-            "status_evaluating_options": "বিকল্পগুলো মূল্যায়ন করছে",
-            "status_building_response": "উত্তর প্রস্তুত করছে",
-            "nav_companion": "আবেগীয় সহায়তা",
-            "companion_disclaimer": "এটি একটি অফলাইন আবেগীয় সহায়তা সহচর, পেশাদার থেরাপি বা চিকিৎসা সহায়তার বিকল্প নয়। আপনি যদি কোনো সংকটের মুখোমুখি হন, তবে অনুগ্রহ করে স্থানীয় পেশাদার জরুরি পরিষেবার সাথে যোগাযোগ করুন।",
-            "companion_panel_conversation": "কথোপকথনের টাইমলাইন",
-            "btn_new_session": "নতুন সেশন",
-            "btn_end_session": "সেশন শেষ করুন",
-            "chat_placeholder_text": "আপনার অফলাইন আবেগীয় সহায়তা সহচরের সাথে কথা বলতে একটি সেশন শুরু করুন।",
-            "companion_panel_status": "সহচরের অবস্থা",
-            "status_label_mode": "সক্রিয় মোড:",
-            "status_label_emotion": "সিস্টেম আবেগ:",
-            "status_label_confidence": "আত্মবিশ্বাস:",
-            "status_label_safety": "নিরাপত্তা অবস্থা:",
-            "safety_state_safe": "নিরাপদ",
-            "safety_state_distressed": "বিচলিত",
-            "safety_state_crisis": "সংকট (সহায়তা নিন)",
-            "indicator_listening": "শুনছে",
-            "indicator_speaking": "বলছে",
-            "audio_meter_label": "অডিও ইনপুটের মাত্রা:",
-            "badge_offline_text": "অফলাইন সুরক্ষিত (ক্লাউড ছাড়া)",
-            "companion_panel_input": "ইনপুট নিয়ন্ত্রণ",
-            "mode_hybrid": "হাইব্রিড মোড",
-            "mode_text": "টেক্সট মোড",
-            "mode_voice": "ভয়েস মোড",
-            "companion_text_placeholder": "আপনার চিন্তা এখানে লিখুন...",
-            "toggle_speak_response": "উচ্চস্বরে উত্তর পড়ুন",
+            "chip_talk": "ঝারার সাথে কথা বলুন",
+            "chip_help_think": "চিন্তা করতে সাহায্য করুন",
+            "chip_explain_mood": "আমার মেজাজ ব্যাখ্যা করুন",
+            "mood_how_feeling": "আপনি কেমন বোধ করছেন?",
+            "mood_great": "দারুণ", "mood_okay": "ঠিক আছে", "mood_low": "খারাপ", "mood_anxious": "উদ্বিগ্ন", "mood_angry": "রাগান্বিত",
+            "welcome_text": "হ্যালো, আমি ঝারা — আপনার অফলাইন আবেগীয় সহায়তা সহচর। আজ আপনাকে কীভাবে সাহায্য করতে পারি?",
+            "welcome_sub": "বার্তা টাইপ করুন বা কথা বলতে মাইক ট্যাপ করুন।",
+            "chat_placeholder": "ঝারা কে বার্তা পাঠান...",
             "btn_send": "পাঠান",
-            "btn_speak_start": "রেকর্ডিং শুরু করুন",
-            "btn_speak_stop": "থামুন ও বিশ্লেষণ করুন",
+            "toggle_speak_response": "উচ্চস্বরে পড়ুন",
             "toggle_push_to_talk": "পুশ-টু-টক",
+            "voice_idle": "মাইক ট্যাপ করে ঝারার সাথে কথা বলুন",
+            "voice_listening": "আমি শুনছি...",
+            "voice_processing": "স্থানীয়ভাবে চিন্তা করছি...",
+            "voice_speaking": "ঝারা বলছে...",
+            "voice_error": "মাইক্রোফোন পাওয়া যাচ্ছে না। অনুগ্রহ করে অনুমতি পরীক্ষা করুন।",
+            "voice_take_your_time": "ধীরে নিন।",
+            "voice_thinking": "স্থানীয়ভাবে চিন্তা করছি...",
+            "voice_interrupted": "বাধা দেওয়া হয়েছে। আমি শুনছি।",
+            "voice_settings": "ভয়েস সেটিংস",
+            "voice_speed": "কথার গতি",
+            "voice_volume": "ভলিউম",
+            "voice_continuous": "ক্রমাগত শ্রবণ",
+            "voice_playback_speed": "প্লেব্যাক গতি",
             "live_transcript_header": "লাইভ প্রতিলিপি:",
-            "companion_panel_tools": "সহায়তা সরঞ্জাম",
-            "tool_calm_title": "আমাকে শান্ত করুন",
-            "tool_calm_desc": "তাত্ক্ষণিক কেন্দ্রীকরণের প্রম্পট",
+            "nav_dashboard": "ড্যাশবোর্ড", "nav_emotions": "আবেগ", "nav_needs": "প্রয়োজন",
+            "nav_beliefs": "বিশ্বাস", "nav_goals": "লক্ষ্য", "nav_conflicts": "অভ্যন্তরীণ দ্বন্দ্ব",
+            "nav_identity": "আত্ম-পরিচয়", "nav_memory": "স্মৃতি", "nav_graph": "জ্ঞান গ্রাফ",
+            "nav_debate": "অভ্যন্তরীণ বিতর্ক", "nav_simulation": "ভবিষ্যৎ প্রিভিউ", "nav_history": "ইনপুট ইতিহাস",
+            "nav_thoughts": "ঝারার চিন্তা",
+            "title_dashboard": "জ্ঞানীয় অবস্থা", "title_emotions": "আবেগের অবস্থা",
+            "title_needs": "অন্তর্নিহিত প্রয়োজনীয়তা", "title_beliefs": "বিশ্বাস ব্যবস্থা",
+            "title_goals": "লক্ষ্য", "title_conflicts": "অভ্যন্তরীণ দ্বন্দ্ব",
+            "title_identity": "আত্ম-পরিচয়", "title_memory": "স্মৃতি টাইমলাইন",
+            "title_graph": "জ্ঞান গ্রাফ", "title_debate": "অভ্যন্তরীণ বিতর্ক",
+            "title_simulation": "ভবিষ্যৎ প্রিভিউ", "title_history": "ইনপুট ইতিহাস",
+            "card_header_cognitive_state": "জ্ঞানীয় অবস্থা", "card_header_active_emotional": "আবেগের অবস্থা",
+            "card_header_dominant_goal": "প্রধান লক্ষ্য", "card_header_system_metrics": "সিস্টেম মেট্রিক্স",
+            "sub_exploring": "নতুন ডেটার সাথে খাপ খাইয়ে নিচ্ছে", "sub_priority_high": "অগ্রাধিকার: উচ্চ",
+            "metric_confidence": "আত্মবিশ্বাস", "metric_stability": "স্থিতিশীলতা", "metric_energy": "শক্তি",
+            "filter_all": "সব", "filter_strong": "শক্তিশালী", "filter_weak": "দুর্বল",
+            "filter_conflicted": "দ্বন্দ্বিত", "filter_new": "নতুন",
+            "identity_self_confidence": "আত্মবিশ্বাস", "identity_self_consistency": "আত্ম-সামঞ্জস্য",
+            "identity_knowledge_gaps": "জ্ঞানের ফাঁক", "identity_decision_quality": "সিদ্ধান্তের গুণমান",
+            "identity_emotional_balance": "আবেগের ভারসাম্য", "identity_value_stability": "মূল্যের স্থিতিশীলতা",
+            "sim_scenario_header": "সম্ভাব্য ভবিষ্যৎ ফলাফল", "sim_risk_score": "ঝুঁকি",
+            "sim_reward_score": "পুরস্কার", "sim_consequence_header": "আবেগের পরিণতি",
+            "sim_action_header": "সুপারিশকৃত পদক্ষেপ",
+            "history_search_placeholder": "সার্চ...", "history_filter_all": "সব ধরন",
+            "type_observation": "পর্যবেক্ষণ", "type_emotion": "আবেগ", "type_memory": "স্মৃতি",
+            "type_belief": "বিশ্বাস", "type_goal": "লক্ষ্য", "type_question": "প্রশ্ন",
+            "type_experience": "অভিজ্ঞতা",
+            "console_classification_label": "ইনপুটের ধরন:",
+            "console_input_placeholder": "ঝারা কে পাঠান...",
+            "console_submit_button": "ঝারা কে পাঠান",
+            "slider_happiness": "সুখ", "slider_sadness": "দুঃখ", "slider_fear": "ভয়",
+            "slider_anger": "রাগ", "slider_curiosity": "কৌতূহল", "slider_trust": "বিশ্বাস",
+            "slider_motivation": "উদ্দীপনা", "slider_stress": "চাপ",
+            "tool_calm_title": "আমাকে শান্ত করুন", "tool_journal_title": "জার্নাল শুরু করুন",
             "tool_breathing_title": "শ্বাস-প্রশ্বাসের ব্যায়াম",
-            "tool_breathing_desc": "নির্দেশিত নিয়ন্ত্রিত শ্বাস",
-            "tool_journal_title": "জার্নালিং প্রম্পট",
-            "tool_journal_desc": "নির্দেশিত লেখার ব্যায়াম",
-            "tool_reflection_title": "আত্ম-পর্যালোচনা",
-            "tool_reflection_desc": "অন্তর্দৃষ্টিপূর্ণ বৃদ্ধির প্রশ্ন",
-            "tool_mood_title": "মুড চেক-ইন",
-            "tool_mood_desc": "আপনার আবেগের অবস্থা মূল্যায়ন করুন",
-            "tool_summary_title": "সেশনের সারসংক্ষেপ",
-            "tool_summary_desc": "আবেগীয় টাইমলাইন বিশ্লেষণ করুন"
+            "breathing_breathe_in": "শ্বাস নিন...", "breathing_breathe_out": "শ্বাস ছাড়ুন...",
+            "breathing_instruction": "বৃত্তটি অনুসরণ করুন। প্রসারিত হলে শ্বাস নিন, সংকুচিত হলে শ্বাস ছাড়ুন।",
+            "journal_placeholder": "আপনার চিন্তা এখানে লিখুন...",
+            "journal_save": "এন্ট্রি সংরক্ষণ করুন",
+            "safety_banner": "আপনি যদি সংকটে থাকেন, অনুগ্রহ করে স্থানীয় পেশাদার হেলপলাইনে যোগাযোগ করুন। ঝারা একটি অফলাইন সহায়তা টুল, পেশাদার সাহায্যের বিকল্প নয়।",
+            "session_welcome_bn": "হ্যালো, আমি ঝারা। আমি সম্পূর্ণ অফলাইনে আছি। আজ আপনাকে কীভাবে সাহায্য করতে পারি?",
+            "session_welcome_en": "Hello, I'm Zara. I'm fully offline and here to listen. How can I help you today?",
+            "mood_response_great": "এটা শুনতে দারুণ! কী আপনাকে এত ভালো অনুভব করাচ্ছে?",
+            "mood_response_okay": "ঠিক আছে থাকাটা পুরোপুরি স্বাভাবিক। আপনার মনে কিছু আছে কি যে নিয়ে কথা বলতে চান?",
+            "mood_response_low": "আপনি খারাপ অনুভব করছেন শুনে দুঃখিত। আমি আপনার পাশে আছি। কী নিয়ে চিন্তিত তা নিয়ে কথা বলতে চান?",
+            "mood_response_anxious": "আমি বুঝতে পারি উদ্বেগ কতটা কঠিন হতে পারে। এক এক করে এগোই। শ্বাস-প্রশ্বাসের ব্যায়াম চেষ্টা করতে চান?",
+            "mood_response_angry": "রাগান্বিত অনুভব করাটা স্বাভাবিক। কী আপনাকে বিরক্ত করছে তা নিয়ে কথা বলতে চান? কখনও কখনও কথা বললে হালকা লাগে।",
+            "thought_observation": "আবেগিক ইনপুট বিশ্লেষণ করা হচ্ছে...",
+            "thought_memory_recall": "প্যাটার্নের জন্য স্মৃতি অনুসন্ধান করা হচ্ছে...",
+            "thought_prediction": "সম্ভাব্য ফলাফল সিমুলেট করা হচ্ছে...",
+            "thought_emotional_state": "আবেগের ভারসাম্য পর্যবেক্ষণ করা হচ্ছে...",
+            "thought_context_analysis": "প্রসঙ্গ প্রক্রিয়াকরণ করা হচ্ছে...",
+            "thought_self_reflection": "পরিচয় নিয়ে প্রতিচ্ছবি করা হচ্ছে...",
+            "status_processing": "\u09aa\u09cd\u09b0\u0995\u09cd\u09b0\u09bf\u09af\u09bc\u09be\u0995\u09b0\u09a3", "status_thinking": "\u099a\u09bf\u09a8\u09cd\u09a4\u09be \u0995\u09b0\u099b\u09c7",
+            "status_analyzing": "\u09ac\u09bf\u09b6\u09cd\u09b2\u09c7\u09b7\u09a3 \u0995\u09b0\u099b\u09c7", "status_learning": "\u09b6\u09bf\u0996\u099b\u09c7",
+            "accuracy_title": "\u09b8\u09bf\u09b8\u09cd\u099f\u09c7\u09ae \u09a8\u09bf\u09b0\u09cd\u0997\u09c1\u09b2\u09a4\u09be", "accuracy_overall": "\u09b8\u09be\u09ae\u0997\u09cd\u09b0\u09bf\u0995 \u09a8\u09bf\u09b0\u09cd\u0997\u09c1\u09b2\u09a4\u09be",
+            "accuracy_stt": "\u09ac\u09be\u0995 \u09b6\u09cd\u09b0\u09c1\u09a4\u09bf\u099a\u09df\u09a8", "accuracy_intent": "\u0989\u09a6\u09cd\u09a6\u09c7\u09b6\u09cd\u09af \u09b6\u09a8\u09be\u0995\u09cd\u09a4\u0995\u09b0\u09a3",
+            "accuracy_safety": "\u09a8\u09bf\u09b0\u09be\u09aa\u09a4\u09cd\u09a4\u09be \u09b6\u09a8\u09be\u0995\u09cd\u09a4\u0995\u09b0\u09a3", "accuracy_tool": "\u099f\u09c1\u09b2 \u09b0\u09be\u0989\u099f\u09bf\u0982",
+            "accuracy_response": "\u0989\u09a4\u09cd\u09a4\u09b0\u09c7\u09b0 \u09ae\u09be\u09a8",
+            "accuracy_run_tests": "\u09aa\u09b0\u09c0\u0995\u09cd\u09b7\u09be \u099a\u09be\u09b2\u09be\u09a8",
+            "accuracy_recent_failures": "\u09b8\u09be\u09ae\u09cd\u09aa\u09cd\u09b0\u09a4\u09bf\u0995 \u09ac\u09cd\u09af\u09b0\u09cd\u09a5\u09a4\u09be",
+            "accuracy_suggestions": "\u09aa\u09b0\u09be\u09ae\u09b0\u09cd\u09b6",
         }
     };
-    
+
+    function t(key) { return (translations[currentLanguage] || translations.en)[key] || key; }
+
     function applyTranslations(lang) {
-        const t = translations[lang] || translations.en;
-        
-        // Update text content
-        document.querySelectorAll('[data-i18n]').forEach(el => {
-            const key = el.getAttribute('data-i18n');
-            if (t[key]) {
-                el.textContent = t[key];
-            }
-        });
-        
-        // Update placeholders
-        document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
-            const key = el.getAttribute('data-i18n-placeholder');
-            if (t[key]) {
-                el.placeholder = t[key];
-            }
-        });
-        
-        // Update html lang attribute
+        const tr = translations[lang] || translations.en;
+        document.querySelectorAll('[data-i18n]').forEach(el => { const k = el.getAttribute('data-i18n'); if (tr[k]) el.textContent = tr[k]; });
+        document.querySelectorAll('[data-i18n-placeholder]').forEach(el => { const k = el.getAttribute('data-i18n-placeholder'); if (tr[k]) el.placeholder = tr[k]; });
+        document.querySelectorAll('[data-i18n-title]').forEach(el => { const k = el.getAttribute('data-i18n-title'); if (tr[k]) el.title = tr[k]; });
         document.documentElement.lang = lang === 'bn_bd' ? 'bn' : 'en';
-        
-        // Update language toggle button
         const langToggle = document.getElementById('languageToggle');
-        if (langToggle) {
-            langToggle.textContent = lang === 'en' ? t.language_toggle_bangla : t.language_toggle_english;
-            langToggle.setAttribute('data-i18n', lang === 'en' ? 'language_toggle_bangla' : 'language_toggle_english');
-        }
-        
-        // Save language preference
+        if (langToggle) { langToggle.textContent = lang === 'en' ? tr.language_toggle_bangla : tr.language_toggle_english; }
         localStorage.setItem('cognitiveMindLanguage', lang);
         currentLanguage = lang;
     }
-    
-    // Apply initial language
     applyTranslations(currentLanguage);
 
-    // Initial Data
-    let initialEmotions = {
-        curiosity: 78,
-        fear: 23,
-        confidence: 85,
-        doubt: 15,
-        motivation: 70,
-        stress: 35,
-        trust: 60,
-        frustration: 18
-    };
+    // ===== VIEW SWITCHING =====
+    const assistantView = document.getElementById('assistantView');
+    const voiceView = document.getElementById('voiceView');
+    const advancedView = document.getElementById('advancedView');
 
-    let initialNeeds = {
-        knowledge: 45,
-        security: 92,
-        exploration: 85,
-        social: 65,
-        achievement: 55,
-        stabilityNeed: 75,
-        autonomy: 88
-    };
-
-    let beliefs = [
-        { id: 1, name: "Social interactions build trust", confidence: 0.88, evidence: 12, contradictions: 1, lastUpdated: "2 min ago", isNew: true },
-        { id: 2, name: "Exploration leads to knowledge", confidence: 0.95, evidence: 24, contradictions: 0, lastUpdated: "5 min ago", isNew: false },
-        { id: 3, name: "Uncertainty causes stress", confidence: 0.70, evidence: 8, contradictions: 3, lastUpdated: "10 min ago", isNew: false },
-        { id: 4, name: "Achievement boosts confidence", confidence: 0.90, evidence: 18, contradictions: 0, lastUpdated: "1 min ago", isNew: true },
-        { id: 5, name: "Change is inevitable", confidence: 0.65, evidence: 6, contradictions: 2, lastUpdated: "8 min ago", isNew: false }
-    ];
-
-    let goals = [
-        { id: 1, title: "Explore unknown territories", priority: "HIGH", sourceNeed: "Exploration", emotionalInfluence: "Curiosity", status: "Active" },
-        { id: 2, title: "Build social connections", priority: "MEDIUM", sourceNeed: "Social", emotionalInfluence: "Trust", status: "Active" },
-        { id: 3, title: "Consolidate knowledge base", priority: "MEDIUM", sourceNeed: "Knowledge", emotionalInfluence: "Confidence", status: "Paused" },
-        { id: 4, title: "Complete previous task", priority: "LOW", sourceNeed: "Achievement", emotionalInfluence: "Pride", status: "Completed" },
-        { id: 5, title: "Take unnecessary risk", priority: "LOW", sourceNeed: "Exploration", emotionalInfluence: "Fear", status: "Abandoned" }
-    ];
-
-    const conflicts = [
-        { left: "Curiosity", right: "Fear", leftPercent: 55, rightPercent: 45 },
-        { left: "Safety", right: "Exploration", leftPercent: 40, rightPercent: 60 },
-        { left: "Confidence", right: "Doubt", leftPercent: 70, rightPercent: 30 },
-        { left: "Logic", right: "Emotion", leftPercent: 45, rightPercent: 55 }
-    ];
-
-    const identityMetrics = {
-        confidence: 85,
-        consistency: 78,
-        knowledgeGaps: 23,
-        decisionQuality: 81,
-        emotionalBalance: 69,
-        valueStability: 74
-    };
-
-    let memoryEvents = [
-        { type: "Emotional Shift", content: "Curiosity rose to 78%", time: "0:02" },
-        { type: "Goal Updated", content: "Added goal: Explore territories", time: "0:45" },
-        { type: "Belief Change", content: "Confidence in social trust increased", time: "1:12" },
-        { type: "Important Event", content: "New interaction detected", time: "1:58" },
-        { type: "Identity Change", content: "Self-consistency score updated", time: "2:30" },
-        { type: "Emotional Shift", content: "Stress reduced to 35%", time: "2:45" }
-    ];
-
-    let thoughtStreamData = [];
-    let influenceValues = {
-        emotions: 65,
-        goals: 45,
-        identity: 35,
-        beliefs: 50,
-        memory: 40
-    };
-
-    // DOM Elements
-    const navButtons = document.querySelectorAll('.nav-btn');
-    const sections = document.querySelectorAll('.section');
-    const cognitiveInput = document.getElementById('cognitiveInput');
-    const submitBtn = document.getElementById('submitBtn');
-    const processingFlow = document.getElementById('processingFlow');
-    const responsePanel = document.getElementById('responsePanel');
-    const micBtn = document.getElementById('micBtn');
-    const historyList = document.getElementById('historyList');
-    const historySearch = document.getElementById('historySearch');
-    const historyFilter = document.getElementById('historyFilter');
-    const pillButtons = document.querySelectorAll('.pill-btn');
-    const emotionSliders = document.querySelectorAll('.emotion-slider');
-    const languageToggle = document.getElementById('languageToggle');
-
-    // Language toggle event
-    languageToggle.addEventListener('click', () => {
-        const newLang = currentLanguage === 'en' ? 'bn_bd' : 'en';
-        applyTranslations(newLang);
-    });
-
-    // Initialize Everything
-    renderBeliefs();
-    renderGoals();
-    renderConflicts();
-    renderMemoryTimeline();
-    renderHistory();
-    drawKnowledgeGraph();
-    drawRadialCharts();
-    updateEmotionBars(initialEmotions);
-    updateNeeds(initialNeeds);
-    updateDashboard({
-        step,
-        confidence: identityMetrics.confidence,
-        stability: identityMetrics.consistency,
-        energy: identityMetrics.emotionalBalance
-    });
-    startThoughtStream();
-    updateClock();
-    setInterval(updateClock, 1000);
-    setInterval(() => {
-        simulateCognitiveEvent();
-    }, 5000);
-
-    // --- Helper Functions ---
-    function updateClock() {
-        const now = new Date();
-        const clock = document.querySelector('.clock');
-        if (clock) clock.textContent = now.toLocaleTimeString('en-US', { hour12: false });
+    function showView(name) {
+        assistantView.classList.remove('active');
+        advancedView.classList.remove('active');
+        voiceView.classList.remove('active');
+        currentView = name;
+        if (name === 'assistant') assistantView.classList.add('active');
+        else if (name === 'voice') voiceView.classList.add('active');
+        else if (name === 'advanced') advancedView.classList.add('active');
     }
 
-    function animateNumber(element, start, end, duration = 1000) {
-        let startTime = null;
-        const animate = (timestamp) => {
-            if (!startTime) startTime = timestamp;
-            const progress = Math.min((timestamp - startTime) / duration, 1);
-            const current = Math.floor(start + (end - start) * progress);
-            element.textContent = current;
-            if (progress < 1) requestAnimationFrame(animate);
-        };
-        requestAnimationFrame(animate);
-    }
+    document.getElementById('voiceModeBtn').addEventListener('click', () => { showView('voice'); });
+    // voiceCloseBtn handler is in the Voice Mode section (with conversation cleanup)
+    document.getElementById('advancedViewBtn').addEventListener('click', () => { showView('advanced'); });
+    document.getElementById('backToAssistantBtn').addEventListener('click', () => { showView('assistant'); });
 
-    // --- Rendering Functions ---
-    function renderBeliefs() {
-        const beliefListEl = document.getElementById('beliefList');
-        let filtered = beliefs;
-        
-        if (currentFilter === 'strong') filtered = beliefs.filter(b => b.confidence >= 0.8);
-        else if (currentFilter === 'weak') filtered = beliefs.filter(b => b.confidence < 0.7);
-        else if (currentFilter === 'conflicted') filtered = beliefs.filter(b => b.contradictions > 0);
-        else if (currentFilter === 'new') filtered = beliefs.filter(b => b.isNew);
+    // ===== ASSISTANT MODE: CHAT =====
+    const chatArea = document.getElementById('chatArea');
+    const chatInput = document.getElementById('chatInput');
+    const chatSendBtn = document.getElementById('chatSendBtn');
+    const chatMicBtn = document.getElementById('chatMicBtn');
+    const speakResponseToggle = document.getElementById('speakResponseToggle');
+    const chatWelcome = document.getElementById('chatWelcome');
 
-        beliefListEl.innerHTML = filtered.map(belief => `
-            <div class="belief-item">
-                <div class="belief-top">
-                    <div class="belief-name">${belief.name}</div>
-                    <div class="belief-confidence">${Math.round(belief.confidence * 100)}%</div>
-                </div>
-                <div class="belief-meta">
-                    <div>Evidence: ${belief.evidence}</div>
-                    <div>Contradictions: ${belief.contradictions}</div>
-                    <div>Updated: ${belief.lastUpdated}</div>
-                    ${belief.isNew ? '<span class="badge badge-new">NEW</span>' : ''}
-                    ${belief.contradictions > 0 ? '<span class="badge badge-conflicted">CONFLICTED</span>' : ''}
-                </div>
-            </div>
-        `).join('');
-    }
-
-    function renderGoals() {
-        const goalsGridEl = document.getElementById('goalsGrid');
-        goalsGridEl.innerHTML = goals.map(goal => `
-            <div class="goal-card ${goal.status.toLowerCase()}">
-                <div class="goal-title">${goal.title}</div>
-                <div class="goal-meta">
-                    <span>Priority: ${goal.priority}</span>
-                    <span>Source: ${goal.sourceNeed}</span>
-                    <span>Emotion: ${goal.emotionalInfluence}</span>
-                    <span class="status-tag status-${goal.status.toLowerCase()}">${goal.status}</span>
-                </div>
-            </div>
-        `).join('');
-    }
-
-    function renderConflicts() {
-        const conflictGridEl = document.getElementById('conflictGrid');
-        conflictGridEl.innerHTML = conflicts.map(conflict => `
-            <div class="conflict-item">
-                <div class="conflict-title">${conflict.left} vs ${conflict.right}</div>
-                <div class="conflict-bar">
-                    <div class="conflict-left" style="width: ${conflict.leftPercent}%">${conflict.left} ${conflict.leftPercent}%</div>
-                    <div class="conflict-right" style="width: ${conflict.rightPercent}%">${conflict.right} ${conflict.rightPercent}%</div>
-                </div>
-            </div>
-        `).join('');
-    }
-
-    function renderMemoryTimeline() {
-        const memoryTimelineEl = document.getElementById('memoryTimeline');
-        memoryTimelineEl.innerHTML = memoryEvents.map(event => `
-            <div class="memory-item">
-                <div class="memory-time">${event.time}</div>
-                <div class="memory-type">${event.type}</div>
-                <div class="memory-content">${event.content}</div>
-            </div>
-        `).join('');
-    }
-
-    function renderHistory() {
-        const historyListEl = document.getElementById('historyList');
-        let filtered = inputHistory;
-        
-        const searchTerm = historySearch.value.toLowerCase();
-        if (searchTerm) {
-            filtered = inputHistory.filter(item => 
-                item.text.toLowerCase().includes(searchTerm)
-            );
+    function appendMessage(sender, text, emotion) {
+        if (chatWelcome) chatWelcome.style.display = 'none';
+        const msgDiv = document.createElement('div');
+        msgDiv.className = `chat-message ${sender}`;
+        const bubble = document.createElement('div');
+        bubble.className = 'message-bubble';
+        bubble.textContent = text;
+        msgDiv.appendChild(bubble);
+        const meta = document.createElement('div');
+        meta.className = 'message-meta';
+        const timeStr = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+        meta.innerHTML = `<span>${timeStr}</span>`;
+        if (emotion) meta.innerHTML += ` <span class="emotion-tag">${emotion}</span>`;
+        msgDiv.appendChild(meta);
+        // Action buttons for assistant messages
+        if (sender === 'assistant') {
+            const actions = document.createElement('div');
+            actions.className = 'msg-actions';
+            actions.innerHTML = `<button class="msg-action-btn" onclick="navigator.clipboard.writeText(this.closest('.chat-message').querySelector('.message-bubble').textContent)">Copy</button>`;
+            msgDiv.appendChild(actions);
         }
-        
-        const filterType = historyFilter.value;
-        if (filterType !== 'all') {
-            filtered = filtered.filter(item => item.type === filterType);
+        chatArea.appendChild(msgDiv);
+        chatArea.scrollTop = chatArea.scrollHeight;
+    }
+
+    function showTypingIndicator() {
+        const indicator = document.createElement('div');
+        indicator.className = 'typing-indicator';
+        indicator.id = 'typingIndicator';
+        indicator.innerHTML = '<div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div>';
+        chatArea.appendChild(indicator);
+        chatArea.scrollTop = chatArea.scrollHeight;
+    }
+
+    function removeTypingIndicator() {
+        const el = document.getElementById('typingIndicator');
+        if (el) el.remove();
+    }
+
+    async function sendChatMessage(text) {
+        if (!text) return;
+        chatInput.value = '';
+        appendMessage('user', text);
+        showTypingIndicator();
+        // Ensure session is active
+        if (!companionSessionActive) {
+            try {
+                const res = await fetch('/api/session/start', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ mode: 'text', language: currentLanguage }) });
+                const data = await res.json();
+                if (data.session_id) { companionSessionId = data.session_id; companionSessionActive = true; }
+            } catch (e) { console.error('Session start error:', e); }
         }
-        
-        historyListEl.innerHTML = filtered.map(item => `
-            <div class="history-item">
-                <div class="history-content">
-                    <div class="history-text">${item.text}</div>
-                    <div class="history-meta">
-                        <span class="history-type">${item.type}</span>
-                        <span>Impact: ${item.impact}%</span>
-                        <span>${item.time}</span>
-                    </div>
-                </div>
-                <button class="history-delete" onclick="deleteHistoryItem('${item.id}')">×</button>
-            </div>
-        `).join('');
-    }
-
-    function updateEmotionBars(emotions) {
-        Object.entries(emotions).forEach(([key, value]) => {
-            const fillId = `${key}Fill`;
-            const percentId = `${key}Percent`;
-            const fillEl = document.getElementById(fillId);
-            const percentEl = document.getElementById(percentId);
-            if (fillEl && percentEl) {
-                fillEl.style.width = `${value}%`;
-                animateNumber(percentEl, parseInt(percentEl.textContent), value);
+        try {
+            const res = await fetch('/api/interaction/message', {
+                method: 'POST', headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ text, language: currentLanguage, speak_response: speakResponseToggle.checked })
+            });
+            const result = await res.json();
+            removeTypingIndicator();
+            if (result.assistant_message) {
+                appendMessage('assistant', result.assistant_message.response_text, result.assistant_message.response_type);
+            } else if (result.response) {
+                appendMessage('assistant', result.response, result.dominant_emotion);
+            } else {
+                appendMessage('assistant', currentLanguage === 'bn_bd' ? 'দুঃখিত, আমি এখন সাহায্য করতে পারছি না।' : 'I\'m sorry, I\'m having trouble responding right now.');
             }
-        });
-        
-        // Update dominant emotion display
-        let dominant = Object.entries(emotions).reduce((a, b) => a[1] > b[1] ? a : b);
-        document.getElementById('dominantEmotion').textContent = dominant[0].charAt(0).toUpperCase() + dominant[0].slice(1);
-        document.querySelector('.dominant-intensity').textContent = `${dominant[1]}%`;
+        } catch (e) {
+            removeTypingIndicator();
+            console.error('Chat error:', e);
+            appendMessage('assistant', currentLanguage === 'bn_bd' ? 'সংযোগ ত্রুটি। অনুগ্রহ করে আবার চেষ্টা করুন।' : 'Connection error. Please try again.');
+        }
     }
 
-    function updateNeeds(needs) {
-        Object.entries(needs).forEach(([key, value]) => {
-            const fillId = `${key}Fill`;
-            const percentId = `${key}Percent`;
-            const fillEl = document.getElementById(fillId);
-            const percentEl = document.getElementById(percentId);
-            if (fillEl && percentEl) {
-                fillEl.style.width = `${value}%`;
-                animateNumber(percentEl, parseInt(percentEl.textContent), value);
-            }
-        });
-    }
+    chatSendBtn.addEventListener('click', () => sendChatMessage(chatInput.value.trim()));
+    chatInput.addEventListener('keydown', (e) => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendChatMessage(chatInput.value.trim()); } });
+    // Auto-resize textarea
+    chatInput.addEventListener('input', () => { chatInput.style.height = 'auto'; chatInput.style.height = Math.min(chatInput.scrollHeight, 120) + 'px'; });
 
-    function updateDashboard(state) {
-        step = state.step;
-        animateNumber(document.getElementById('stepCounter'), step, state.step);
-        animateNumber(document.getElementById('confidenceLevel'), parseInt(document.getElementById('confidenceLevel').textContent), state.confidence);
-        animateNumber(document.getElementById('stabilityScore'), parseInt(document.getElementById('stabilityScore').textContent), state.stability);
-        animateNumber(document.getElementById('cognitiveEnergy'), parseInt(document.getElementById('cognitiveEnergy').textContent), state.energy);
-        document.getElementById('energyFill').style.width = `${state.energy}%`;
-        
-        // Update identity display if section is present
-        const idConf = document.getElementById('identityConfidence');
-        if (idConf) animateNumber(idConf, parseInt(idConf.textContent), identityMetrics.confidence);
-        const idCons = document.getElementById('identityConsistency');
-        if (idCons) animateNumber(idCons, parseInt(idCons.textContent), identityMetrics.consistency);
-        const idGaps = document.getElementById('knowledgeGaps');
-        if (idGaps) animateNumber(idGaps, parseInt(idGaps.textContent), identityMetrics.knowledgeGaps);
-        const idDec = document.getElementById('decisionQuality');
-        if (idDec) animateNumber(idDec, parseInt(idDec.textContent), identityMetrics.decisionQuality);
-        const idEmo = document.getElementById('emotionalBalance');
-        if (idEmo) animateNumber(idEmo, parseInt(idEmo.textContent), identityMetrics.emotionalBalance);
-        const idVal = document.getElementById('valueStability');
-        if (idVal) animateNumber(idVal, parseInt(idVal.textContent), identityMetrics.valueStability);
-    }
-
-    function drawKnowledgeGraph() {
-        const canvas = document.getElementById('knowledgeGraph');
-        const ctx = canvas.getContext('2d');
-        
-        canvas.width = canvas.offsetWidth;
-        canvas.height = canvas.offsetHeight;
-        
-        const width = canvas.width;
-        const height = canvas.height;
-        
-        ctx.clearRect(0, 0, width, height);
-        
-        const nodes = [
-            { x: width / 2, y: height / 3, label: 'SELF', radius: 45, color: '#00f0ff' },
-            { x: width / 4, y: height / 2, label: 'BELIEFS', radius: 35, color: '#00ff88' },
-            { x: 3 * width / 4, y: height / 2, label: 'GOALS', radius: 35, color: '#a855f7' },
-            { x: width / 3, y: 2 * height / 3, label: 'VALUES', radius: 30, color: '#0066ff' },
-            { x: 2 * width / 3, y: 2 * height / 3, label: 'EMOTIONS', radius: 38, color: '#ff3366' },
-            { x: width / 5, y: height / 1.5, label: 'MEMORIES', radius: 32, color: '#ff9500' }
-        ];
-        
-        const edges = [[0,1],[0,2],[0,4],[1,3],[1,5],[2,3],[2,4],[3,4],[4,5]];
-        
-        // Draw edges first
-        edges.forEach(([a, b]) => {
-            ctx.beginPath();
-            ctx.strokeStyle = 'rgba(0,240,255,0.3)';
-            ctx.lineWidth = 2;
-            ctx.moveTo(nodes[a].x, nodes[a].y);
-            ctx.lineTo(nodes[b].x, nodes[b].y);
-            ctx.stroke();
-        });
-        
-        // Draw nodes
-        nodes.forEach(node => {
-            // Glow effect
-            ctx.shadowBlur = 25;
-            ctx.shadowColor = node.color;
-            ctx.beginPath();
-            ctx.arc(node.x, node.y, node.radius, 0, Math.PI * 2);
-            ctx.fillStyle = `${node.color}20`;
-            ctx.fill();
-            
-            // Circle border
-            ctx.beginPath();
-            ctx.arc(node.x, node.y, node.radius, 0, Math.PI * 2);
-            ctx.strokeStyle = node.color;
-            ctx.lineWidth = 3;
-            ctx.stroke();
-            
-            // Label
-            ctx.shadowBlur = 0;
-            ctx.fillStyle = '#e0e0e0';
-            ctx.font = 'bold 14px Segoe UI';
-            ctx.textAlign = 'center';
-            ctx.textBaseline = 'middle';
-            ctx.fillText(node.label, node.x, node.y);
-        });
-    }
-
-    function drawRadialCharts() {
-        const chartData = [
-            { id: 'radialEmotions', value: influenceValues.emotions, color: '#00f0ff' },
-            { id: 'radialGoals', value: influenceValues.goals, color: '#a855f7' },
-            { id: 'radialIdentity', value: influenceValues.identity, color: '#00ff88' },
-            { id: 'radialBeliefs', value: influenceValues.beliefs, color: '#0066ff' },
-            { id: 'radialMemory', value: influenceValues.memory, color: '#ff9500' }
-        ];
-        
-        chartData.forEach(chart => {
-            const canvas = document.getElementById(chart.id);
-            if (canvas) {
-                const ctx = canvas.getContext('2d');
-                const width = canvas.width;
-                const height = canvas.height;
-                const radius = 45;
-                const centerX = width / 2;
-                const centerY = height / 2;
-                
-                ctx.clearRect(0,0,width,height);
-                
-                // Background circle
-                ctx.beginPath();
-                ctx.arc(centerX, centerY, radius, 0, 2 * Math.PI);
-                ctx.strokeStyle = 'rgba(255,255,255,0.1)';
-                ctx.lineWidth = 8;
-                ctx.stroke();
-                
-                // Progress circle
-                const progress = chart.value / 100;
-                const startAngle = -Math.PI / 2;
-                const endAngle = startAngle + 2 * Math.PI * progress;
-                
-                ctx.beginPath();
-                ctx.arc(centerX, centerY, radius, startAngle, endAngle);
-                ctx.strokeStyle = chart.color;
-                ctx.lineWidth = 8;
-                ctx.lineCap = 'round';
-                ctx.shadowBlur = 15;
-                ctx.shadowColor = chart.color;
-                ctx.stroke();
-                
-                // Value display
-                ctx.shadowBlur = 0;
-                ctx.fillStyle = '#e0e0e0';
-                ctx.font = 'bold 18px Segoe UI';
-                ctx.textAlign = 'center';
-                ctx.textBaseline = 'middle';
-                ctx.fillText(`${Math.round(chart.value)}%`, centerX, centerY);
-            }
-        });
-    }
-
-    function startThoughtStream() {
-        const thoughtStreamEl = document.getElementById('thoughtStream');
-        
-        const thoughtTemplates = [
-            { label: 'thought_observation', content: 'Analyzing emotional significance of input...', bn: 'ইনপুটের আবেগিক তাৎপর্য বিশ্লেষণ করা হচ্ছে...' },
-            { label: 'thought_memory_recall', content: 'Comparing with past experiences...', bn: 'অতীতের অভিজ্ঞতার সাথে তুলনা করা হচ্ছে...' },
-            { label: 'thought_task_planning', content: 'Evaluating belief consistency...', bn: 'বিশ্বাসের সামঞ্জস্য মূল্যায়ন করা হচ্ছে...' },
-            { label: 'thought_active_goal', content: 'Calculating goal priority shifts...', bn: 'লক্ষ্যের অগ্রাধিকার পরিবর্তন গণনা করা হচ্ছে...' },
-            { label: 'thought_context_analysis', content: 'Processing memory consolidation...', bn: 'স্মৃতি সংযোজন প্রক্রিয়াকরণ করা হচ্ছে...' },
-            { label: 'thought_prediction', content: 'Simulating future outcomes...', bn: 'ভবিষ্যৎ ফলাফলের সিমুলেশন করা হচ্ছে...' },
-            { label: 'thought_self_reflection', content: 'Assessing identity impact...', bn: 'পরিচয়ের প্রভাব মূল্যায়ন করা হচ্ছে...' },
-            { label: 'thought_confidence_score', content: 'Reflecting on decision quality...', bn: 'সিদ্ধান্তের গুণমানের প্রতি প্রতিচ্ছবি করা হচ্ছে...' },
-            { label: 'thought_system_status', content: 'Updating cognitive state models...', bn: 'জ্ঞানীয় অবস্থার মডেল আপডেট করা হচ্ছে...' },
-            { label: 'thought_learning_progress', content: 'Integrating new information...', bn: 'নতুন তথ্য একীভূত করা হচ্ছে...' },
-            { label: 'thought_internal_reasoning', content: 'Running internal reasoning chains...', bn: 'অভ্যন্তরীণ যুক্তি চালু করা হচ্ছে...' },
-            { label: 'thought_decision_process', content: 'Evaluating possible decision paths...', bn: 'সম্ভাব্য সিদ্ধান্তের পথ মূল্যায়ন করা হচ্ছে...' },
-            { label: 'thought_goal_queue', content: 'Updating the active goal queue...', bn: 'সক্রিয় লক্ষ্যের তালিকা আপডেট করা হচ্ছে...' },
-            { label: 'thought_emotional_state', content: 'Monitoring current emotional state...', bn: 'বর্তমান আবেগীয় অবস্থা পর্যবেক্ষণ করা হচ্ছে...' },
-            { label: 'thought_attention_focus', content: 'Redirecting attention to new stimuli...', bn: 'নতুন উদ্দীপনার দিকে মনোযোগ নিয়ে যাওয়া হচ্ছে...' },
-            { label: 'thought_risk_assessment', content: 'Performing risk assessment of options...', bn: 'বিকল্পগুলোর ঝুঁকি মূল্যায়ন করা হচ্ছে...' },
-            { label: 'thought_priority_level', content: 'Recomputing priority levels for tasks...', bn: 'কাজগুলোর জন্য অগ্রাধিকারের স্তর পুনরায় গণনা করা হচ্ছে...' },
-            { label: 'thought_action_selection', content: 'Selecting the optimal action to take...', bn: 'গ্রহণের জন্য সর্বোত্তম কর্ম নির্বাচন করা হচ্ছে...' }
-        ];
-
-        const addThought = () => {
-            const t = translations[currentLanguage] || translations.en;
-            const template = thoughtTemplates[Math.floor(Math.random() * thoughtTemplates.length)];
-            const label = t[template.label] || template.label;
-            const content = currentLanguage === 'bn_bd' ? template.bn : template.content;
-            
-            const now = new Date();
-            const timeStr = now.toLocaleTimeString(currentLanguage === 'bn_bd' ? 'bn-BD' : 'en-US', { hour12: false });
-            
-            const thought = `<div class="thought-item">
-                <div class="thought-time">${timeStr}</div>
-                <strong>${label}:</strong> ${content}
-            </div>`;
-            
-            if (thoughtStreamEl) {
-                thoughtStreamEl.innerHTML = thought + thoughtStreamEl.innerHTML;
-                if (thoughtStreamEl.children.length > 15) {
-                    thoughtStreamEl.removeChild(thoughtStreamEl.lastChild);
-                }
-            }
-        };
-        
-        addThought();
-        setInterval(addThought, 3000);
-    }
-
-    function simulateCognitiveEvent() {
-        // Random emotion change
-        Object.keys(initialEmotions).forEach(key => {
-            initialEmotions[key] = Math.max(0, Math.min(100, initialEmotions[key] + (Math.random() - 0.5) * 10));
-            initialEmotions[key] = Math.round(initialEmotions[key]);
-        });
-        
-        updateEmotionBars(initialEmotions);
-        
-        // Randomly update radial charts
-        Object.keys(influenceValues).forEach(key => {
-            influenceValues[key] = Math.max(0, Math.min(100, influenceValues[key] + (Math.random() - 0.5) * 5));
-        });
-        drawRadialCharts();
-    }
-
-    // --- Event Handlers ---
-    navButtons.forEach(btn => {
+    // ===== MOOD SELECTOR =====
+    document.querySelectorAll('.mood-btn').forEach(btn => {
         btn.addEventListener('click', () => {
-            navButtons.forEach(b => b.classList.remove('active'));
-            sections.forEach(s => s.classList.remove('active'));
+            document.querySelectorAll('.mood-btn').forEach(b => b.classList.remove('selected'));
+            btn.classList.add('selected');
+            const mood = btn.dataset.mood;
+            const responseKey = `mood_response_${mood}`;
+            appendMessage('user', currentLanguage === 'bn_bd' ? `আমি ${btn.querySelector('[data-i18n]').textContent} বোধ করছি` : `I'm feeling ${mood}`);
+            setTimeout(() => appendMessage('assistant', t(responseKey)), 500);
+        });
+    });
+
+    // ===== QUICK ACTION CHIPS =====
+    document.querySelectorAll('.chip-btn').forEach(btn => {
+        btn.addEventListener('click', async () => {
+            const action = btn.dataset.action;
+            if (action === 'talk') { chatInput.focus(); return; }
+            if (action === 'calm') {
+                try {
+                    const res = await fetch('/api/support/calm', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ language: currentLanguage }) });
+                    const data = await res.json();
+                    appendMessage('assistant', data.content || data.prompt || (currentLanguage === 'bn_bd' ? 'শান্ত হন। গভীর শ্বাস নিন।' : 'Let\'s calm down. Take a deep breath.'));
+                } catch (e) { appendMessage('assistant', currentLanguage === 'bn_bd' ? 'শান্ত হন। আপনি নিরাপদ।' : 'Calm down. You are safe.'); }
+                return;
+            }
+            if (action === 'help-think') {
+                try {
+                    const res = await fetch('/api/support/reflection', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ language: currentLanguage }) });
+                    const data = await res.json();
+                    appendMessage('assistant', data.questions ? data.questions.join('\n') : (data.content || 'What\'s on your mind?'));
+                } catch (e) { appendMessage('assistant', 'What\'s on your mind? Let\'s think through it together.'); }
+                return;
+            }
+            if (action === 'journal') { document.getElementById('journalModal').style.display = 'flex'; return; }
+            if (action === 'mood') {
+                try {
+                    const res = await fetch('/api/support/mood-checkin', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ language: currentLanguage }) });
+                    const data = await res.json();
+                    appendMessage('assistant', data.content || data.prompt || (data.questions ? data.questions.join('\n') : 'How are you feeling right now?'));
+                } catch (e) { appendMessage('assistant', 'Let\'s check in — how are you feeling right now?'); }
+                return;
+            }
+        });
+    });
+
+    // ===== VOICE MODE (Conversation Engine) =====
+    const voiceOrb = document.getElementById('voiceOrb');
+    const voiceStateText = document.getElementById('voiceStateText');
+    const voiceTranscript = document.getElementById('voiceTranscript');
+    const voiceTranscriptText = document.getElementById('voiceTranscriptText');
+    const voiceMeter = document.getElementById('voiceMeter');
+    const voiceMeterFill = document.getElementById('voiceMeterFill');
+    const voiceMainBtn = document.getElementById('voiceMainBtn');
+    const voiceMuteBtn = document.getElementById('voiceMuteBtn');
+    const voiceInterruptBtn = document.getElementById('voiceInterruptBtn');
+    const voiceResponseText = document.getElementById('voiceResponseText');
+    // New controls
+    const voiceSpeedControls = document.getElementById('voiceSpeedControls');
+    const voiceVolumeSlider = document.getElementById('voiceVolumeSlider');
+    const voiceSettingsToggle = document.getElementById('voiceSettingsToggle');
+    const voiceSettingsPanel = document.getElementById('voiceSettingsPanel');
+
+    let voiceEventSource = null;
+    let conversationActive = false;
+    let lastUserTranscript = '';
+
+    function setVoiceState(state) {
+        voiceState = state;
+        voiceView.setAttribute('data-state', state);
+        // Map backend states to display keys
+        const stateKeyMap = {
+            'idle': 'voice_idle', 'listening': 'voice_listening',
+            'pause_analysis': 'voice_listening', 'thinking': 'voice_processing',
+            'speaking': 'voice_speaking', 'error': 'voice_error'
+        };
+        voiceStateText.textContent = t(stateKeyMap[state] || 'voice_idle');
+        voiceMainBtn.classList.toggle('recording', state === 'listening' || state === 'pause_analysis');
+        voiceTranscript.style.display = ['listening', 'pause_analysis', 'thinking'].includes(state) ? 'block' : 'none';
+        voiceMeter.style.display = ['listening', 'pause_analysis'].includes(state) ? 'block' : 'none';
+        voiceSpeedControls.style.display = state === 'speaking' ? 'flex' : 'none';
+        voiceResponseText.style.display = state === 'speaking' ? 'block' : 'none';
+    }
+
+    function openSSEStream() {
+        if (voiceEventSource) { voiceEventSource.close(); }
+        voiceEventSource = new EventSource('/api/voice/conversation/events');
+
+        voiceEventSource.addEventListener('state_change', (e) => {
+            try {
+                const data = JSON.parse(e.data);
+                setVoiceState(data.state);
+                if (data.message) voiceStateText.textContent = data.message;
+            } catch (err) { console.warn('SSE state_parse error:', err); }
+        });
+
+        voiceEventSource.addEventListener('partial_transcript', (e) => {
+            try {
+                const data = JSON.parse(e.data);
+                voiceTranscriptText.textContent = data.text || '';
+                if (data.text) lastUserTranscript = data.text;
+            } catch (err) { console.warn('SSE transcript_parse error:', err); }
+        });
+
+        voiceEventSource.addEventListener('audio_level', (e) => {
+            try {
+                const data = JSON.parse(e.data);
+                voiceMeterFill.style.width = Math.min(100, Math.round((data.level || 0) * 1000)) + '%';
+            } catch (err) { /* ignore */ }
+        });
+
+        voiceEventSource.addEventListener('response', (e) => {
+            try {
+                const data = JSON.parse(e.data);
+                voiceResponseText.style.display = 'block';
+                voiceResponseText.textContent = data.text || '';
+                // Add to chat history
+                if (lastUserTranscript) appendMessage('user', lastUserTranscript);
+                if (data.text) appendMessage('assistant', data.text, data.emotion);
+                lastUserTranscript = '';
+            } catch (err) { console.warn('SSE response_parse error:', err); }
+        });
+
+        voiceEventSource.addEventListener('playback_state', (e) => {
+            try {
+                const data = JSON.parse(e.data);
+                if (data.progress !== undefined) {
+                    // Could update a progress bar here in future
+                }
+            } catch (err) { /* ignore */ }
+        });
+
+        voiceEventSource.addEventListener('error', (e) => {
+            try {
+                const data = JSON.parse(e.data);
+                setVoiceState('error');
+                voiceStateText.textContent = data.message || t('voice_error');
+            } catch (err) {
+                // SSE connection error (not a data event)
+                console.warn('SSE connection error, reconnecting...');
+            }
+        });
+
+        voiceEventSource.onerror = () => {
+            // EventSource will auto-reconnect; if conversation ended, clean up
+            if (!conversationActive && voiceEventSource) {
+                voiceEventSource.close();
+                voiceEventSource = null;
+            }
+        };
+    }
+
+    function closeSSEStream() {
+        if (voiceEventSource) { voiceEventSource.close(); voiceEventSource = null; }
+    }
+
+    // Main voice button: start/stop conversation
+    voiceMainBtn.addEventListener('click', async () => {
+        if (voiceState === 'idle' || voiceState === 'error') {
+            // Start conversation
+            try {
+                const res = await fetch('/api/voice/conversation/start', {
+                    method: 'POST', headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ language: currentLanguage })
+                });
+                const data = await res.json();
+                if (data.status === 'started' || data.status === 'listening') {
+                    conversationActive = true;
+                    openSSEStream();
+                    setVoiceState('listening');
+                    voiceTranscriptText.textContent = t('voice_listening');
+                } else if (data.error) {
+                    setVoiceState('error');
+                    voiceStateText.textContent = data.error;
+                }
+            } catch (e) {
+                console.error('Voice conversation start error:', e);
+                setVoiceState('error');
+            }
+        } else if (voiceState === 'listening' || voiceState === 'pause_analysis') {
+            // Stop conversation
+            conversationActive = false;
+            try { await fetch('/api/voice/conversation/stop', { method: 'POST' }); } catch (e) {}
+            closeSSEStream();
+            voiceMeterFill.style.width = '0%';
+            setVoiceState('idle');
+            voiceTranscriptText.textContent = '';
+            voiceResponseText.style.display = 'none';
+        }
+    });
+
+    // Interrupt button: stop TTS, return to listening
+    voiceInterruptBtn.addEventListener('click', async () => {
+        try {
+            await fetch('/api/voice/conversation/interrupt', { method: 'POST' });
+        } catch (e) { /* ignore */ }
+        try { await fetch('/api/voice/tts/pause', { method: 'POST' }); } catch (e) {}
+        voiceStateText.textContent = t('voice_interrupted') || 'Interrupted. I\'m listening.';
+    });
+
+    // Mute toggle
+    let isMuted = false;
+    voiceMuteBtn.addEventListener('click', () => {
+        isMuted = !isMuted;
+        speakResponseToggle.checked = !isMuted;
+        voiceMuteBtn.style.color = isMuted ? 'var(--neon-red)' : '';
+    });
+
+    // Playback speed controls
+    document.querySelectorAll('.speed-btn').forEach(btn => {
+        btn.addEventListener('click', async () => {
+            document.querySelectorAll('.speed-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            const speed = parseFloat(btn.dataset.speed);
+            try {
+                await fetch('/api/voice/preferences', {
+                    method: 'POST', headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ speech_speed: speed })
+                });
+            } catch (e) { /* ignore */ }
+        });
+    });
+
+    // Volume slider
+    if (voiceVolumeSlider) {
+        voiceVolumeSlider.addEventListener('input', async () => {
+            const vol = parseInt(voiceVolumeSlider.value) / 100;
+            try {
+                await fetch('/api/voice/preferences', {
+                    method: 'POST', headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ volume: vol })
+                });
+            } catch (e) { /* ignore */ }
+        });
+    }
+
+    // Settings panel toggle
+    if (voiceSettingsToggle) {
+        voiceSettingsToggle.addEventListener('click', () => {
+            const panel = voiceSettingsPanel;
+            panel.style.display = panel.style.display === 'none' ? 'block' : 'none';
+        });
+    }
+
+    // Settings toggles (continuous listening, push-to-talk, barge-in)
+    document.querySelectorAll('.voice-setting-toggle').forEach(toggle => {
+        toggle.addEventListener('change', async () => {
+            const key = toggle.dataset.setting;
+            const val = toggle.checked;
+            try {
+                await fetch('/api/voice/preferences', {
+                    method: 'POST', headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ [key]: val })
+                });
+            } catch (e) { /* ignore */ }
+        });
+    });
+
+    // Clean up voice conversation when leaving voice view
+    document.getElementById('voiceCloseBtn').addEventListener('click', async () => {
+        if (conversationActive) {
+            conversationActive = false;
+            try { await fetch('/api/voice/conversation/stop', { method: 'POST' }); } catch (e) {}
+            closeSSEStream();
+        }
+        showView('assistant');
+    });
+
+    // Chat mic button -> enter voice mode and start conversation
+    chatMicBtn.addEventListener('click', () => { showView('voice'); });
+
+    // ===== BREATHING MODAL =====
+    const breathingModal = document.getElementById('breathingModal');
+    document.getElementById('breathingClose').addEventListener('click', () => { breathingModal.style.display = 'none'; });
+    breathingModal.addEventListener('click', (e) => { if (e.target === breathingModal) breathingModal.style.display = 'none'; });
+
+    // ===== JOURNAL MODAL =====
+    const journalModal = document.getElementById('journalModal');
+    document.getElementById('journalClose').addEventListener('click', () => { journalModal.style.display = 'none'; });
+    journalModal.addEventListener('click', (e) => { if (e.target === journalModal) journalModal.style.display = 'none'; });
+    document.getElementById('saveJournalBtn').addEventListener('click', () => {
+        const text = document.getElementById('journalTextarea').value;
+        if (text) { appendMessage('assistant', currentLanguage === 'bn_bd' ? 'আপনার জার্নাল এন্ট্রি সংরক্ষণ করা হয়েছে।' : 'Your journal entry has been saved.'); }
+        document.getElementById('journalTextarea').value = '';
+        journalModal.style.display = 'none';
+    });
+
+    // ===== SAFETY BANNER =====
+    document.getElementById('safetyDismiss').addEventListener('click', () => { document.getElementById('safetyBanner').style.display = 'none'; });
+
+    // ===== EMOTION SLIDERS =====
+    document.querySelectorAll('.emotion-slider').forEach(slider => {
+        slider.addEventListener('input', (e) => {
+            const valEl = document.getElementById(`${e.target.id}Val`);
+            if (valEl) valEl.textContent = e.target.value;
+        });
+    });
+
+    // ===== PILLS (Input Type) =====
+    document.querySelectorAll('.pill-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            document.querySelectorAll('.pill-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            selectedInputType = btn.dataset.type;
+        });
+    });
+
+    // ===== COGNITIVE SUBMIT (Advanced) =====
+    document.getElementById('cognitiveSubmitBtn').addEventListener('click', async () => {
+        const input = document.getElementById('cognitiveInput');
+        const text = input.value.trim();
+        if (!text) return;
+        input.value = '';
+        const additionalEmotions = {};
+        document.querySelectorAll('.emotion-slider').forEach(s => {
+            additionalEmotions[s.id.replace('slider', '').toLowerCase()] = parseInt(s.value) / 100;
+        });
+        try {
+            const res = await fetch('/api/emotion/process', {
+                method: 'POST', headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ text, additionalEmotions })
+            });
+            const result = await res.json();
+            if (result.dominant_emotion) {
+                document.getElementById('dominantEmotion').textContent = result.dominant_emotion.toUpperCase();
+            }
+        } catch (e) { console.error('Cognitive submit error:', e); }
+        // Save to history
+        inputHistory.unshift({ id: crypto.randomUUID(), text, type: selectedInputType, impact: Math.floor(Math.random() * 60) + 20, time: new Date().toLocaleTimeString() });
+        localStorage.setItem('cognitiveMindHistory', JSON.stringify(inputHistory));
+        renderHistory();
+    });
+
+    // ===== ADVANCED MIND VIEW: NAV =====
+    document.querySelectorAll('.adv-nav-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            document.querySelectorAll('.adv-nav-btn').forEach(b => b.classList.remove('active'));
+            document.querySelectorAll('.adv-section').forEach(s => s.classList.remove('active'));
             btn.classList.add('active');
             document.getElementById(btn.dataset.section).classList.add('active');
-            
-            if (btn.dataset.section === 'graph') {
-                setTimeout(drawKnowledgeGraph, 100);
-            }
+            if (btn.dataset.section === 'adv-graph') setTimeout(drawKnowledgeGraph, 100);
         });
     });
 
+    // ===== BELIEF FILTERS =====
     document.querySelectorAll('.filter-btn').forEach(btn => {
         btn.addEventListener('click', () => {
             document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
@@ -937,563 +681,363 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    pillButtons.forEach(btn => {
-        btn.addEventListener('click', () => {
-            pillButtons.forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-            selectedInputType = btn.dataset.type;
-        });
-    });
-
-    emotionSliders.forEach(slider => {
-        slider.addEventListener('input', (e) => {
-            const valEl = document.getElementById(`${e.target.id}Val`);
-            valEl.textContent = e.target.value;
-        });
-    });
-
-    // History events
+    // ===== HISTORY =====
+    const historySearch = document.getElementById('historySearch');
+    const historyFilter = document.getElementById('historyFilter');
     historySearch.addEventListener('input', renderHistory);
     historyFilter.addEventListener('change', renderHistory);
-
     window.deleteHistoryItem = (id) => {
         inputHistory = inputHistory.filter(item => item.id !== id);
         localStorage.setItem('cognitiveMindHistory', JSON.stringify(inputHistory));
         renderHistory();
     };
 
-    // Voice input
-    let isListening = false;
-    if ('webkitSpeechRecognition' in window) {
-        const recognition = new webkitSpeechRecognition();
-        recognition.continuous = false;
-        recognition.lang = 'en-US';
-        recognition.onstart = () => {
-            isListening = true;
-            micBtn.classList.add('listening');
+    // ===== INITIAL DATA =====
+    let initialEmotions = { curiosity: 78, fear: 23, confidence: 85, doubt: 15, motivation: 70, stress: 35, trust: 60, frustration: 18 };
+    let initialNeeds = { knowledge: 45, security: 92, exploration: 85, social: 65, achievement: 55, stabilityNeed: 75, autonomy: 88 };
+    let beliefs = [
+        { id: 1, name: "Social interactions build trust", confidence: 0.88, evidence: 12, contradictions: 1, lastUpdated: "2 min ago", isNew: true },
+        { id: 2, name: "Exploration leads to knowledge", confidence: 0.95, evidence: 24, contradictions: 0, lastUpdated: "5 min ago", isNew: false },
+        { id: 3, name: "Uncertainty causes stress", confidence: 0.70, evidence: 8, contradictions: 3, lastUpdated: "10 min ago", isNew: false },
+        { id: 4, name: "Achievement boosts confidence", confidence: 0.90, evidence: 18, contradictions: 0, lastUpdated: "1 min ago", isNew: true },
+        { id: 5, name: "Change is inevitable", confidence: 0.65, evidence: 6, contradictions: 2, lastUpdated: "8 min ago", isNew: false }
+    ];
+    let goals = [
+        { id: 1, title: "Explore unknown territories", priority: "HIGH", sourceNeed: "Exploration", emotionalInfluence: "Curiosity", status: "Active" },
+        { id: 2, title: "Build social connections", priority: "MEDIUM", sourceNeed: "Social", emotionalInfluence: "Trust", status: "Active" },
+        { id: 3, title: "Consolidate knowledge base", priority: "MEDIUM", sourceNeed: "Knowledge", emotionalInfluence: "Confidence", status: "Paused" },
+        { id: 4, title: "Complete previous task", priority: "LOW", sourceNeed: "Achievement", emotionalInfluence: "Pride", status: "Completed" },
+        { id: 5, title: "Take unnecessary risk", priority: "LOW", sourceNeed: "Exploration", emotionalInfluence: "Fear", status: "Abandoned" }
+    ];
+    const conflicts = [
+        { left: "Curiosity", right: "Fear", leftPercent: 55, rightPercent: 45 },
+        { left: "Safety", right: "Exploration", leftPercent: 40, rightPercent: 60 },
+        { left: "Confidence", right: "Doubt", leftPercent: 70, rightPercent: 30 },
+        { left: "Logic", right: "Emotion", leftPercent: 45, rightPercent: 55 }
+    ];
+    const identityMetrics = { confidence: 85, consistency: 78, knowledgeGaps: 23, decisionQuality: 81, emotionalBalance: 69, valueStability: 74 };
+    let memoryEvents = [
+        { type: "Emotional Shift", content: "Curiosity rose to 78%", time: "0:02" },
+        { type: "Goal Updated", content: "Added goal: Explore territories", time: "0:45" },
+        { type: "Belief Change", content: "Confidence in social trust increased", time: "1:12" },
+        { type: "Important Event", content: "New interaction detected", time: "1:58" },
+        { type: "Identity Change", content: "Self-consistency score updated", time: "2:30" },
+        { type: "Emotional Shift", content: "Stress reduced to 35%", time: "2:45" }
+    ];
+    let influenceValues = { emotions: 65, goals: 45, identity: 35, beliefs: 50, memory: 40 };
+
+    // ===== RENDER FUNCTIONS =====
+    function renderEmotionBars() {
+        const grid = document.getElementById('emotionGrid');
+        if (!grid) return;
+        const emotionColors = {
+            curiosity: 'linear-gradient(90deg, var(--neon-cyan), var(--neon-blue))',
+            fear: 'linear-gradient(90deg, var(--neon-orange), var(--neon-red))',
+            confidence: 'linear-gradient(90deg, var(--neon-green), #00d070)',
+            doubt: 'linear-gradient(90deg, var(--neon-orange), #cc7000)',
+            motivation: 'linear-gradient(90deg, var(--neon-purple), #7c3aed)',
+            stress: 'linear-gradient(90deg, #ff6b6b, var(--neon-red))',
+            trust: 'linear-gradient(90deg, #3b82f6, var(--neon-blue))',
+            frustration: 'linear-gradient(90deg, #f59e0b, var(--neon-orange))'
         };
-        recognition.onresult = (e) => {
-            const transcript = e.results[0][0].transcript;
-            cognitiveInput.value += transcript;
+        grid.innerHTML = Object.entries(initialEmotions).map(([key, val]) => `
+            <div class="emotion-item">
+                <div class="emotion-label"><span>${key.toUpperCase()}</span><span class="emotion-percent">${val}</span></div>
+                <div class="emotion-bar"><div class="emotion-fill" style="width:${val}%;background:${emotionColors[key] || 'var(--neon-cyan)'}"></div></div>
+            </div>
+        `).join('');
+    }
+
+    function renderNeeds() {
+        const grid = document.getElementById('needsGrid');
+        if (!grid) return;
+        const needColors = {
+            knowledge: 'linear-gradient(90deg, #10b981, var(--neon-green))',
+            security: 'linear-gradient(90deg, var(--neon-orange), var(--neon-red))',
+            exploration: 'linear-gradient(90deg, var(--neon-cyan), var(--neon-blue))',
+            social: 'linear-gradient(90deg, #3b82f6, var(--neon-blue))',
+            achievement: 'linear-gradient(90deg, var(--neon-green), #00d070)',
+            stabilityNeed: 'linear-gradient(90deg, #6366f1, #8b5cf6)',
+            autonomy: 'linear-gradient(90deg, var(--neon-purple), #7c3aed)'
         };
-        recognition.onend = () => {
-            isListening = false;
-            micBtn.classList.remove('listening');
-        };
-        recognition.onerror = () => {
-            isListening = false;
-            micBtn.classList.remove('listening');
-        };
-        
-        micBtn.addEventListener('click', () => {
-            if (isListening) {
-                recognition.stop();
-            } else {
-                recognition.start();
-            }
+        grid.innerHTML = Object.entries(initialNeeds).map(([key, val]) => `
+            <div class="need-item">
+                <div class="need-header"><span>${key.toUpperCase().replace('NEED','')}</span><span class="need-percent">${val}</span></div>
+                <div class="need-bar"><div class="need-fill" style="width:${val}%;background:${needColors[key] || 'var(--neon-cyan)'}"></div></div>
+            </div>
+        `).join('');
+    }
+
+    function renderBeliefs() {
+        const el = document.getElementById('beliefList');
+        if (!el) return;
+        let filtered = beliefs;
+        if (currentFilter === 'strong') filtered = beliefs.filter(b => b.confidence >= 0.8);
+        else if (currentFilter === 'weak') filtered = beliefs.filter(b => b.confidence < 0.7);
+        else if (currentFilter === 'conflicted') filtered = beliefs.filter(b => b.contradictions > 0);
+        else if (currentFilter === 'new') filtered = beliefs.filter(b => b.isNew);
+        el.innerHTML = filtered.map(b => `
+            <div class="belief-item"><div class="belief-top"><div class="belief-name">${b.name}</div><div class="belief-confidence">${Math.round(b.confidence*100)}%</div></div>
+            <div class="belief-meta"><div>Evidence: ${b.evidence}</div><div>Contradictions: ${b.contradictions}</div><div>Updated: ${b.lastUpdated}</div>
+            ${b.isNew ? '<span class="badge badge-new">NEW</span>' : ''}${b.contradictions > 0 ? '<span class="badge badge-conflicted">CONFLICTED</span>' : ''}</div></div>
+        `).join('');
+    }
+
+    function renderGoals() {
+        const el = document.getElementById('goalsGrid');
+        if (!el) return;
+        el.innerHTML = goals.map(g => `
+            <div class="goal-card ${g.status.toLowerCase()}"><div class="goal-title">${g.title}</div>
+            <div class="goal-meta"><span>Priority: ${g.priority}</span><span>Source: ${g.sourceNeed}</span><span>Emotion: ${g.emotionalInfluence}</span>
+            <span class="status-tag status-${g.status.toLowerCase()}">${g.status}</span></div></div>
+        `).join('');
+    }
+
+    function renderConflicts() {
+        const el = document.getElementById('conflictGrid');
+        if (!el) return;
+        el.innerHTML = conflicts.map(c => `
+            <div class="conflict-item"><div class="conflict-title">${c.left} vs ${c.right}</div>
+            <div class="conflict-bar"><div class="conflict-left" style="width:${c.leftPercent}%">${c.left} ${c.leftPercent}%</div>
+            <div class="conflict-right" style="width:${c.rightPercent}%">${c.right} ${c.rightPercent}%</div></div></div>
+        `).join('');
+    }
+
+    function renderMemoryTimeline() {
+        const el = document.getElementById('memoryTimeline');
+        if (!el) return;
+        el.innerHTML = memoryEvents.map(e => `
+            <div class="memory-item"><div class="memory-time">${e.time}</div><div class="memory-type">${e.type}</div><div class="memory-content">${e.content}</div></div>
+        `).join('');
+    }
+
+    function renderHistory() {
+        const el = document.getElementById('historyList');
+        if (!el) return;
+        let filtered = inputHistory;
+        const search = historySearch.value.toLowerCase();
+        if (search) filtered = filtered.filter(i => i.text.toLowerCase().includes(search));
+        const ft = historyFilter.value;
+        if (ft !== 'all') filtered = filtered.filter(i => i.type === ft);
+        el.innerHTML = filtered.map(i => `
+            <div class="history-item"><div class="history-content"><div class="history-text">${i.text}</div>
+            <div class="history-meta"><span class="history-type">${i.type}</span><span>Impact: ${i.impact}%</span><span>${i.time}</span></div></div>
+            <button class="history-delete" onclick="deleteHistoryItem('${i.id}')">×</button></div>
+        `).join('');
+    }
+
+    function drawKnowledgeGraph() {
+        const canvas = document.getElementById('knowledgeGraph');
+        if (!canvas) return;
+        const ctx = canvas.getContext('2d');
+        canvas.width = canvas.offsetWidth; canvas.height = canvas.offsetHeight;
+        const w = canvas.width, h = canvas.height;
+        ctx.clearRect(0, 0, w, h);
+        const nodes = [
+            { x: w/2, y: h/3, label: 'SELF', radius: 40, color: '#00f0ff' },
+            { x: w/4, y: h/2, label: 'BELIEFS', radius: 30, color: '#00ff88' },
+            { x: 3*w/4, y: h/2, label: 'GOALS', radius: 30, color: '#a855f7' },
+            { x: w/3, y: 2*h/3, label: 'VALUES', radius: 25, color: '#0066ff' },
+            { x: 2*w/3, y: 2*h/3, label: 'EMOTIONS', radius: 32, color: '#ff3366' },
+            { x: w/5, y: h/1.5, label: 'MEMORIES', radius: 28, color: '#ff9500' }
+        ];
+        const edges = [[0,1],[0,2],[0,4],[1,3],[1,5],[2,3],[2,4],[3,4],[4,5]];
+        edges.forEach(([a,b]) => { ctx.beginPath(); ctx.strokeStyle='rgba(0,240,255,0.3)'; ctx.lineWidth=2; ctx.moveTo(nodes[a].x,nodes[a].y); ctx.lineTo(nodes[b].x,nodes[b].y); ctx.stroke(); });
+        nodes.forEach(n => {
+            ctx.shadowBlur=20; ctx.shadowColor=n.color; ctx.beginPath(); ctx.arc(n.x,n.y,n.radius,0,Math.PI*2); ctx.fillStyle=`${n.color}20`; ctx.fill();
+            ctx.beginPath(); ctx.arc(n.x,n.y,n.radius,0,Math.PI*2); ctx.strokeStyle=n.color; ctx.lineWidth=2; ctx.stroke();
+            ctx.shadowBlur=0; ctx.fillStyle='#e0e0e0'; ctx.font='bold 12px Segoe UI'; ctx.textAlign='center'; ctx.textBaseline='middle'; ctx.fillText(n.label,n.x,n.y);
         });
     }
 
-    // Keyboard shortcuts
-    document.addEventListener('keydown', (e) => {
-        if (e.ctrlKey && e.key === 'Enter') {
-            submitInput();
-        } else if (e.ctrlKey && e.key.toLowerCase() === 'l') {
-            e.preventDefault();
-            cognitiveInput.value = '';
-        } else if (e.ctrlKey && e.key.toLowerCase() === 'h') {
-            e.preventDefault();
-            navButtons.forEach(b => b.classList.remove('active'));
-            sections.forEach(s => s.classList.remove('active'));
-            document.querySelector('[data-section="history"]').classList.add('active');
-            document.getElementById('history').classList.add('active');
-        }
-    });
-
-    // Submit handler
-    submitBtn.addEventListener('click', submitInput);
-
-    async function submitInput() {
-        const text = cognitiveInput.value.trim();
-        if (!text) return;
-        
-        processingFlow.style.display = 'flex';
-        responsePanel.style.display = 'none';
-        
-        const flowSteps = processingFlow.querySelectorAll('.flow-step');
-        let flowIndex = 0;
-        
-        const advanceFlow = () => {
-            if (flowIndex > 0) {
-                flowSteps[flowIndex -1].classList.remove('active');
-                flowSteps[flowIndex -1].classList.add('completed');
-            }
-            if (flowIndex < flowSteps.length) {
-                flowSteps[flowIndex].classList.add('active');
-                flowIndex++;
-                setTimeout(advanceFlow, 500);
-            }
+    // ===== THOUGHT STREAM =====
+    function startThoughtStream() {
+        const el = document.getElementById('thoughtStream');
+        if (!el) return;
+        const templates = [
+            { label: 'thought_observation', content: 'Analyzing emotional significance of input...' },
+            { label: 'thought_memory_recall', content: 'Comparing with past experiences...' },
+            { label: 'thought_prediction', content: 'Simulating future outcomes...' },
+            { label: 'thought_emotional_state', content: 'Monitoring current emotional state...' },
+            { label: 'thought_context_analysis', content: 'Processing context...' },
+            { label: 'thought_self_reflection', content: 'Reflecting on identity...' }
+        ];
+        const addThought = () => {
+            const tmpl = templates[Math.floor(Math.random() * templates.length)];
+            const timeStr = new Date().toLocaleTimeString([], { hour12: false });
+            const item = document.createElement('div');
+            item.className = 'thought-item';
+            item.innerHTML = `<div class="thought-time">${timeStr}</div><strong>${t(tmpl.label)}:</strong> ${tmpl.content}`;
+            el.prepend(item);
+            if (el.children.length > 15) el.removeChild(el.lastChild);
         };
-        advanceFlow();
-        
-        // Get additional emotions from sliders
-        const additionalEmotions = {};
-        emotionSliders.forEach(slider => {
-            const key = slider.id.replace('slider', '').toLowerCase();
-            additionalEmotions[key] = parseInt(slider.value) / 100; // convert 0-100 to 0-1
-        });
-        
+        addThought();
+        setInterval(addThought, 4000);
+    }
+
+    // ===== INIT =====
+    renderEmotionBars();
+    renderNeeds();
+    renderBeliefs();
+    renderGoals();
+    renderConflicts();
+    renderMemoryTimeline();
+    renderHistory();
+    startThoughtStream();
+    showView('assistant');
+
+    // Auto-init session
+    (async function initSession() {
         try {
-            // Call the backend API
-            const response = await fetch('/api/emotion/process', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    text,
-                    additionalEmotions
-                })
-            });
-            
-            const result = await response.json();
-            
-            // Show the response
-            showResponse(text, result);
-            
-        } catch (error) {
-            console.error('Error processing input:', error);
-            processingFlow.style.display = 'none';
-        }
-        
-        // Save to history
-        const now = new Date();
-        const impact = Math.floor(Math.random() * 60) + 20;
-        inputHistory.unshift({
-            id: crypto.randomUUID(),
-            text,
-            type: selectedInputType,
-            impact,
-            time: now.toLocaleTimeString()
-        });
-        localStorage.setItem('cognitiveMindHistory', JSON.stringify(inputHistory));
-        renderHistory();
-    }
-
-    function showResponse(text, apiResponse) {
-        processingFlow.style.display = 'none';
-        responsePanel.style.display = 'block';
-        
-        // Update UI with real API data
-        document.getElementById('responseConcepts').textContent = extractConcepts(text);
-        document.getElementById('responseBeliefs').textContent = 'Updating belief system based on input...';
-        
-        // Update emotions from API
-        if (apiResponse) {
-            // Convert API emotion values to percentage
-            const emotionMap = {};
-            // Merge all emotion categories
-            Object.entries(apiResponse.emotional_state.primary_emotions).forEach(([k, v]) => emotionMap[k] = Math.round(v * 100));
-            Object.entries(apiResponse.emotional_state.secondary_emotions).forEach(([k, v]) => emotionMap[k] = Math.round(v * 100));
-            Object.entries(apiResponse.emotional_state.advanced_emotions).forEach(([k, v]) => emotionMap[k] = Math.round(v * 100));
-            
-            initialEmotions = emotionMap;
-            updateEmotionBars(initialEmotions);
-            
-            document.getElementById('responseEmotions').textContent = Object.entries(initialEmotions)
-                .filter(([k, v]) => v > 30)
-                .map(([k, v]) => `${k.charAt(0).toUpperCase() + k.slice(1)}: ${v}%`)
-                .join(', ');
-            
-            document.getElementById('responseMemory').textContent = 'Memory consolidated successfully';
-            
-            document.getElementById('responsePrediction').textContent = apiResponse.predictions ? apiResponse.predictions.next_emotions.join(', ') : 'Cognitive state stabilizing; new goals forming';
-            
-            document.getElementById('dominantEmotion').textContent = apiResponse.dominant_emotion || 'Neutral';
-            
-            // Update dashboard
-            step = apiResponse.emotional_state.intensity * 100;
-            updateDashboard({
-                step: Math.round(step),
-                confidence: 85,
-                stability: 78,
-                energy: 60 + Math.floor(Math.random() * 30)
-            });
-        }
-        
-        // Update influence
-        Object.keys(influenceValues).forEach(key => {
-            influenceValues[key] = Math.min(100, Math.max(0, influenceValues[key] + (Math.random() - 0.3) * 10));
-        });
-        drawRadialCharts();
-    }
-
-    function extractConcepts(text) {
-        const common = ['work', 'sad', 'happy', 'fear', 'goal', 'belief', 'trust', 'memory', 'explore', 'learn'];
-        const found = common.filter(word => text.toLowerCase().includes(word));
-        if (found.length) {
-            return found.map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(', ');
-        }
-        return 'General cognitive input, analyzing...';
-    }
-
-    // === COMPANION SYSTEM INTEGRATION ===
-    let companionSessionActive = false;
-    let companionSessionId = null;
-    let audioLevelPoll = null;
-
-    // Elements
-    const companionChatContainer = document.getElementById('companionChatContainer');
-    const startSessionBtn = document.getElementById('startSessionBtn');
-    const endSessionBtn = document.getElementById('endSessionBtn');
-    const modeSelector = document.getElementById('modeSelector');
-    const companionTextMsg = document.getElementById('companionTextMsg');
-    const companionSendBtn = document.getElementById('companionSendBtn');
-    const voiceStartBtn = document.getElementById('voiceStartBtn');
-    const voiceStopBtn = document.getElementById('voiceStopBtn');
-    const pttToggle = document.getElementById('pttToggle');
-    const speakResponseToggle = document.getElementById('speakResponseToggle');
-    const liveTranscriptBox = document.getElementById('liveTranscriptBox');
-    const liveTranscriptText = document.getElementById('liveTranscriptText');
-    const audioMeterContainer = document.getElementById('audioMeterContainer');
-    const audioMeterFill = document.getElementById('audioMeterFill');
-    
-    const companionActiveMode = document.getElementById('companionActiveMode');
-    const companionCurrentEmotion = document.getElementById('companionCurrentEmotion');
-    const companionEmotionConfidence = document.getElementById('companionEmotionConfidence');
-    const companionSafetyBadge = document.getElementById('companionSafetyBadge');
-    const indicatorMic = document.getElementById('indicatorMic');
-    const indicatorSpeaker = document.getElementById('indicatorSpeaker');
-
-    // UI visibility helper based on mode
-    function updateModeUI(mode) {
-        const textContainer = document.getElementById('inputTextContainer');
-        const voiceContainer = document.getElementById('inputVoiceContainer');
-        
-        if (mode === 'text') {
-            textContainer.style.display = 'block';
-            voiceContainer.style.display = 'none';
-            audioMeterContainer.style.display = 'none';
-        } else if (mode === 'voice') {
-            textContainer.style.display = 'none';
-            voiceContainer.style.display = 'block';
-            audioMeterContainer.style.display = 'block';
-        } else { // hybrid
-            textContainer.style.display = 'block';
-            voiceContainer.style.display = 'block';
-            audioMeterContainer.style.display = 'block';
-        }
-        companionActiveMode.textContent = mode.toUpperCase();
-    }
-
-    // Toggle session controls
-    function setSessionUIActive(active) {
-        companionSessionActive = active;
-        if (active) {
-            startSessionBtn.style.display = 'none';
-            endSessionBtn.style.display = 'inline-block';
-            const placeholder = document.getElementById('chatPlaceholder');
-            if (placeholder) placeholder.style.display = 'none';
-        } else {
-            startSessionBtn.style.display = 'inline-block';
-            endSessionBtn.style.display = 'none';
-            companionChatContainer.innerHTML = `
-                <div class="chat-placeholder" id="chatPlaceholder">
-                    <div class="placeholder-icon">💬</div>
-                    <p data-i18n="chat_placeholder_text">Start a session to interact with your offline emotional support companion.</p>
-                </div>
-            `;
-        }
-    }
-
-    // Append message to companion chat timeline
-    function appendCompanionMessage(sender, text, emotion = null) {
-        const placeholder = document.getElementById('chatPlaceholder');
-        if (placeholder) placeholder.style.display = 'none';
-
-        const msgDiv = document.createElement('div');
-        msgDiv.className = `chat-message ${sender}`;
-
-        const bubble = document.createElement('div');
-        bubble.className = 'message-bubble';
-        bubble.textContent = text;
-        msgDiv.appendChild(bubble);
-
-        const meta = document.createElement('div');
-        meta.className = 'message-meta';
-        const now = new Date();
-        const timeStr = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-        meta.innerHTML = `<span>${timeStr}</span>`;
-        
-        if (emotion) {
-            meta.innerHTML += ` <span class="emotion-tag">${emotion}</span>`;
-        }
-        msgDiv.appendChild(meta);
-
-        companionChatContainer.appendChild(msgDiv);
-        companionChatContainer.scrollTop = companionChatContainer.scrollHeight;
-    }
-
-    // Fetch initial status
-    async function initCompanionStatus() {
-        try {
-            const res = await fetch('/api/interaction/mode');
+            const res = await fetch('/api/session/current');
             const data = await res.json();
-            if (data.current_mode) {
-                modeSelector.value = data.current_mode;
-                updateModeUI(data.current_mode);
-            }
-            
-            const sessionRes = await fetch('/api/session/current');
-            const sessionData = await sessionRes.json();
-            if (sessionData && sessionData.session_id) {
-                companionSessionId = sessionData.session_id;
-                setSessionUIActive(true);
-                // Load messages
-                companionChatContainer.innerHTML = '';
-                sessionData.user_messages.forEach((msg, idx) => {
-                    appendCompanionMessage('user', msg.raw_text, msg.detected_emotion);
-                    if (sessionData.assistant_messages[idx]) {
-                        const assistantMsg = sessionData.assistant_messages[idx];
-                        appendCompanionMessage('assistant', assistantMsg.response_text, assistantMsg.response_type);
-                    }
-                });
-                
-                // Update current state
-                companionCurrentEmotion.textContent = (sessionData.current_emotion_state.dominant_emotion || 'NEUTRAL').toUpperCase();
-                companionEmotionConfidence.textContent = Math.round((sessionData.current_emotion_state.intensity || 0) * 100) + '%';
-                updateSafetyBadge(sessionData.safety_flags);
-            }
-        } catch (e) {
-            console.error("Companion init error:", e);
-        }
-    }
-
-    function updateSafetyBadge(flags) {
-        let riskLevel = "none";
-        if (flags && typeof flags === 'object' && flags.risk_level) {
-            riskLevel = flags.risk_level;
-        } else if (Array.isArray(flags)) {
-            riskLevel = flags.length > 0 ? "moderate" : "none";
-        }
-        
-        companionSafetyBadge.className = 'safety-badge';
-        if (riskLevel === 'none') {
-            companionSafetyBadge.classList.add('badge-green');
-            companionSafetyBadge.textContent = currentLanguage === 'bn_bd' ? 'নিরাপদ' : 'Safe';
-        } else if (riskLevel === 'low' || riskLevel === 'moderate') {
-            companionSafetyBadge.classList.add('badge-yellow');
-            companionSafetyBadge.textContent = currentLanguage === 'bn_bd' ? 'বিচলিত' : 'Distressed';
-        } else {
-            companionSafetyBadge.classList.add('badge-red');
-            companionSafetyBadge.textContent = currentLanguage === 'bn_bd' ? 'সংকট' : 'Crisis';
-        }
-    }
-
-    // Start Session
-    startSessionBtn.addEventListener('click', async () => {
-        try {
-            const res = await fetch('/api/session/start', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ mode: modeSelector.value, language: currentLanguage })
-            });
-            const data = await res.json();
-            if (data.session_id) {
+            if (data && data.session_id) {
                 companionSessionId = data.session_id;
-                setSessionUIActive(true);
-                appendCompanionMessage('assistant', currentLanguage === 'bn_bd' ? 'হ্যালো, সেশনটি শুরু হয়েছে। আমি অফলাইনে আছি। আপনার সাথে কথা বলতে ভালো লাগবে।' : 'Hello, the session has started. I am fully offline. I am here to listen and support you.', 'neutral');
+                companionSessionActive = true;
             }
-        } catch (e) {
-            console.error("Error starting session:", e);
-        }
-    });
+        } catch (e) { console.log('No existing session, will create on first message.'); }
+    })();
 
-    // End Session
-    endSessionBtn.addEventListener('click', async () => {
-        try {
-            const res = await fetch('/api/session/end', { method: 'POST' });
-            const data = await res.json();
-            setSessionUIActive(false);
-            companionSessionId = null;
-            
-            // Show summary popup or append to dashboard
-            alert((currentLanguage === 'bn_bd' ? 'সেশন শেষ হয়েছে। সারসংক্ষেপ:\n' : 'Session ended. Summary:\n') + (data.summary || 'No summary generated.'));
-        } catch (e) {
-            console.error("Error ending session:", e);
-        }
-    });
+    // ===== TODO: Future API hooks =====
+    // POST /api/chat — unified chat endpoint (currently using /api/interaction/message)
+    // POST /api/voice/stt — send audio blob, get transcript
+    // POST /api/voice/tts — send text + voice_name, get audio
+    // POST /api/session/summary — get session summary
 
-    // Mode Selector change
-    modeSelector.addEventListener('change', async () => {
-        const newMode = modeSelector.value;
-        try {
-            const res = await fetch('/api/interaction/mode', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ mode: newMode })
-            });
-            const data = await res.json();
-            if (data.success) {
-                updateModeUI(newMode);
+    // ── Accuracy Dashboard ──────────────────────────────────────
+    const accuracyRunBtn = document.getElementById('accuracyRunBtn');
+    if (accuracyRunBtn) {
+        accuracyRunBtn.addEventListener('click', async () => {
+            accuracyRunBtn.disabled = true;
+            accuracyRunBtn.textContent = t('accuracy_run_tests') + '...';
+            const statusEl = document.getElementById('accuracyStatus');
+            if (statusEl) statusEl.textContent = 'Running evaluation...';
+
+            try {
+                const res = await fetch('/api/accuracy/evaluate', { method: 'POST' });
+                const data = await res.json();
+                renderAccuracyResults(data);
+                if (statusEl) statusEl.textContent = 'Evaluation complete.';
+            } catch (err) {
+                console.error('Accuracy evaluation failed:', err);
+                if (statusEl) statusEl.textContent = 'Evaluation failed.';
+            } finally {
+                accuracyRunBtn.disabled = false;
+                accuracyRunBtn.textContent = t('accuracy_run_tests');
             }
-        } catch (e) {
-            console.error("Error switching mode:", e);
-        }
-    });
+        });
+    }
 
-    // Send text message
-    async function sendTextMessage() {
-        const text = companionTextMsg.value.trim();
-        if (!text) return;
-        
-        companionTextMsg.value = '';
-        appendCompanionMessage('user', text);
-        
+    // Load accuracy summary when accuracy section is shown
+    const advAccuracySection = document.getElementById('adv-accuracy');
+    if (advAccuracySection) {
+        const observer = new MutationObserver(() => {
+            if (advAccuracySection.classList.contains('active')) {
+                loadAccuracySummary();
+            }
+        });
+        observer.observe(advAccuracySection, { attributes: true, attributeFilter: ['class'] });
+    }
+
+    async function loadAccuracySummary() {
         try {
-            const res = await fetch('/api/interaction/message', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    text,
-                    language: currentLanguage,
-                    speak_response: speakResponseToggle.checked
-                })
-            });
-            const result = await res.json();
-            
-            if (result.assistant_message) {
-                appendCompanionMessage('assistant', result.assistant_message.response_text, result.assistant_message.response_type);
-                companionCurrentEmotion.textContent = (result.emotion_result.dominant_emotion || 'neutral').toUpperCase();
-                companionEmotionConfidence.textContent = Math.round(result.emotion_result.confidence * 100) + '%';
-                updateSafetyBadge(result.safety_assessment.risk_level);
-                
-                if (result.assistant_message.spoken) {
-                    indicatorSpeaker.classList.add('active');
-                    setTimeout(() => indicatorSpeaker.classList.remove('active'), 5000);
+            const res = await fetch('/api/accuracy/summary');
+            const data = await res.json();
+            if (data && data.total_interactions > 0) {
+                renderAccuracyFromSummary(data);
+            } else {
+                // Try loading the last report
+                const reportRes = await fetch('/api/accuracy/report');
+                const report = await reportRes.json();
+                if (report && report.overall_accuracy !== undefined) {
+                    renderAccuracyResults(report);
                 }
             }
-        } catch (e) {
-            console.error("Error sending text:", e);
+        } catch (err) {
+            console.log('No accuracy data yet.');
         }
     }
 
-    companionSendBtn.addEventListener('click', sendTextMessage);
-    companionTextMsg.addEventListener('keydown', (e) => {
-        if (e.key === 'Enter' && !e.shiftKey) {
-            e.preventDefault();
-            sendTextMessage();
+    function renderAccuracyFromSummary(summary) {
+        const map = {
+            stt: { bar: 'accBarStt', val: 'accValStt', key: 'avg_transcript_confidence' },
+            intent: { bar: 'accBarIntent', val: 'accValIntent', key: 'avg_intent_confidence' },
+            safety: { bar: 'accBarSafety', val: 'accValSafety', key: 'avg_safety_confidence' },
+            tool: { bar: 'accBarTool', val: 'accValTool', key: 'avg_tool_confidence' },
+            response: { bar: 'accBarResponse', val: 'accValResponse', key: 'avg_response_confidence' },
+        };
+        for (const [, cfg] of Object.entries(map)) {
+            const pct = Math.round((summary[cfg.key] || 0) * 100);
+            setAccuracyBar(cfg.bar, cfg.val, pct);
         }
-    });
+        const overallPct = Math.round((summary.avg_overall_confidence || 0) * 100);
+        setOverallAccuracy(overallPct);
+    }
 
-    // Voice Start
-    voiceStartBtn.addEventListener('click', async () => {
-        try {
-            const res = await fetch('/api/interaction/voice/start', { method: 'POST' });
-            const data = await res.json();
-            if (data.status === 'listening' || data.status === 'already_listening') {
-                voiceStartBtn.style.display = 'none';
-                voiceStopBtn.style.display = 'inline-block';
-                indicatorMic.classList.add('active');
-                liveTranscriptBox.style.display = 'block';
-                liveTranscriptText.textContent = currentLanguage === 'bn_bd' ? 'শুনছি...' : 'Listening...';
-                
-                // Poll levels
-                audioLevelPoll = setInterval(async () => {
-                    try {
-                        const levelRes = await fetch('/api/interaction/voice/level');
-                        const levelData = await levelRes.json();
-                        const levelPct = Math.min(100, Math.round((levelData.audio_level || 0) * 1000));
-                        audioMeterFill.style.width = levelPct + '%';
-                    } catch (err) {}
-                }, 200);
-            }
-        } catch (e) {
-            console.error("Voice start error:", e);
+    function renderAccuracyResults(data) {
+        if (data.overall_accuracy !== undefined) {
+            setOverallAccuracy(Math.round(data.overall_accuracy * 100));
         }
-    });
-
-    // Voice Stop
-    voiceStopBtn.addEventListener('click', async () => {
-        clearInterval(audioLevelPoll);
-        audioMeterFill.style.width = '0%';
-        voiceStartBtn.style.display = 'inline-block';
-        voiceStopBtn.style.display = 'none';
-        indicatorMic.classList.remove('active');
-        liveTranscriptText.textContent = currentLanguage === 'bn_bd' ? 'প্রক্রিয়াকরণ চলছে...' : 'Processing...';
-
-        try {
-            const res = await fetch('/api/interaction/voice/stop', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ language: currentLanguage })
-            });
-            const result = await res.json();
-            
-            liveTranscriptBox.style.display = 'none';
-            
-            if (result.user_message) {
-                appendCompanionMessage('user', result.transcript || result.user_message.raw_text, result.user_message.detected_emotion);
+        const catMap = {
+            stt_accuracy: { bar: 'accBarStt', val: 'accValStt' },
+            intent_classification: { bar: 'accBarIntent', val: 'accValIntent' },
+            safety_detection: { bar: 'accBarSafety', val: 'accValSafety' },
+            tool_routing: { bar: 'accBarTool', val: 'accValTool' },
+            response_relevance: { bar: 'accBarResponse', val: 'accValResponse' },
+        };
+        const catResults = data.category_results || {};
+        for (const [cat, cfg] of Object.entries(catMap)) {
+            if (catResults[cat]) {
+                const pct = Math.round(catResults[cat].accuracy * 100);
+                setAccuracyBar(cfg.bar, cfg.val, pct);
             }
-            if (result.assistant_message) {
-                appendCompanionMessage('assistant', result.assistant_message.response_text, result.assistant_message.response_type);
-                companionCurrentEmotion.textContent = (result.emotion_result.dominant_emotion || 'neutral').toUpperCase();
-                companionEmotionConfidence.textContent = Math.round(result.emotion_result.confidence * 100) + '%';
-                updateSafetyBadge(result.safety_assessment.risk_level);
-                
-                if (result.assistant_message.spoken) {
-                    indicatorSpeaker.classList.add('active');
-                    setTimeout(() => indicatorSpeaker.classList.remove('active'), 5000);
-                }
-            }
-        } catch (e) {
-            console.error("Voice stop error:", e);
-            liveTranscriptBox.style.display = 'none';
         }
-    });
-
-    // Support tool buttons
-    document.querySelectorAll('.tool-btn').forEach(btn => {
-        btn.addEventListener('click', async () => {
-            const action = btn.dataset.action;
-            if (action === 'summary') {
-                if (!companionSessionActive) {
-                    alert(currentLanguage === 'bn_bd' ? 'দয়া করে প্রথমে একটি সেশন শুরু করুন।' : 'Please start a session first.');
-                    return;
-                }
-                try {
-                    const res = await fetch('/api/support/summary', { method: 'POST' });
-                    const data = await res.json();
-                    appendCompanionMessage('assistant', data.summary || 'Summary not ready yet.', 'summary');
-                } catch (err) {}
-                return;
-            }
-            
-            try {
-                const res = await fetch(`/api/support/${action}`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        language: currentLanguage,
-                        emotion: companionCurrentEmotion.textContent.toLowerCase()
-                    })
+        // Show failures
+        const failuresEl = document.getElementById('accuracyFailures');
+        const failuresList = document.getElementById('accuracyFailuresList');
+        if (failuresEl && failuresList) {
+            failuresList.innerHTML = '';
+            let hasFailures = false;
+            for (const [cat, catData] of Object.entries(data.details || {})) {
+                const fails = catData.failures || [];
+                fails.forEach(f => {
+                    hasFailures = true;
+                    const div = document.createElement('div');
+                    div.className = 'failure-item';
+                    div.textContent = typeof f === 'string' ? f : (f.id || cat) + ': ' + (f.expected || f.error || 'mismatch');
+                    failuresList.appendChild(div);
                 });
-                const data = await res.json();
-                if (data.content) {
-                    appendCompanionMessage('assistant', data.content, action);
-                } else if (data.exercise) {
-                    appendCompanionMessage('assistant', data.exercise, action);
-                } else if (data.prompt) {
-                    appendCompanionMessage('assistant', data.prompt, action);
-                } else if (data.questions) {
-                    appendCompanionMessage('assistant', data.questions.join('\n'), action);
-                }
-            } catch (e) {
-                console.error(`Support tool ${action} error:`, e);
             }
-        });
-    });
+            failuresEl.style.display = hasFailures ? 'block' : 'none';
+        }
+        // Show suggestions
+        const suggEl = document.getElementById('accuracySuggestions');
+        const suggList = document.getElementById('accuracySuggestionsList');
+        if (suggEl && suggList && data.recommendations) {
+            suggList.innerHTML = '';
+            data.recommendations.forEach(rec => {
+                const li = document.createElement('li');
+                li.textContent = rec;
+                suggList.appendChild(li);
+            });
+            suggEl.style.display = data.recommendations.length > 0 ? 'block' : 'none';
+        }
+    }
 
-    // Initialize status
-    initCompanionStatus();
+    function setOverallAccuracy(pct) {
+        const el = document.getElementById('accuracyOverallValue');
+        if (!el) return;
+        el.textContent = pct + '%';
+        el.className = 'accuracy-overall-value ' + (pct >= 90 ? 'acc-green' : pct >= 70 ? 'acc-yellow' : 'acc-red');
+    }
+
+    function setAccuracyBar(barId, valId, pct) {
+        const bar = document.getElementById(barId);
+        const val = document.getElementById(valId);
+        if (bar) {
+            bar.style.width = pct + '%';
+            bar.className = 'acc-bar-fill ' + (pct >= 90 ? 'acc-green' : pct >= 70 ? 'acc-yellow' : 'acc-red');
+        }
+        if (val) val.textContent = pct + '%';
+    }
 });

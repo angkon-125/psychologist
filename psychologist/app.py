@@ -1,6 +1,9 @@
 import os
+import json
+import queue
+from pathlib import Path
 
-from flask import Flask, request, jsonify, send_from_directory
+from flask import Flask, request, jsonify, send_from_directory, Response
 from flask_cors import CORS
 
 from logger import get_logger
@@ -16,6 +19,9 @@ from emotion_engine.interaction.support_tools import SupportTools
 from emotion_engine.interaction.text_mode_handler import TextModeHandler
 from emotion_engine.interaction.voice_mode_handler import VoiceModeHandler
 from emotion_engine.interaction.hybrid_mode_handler import HybridModeHandler
+from emotion_engine.interaction.confidence_scorer import ConfidenceScorer
+from emotion_engine.interaction.correction_detector import CorrectionDetector
+from emotion_engine.interaction.accuracy_logger import AccuracyLogger
 
 logger = get_logger("app")
 
@@ -147,6 +153,48 @@ session_manager.set_activity_callback(on_activity)
 text_handler.set_activity_callback(on_activity)
 voice_handler.set_activity_callback(on_activity)
 hybrid_handler.set_activity_callback(on_activity)
+
+# ── Accuracy System (NEW) ────────────────────────────────────────
+confidence_scorer = ConfidenceScorer()
+correction_detector = CorrectionDetector()
+accuracy_logger = AccuracyLogger()
+
+# ── Voice Conversation Engine (NEW) ─────────────────────────────
+conversation_engine = None
+voice_preferences = None
+try:
+    from emotion_engine.voice_engine import (
+        ConversationEngine, ResponseGenerator, VoicePreferences,
+    )
+    from emotion_engine.voice_engine.ollama_client import OllamaClient
+
+    voice_preferences = VoicePreferences()
+
+    # Optional Ollama LLM
+    ollama_client = None
+    if os.environ.get("USE_OLLAMA", "").lower() == "true":
+        try:
+            ollama_client = OllamaClient()
+            if ollama_client.is_available:
+                logger.info("Ollama LLM enabled for voice engine")
+            else:
+                logger.info("Ollama requested but not reachable — will use EmotionEngine")
+                ollama_client = None
+        except Exception as e:
+            logger.warning("Ollama init failed: %s", e)
+            ollama_client = None
+
+    response_generator = ResponseGenerator(emotion_engine, ollama_client)
+
+    conversation_engine = ConversationEngine(
+        stt_manager=stt_manager,
+        tts_manager=tts_manager,
+        response_generator=response_generator,
+        preferences=voice_preferences,
+    )
+    logger.info("Voice conversation engine initialized")
+except Exception as e:
+    logger.warning("Voice conversation engine not available: %s", e)
 
 @app.route('/')
 def index():
@@ -329,6 +377,47 @@ def interaction_message():
                 speak_response=speak_response,
                 session_id=session_id
             )
+
+        # ── Confidence scoring + accuracy logging ──────────────
+        try:
+            emotion_result = result.get("emotion_result", {})
+            safety_assessment = result.get("safety_assessment", {})
+            assistant_msg = result.get("assistant_message", {})
+            response_text = assistant_msg.get("response_text", "") if isinstance(assistant_msg, dict) else ""
+            response_type = assistant_msg.get("response_type", "") if isinstance(assistant_msg, dict) else ""
+
+            scores = confidence_scorer.score(
+                transcript=text,
+                emotion_result=emotion_result,
+                safety_result=safety_assessment,
+                response_text=response_text,
+                source="text_mode",
+                input_mode=current_mode,
+            )
+
+            # Correction detection
+            correction = correction_detector.detect(text, language)
+
+            # Log the interaction
+            accuracy_logger.log_interaction({
+                "input_mode": current_mode,
+                "transcript": text,
+                "detected_intent": emotion_result.get("dominant_emotion", ""),
+                "confidence_scores": scores,
+                "selected_backend": "text_mode",
+                "response_type": response_type,
+                "fallback_used": False,
+                "correction": correction if correction.get("is_correction") else None,
+                "error_state": None,
+                "response_text": response_text,
+            })
+
+            # Attach confidence scores to the response
+            result["confidence_scores"] = scores
+            result["correction_detected"] = correction.get("is_correction", False)
+        except Exception as acc_err:
+            logger.warning("Accuracy scoring/logging failed: %s", acc_err)
+
         return jsonify(result)
     except Exception as e:
         logger.error("Interaction message processing failed: %s", e)
@@ -541,6 +630,245 @@ def safety_status():
         "risk_level": risk_level,
         "flags": safety_flags
     })
+
+# ── Voice Conversation Engine API ────────────────────────────────
+
+# SSE client queues
+_voice_sse_clients: dict = {}
+
+@app.route('/api/voice/conversation/start', methods=['POST'])
+@rate_limit(app, requests=30, window_seconds=60)
+def voice_conversation_start():
+    """Start a voice conversation session."""
+    if not conversation_engine:
+        return jsonify({"status": "error", "message": "Voice engine not available"}), 503
+
+    result = conversation_engine.start_conversation()
+    return jsonify(result)
+
+
+@app.route('/api/voice/conversation/stop', methods=['POST'])
+@rate_limit(app, requests=30, window_seconds=60)
+def voice_conversation_stop():
+    """Stop the voice conversation session."""
+    if not conversation_engine:
+        return jsonify({"status": "error", "message": "Voice engine not available"}), 503
+
+    result = conversation_engine.stop_conversation()
+    return jsonify(result)
+
+
+@app.route('/api/voice/conversation/interrupt', methods=['POST'])
+@rate_limit(app, requests=30, window_seconds=60)
+def voice_conversation_interrupt():
+    """Interrupt current TTS playback."""
+    if not conversation_engine:
+        return jsonify({"status": "error", "message": "Voice engine not available"}), 503
+
+    result = conversation_engine.interrupt()
+    return jsonify(result)
+
+
+@app.route('/api/voice/conversation/state', methods=['GET'])
+def voice_conversation_state():
+    """Get current conversation state."""
+    if not conversation_engine:
+        return jsonify({"state": "unavailable", "message": "Voice engine not active"})
+
+    return jsonify(conversation_engine.get_state())
+
+
+@app.route('/api/voice/conversation/events')
+def voice_conversation_events():
+    """SSE stream for real-time voice conversation events."""
+    if not conversation_engine:
+        return jsonify({"status": "error", "message": "Voice engine not available"}), 503
+
+    q = queue.Queue(maxsize=100)
+    client_id = id(q)
+    conversation_engine.register_event_queue(client_id, q)
+
+    def generate():
+        try:
+            while True:
+                try:
+                    event = q.get(timeout=30)
+                    yield f"event: {event['type']}\ndata: {json.dumps(event['data'])}\n\n"
+                except queue.Empty:
+                    # Send keepalive
+                    yield ": keepalive\n\n"
+        except GeneratorExit:
+            pass
+        finally:
+            conversation_engine.unregister_event_queue(client_id)
+
+    return Response(
+        generate(),
+        mimetype='text/event-stream',
+        headers={
+            'Cache-Control': 'no-cache',
+            'X-Accel-Buffering': 'no',
+            'Connection': 'keep-alive',
+        },
+    )
+
+
+@app.route('/api/voice/preferences', methods=['GET'])
+def voice_preferences_get():
+    """Get voice preferences."""
+    if not voice_preferences:
+        return jsonify({"status": "error", "message": "Voice preferences not available"}), 503
+    return jsonify(voice_preferences.get_all())
+
+
+@app.route('/api/voice/preferences', methods=['POST'])
+@rate_limit(app, requests=30, window_seconds=60)
+def voice_preferences_set():
+    """Update voice preferences."""
+    if not voice_preferences:
+        return jsonify({"status": "error", "message": "Voice preferences not available"}), 503
+
+    data = request.get_json(silent=True)
+    if not data:
+        return jsonify({"error": "invalid_input", "message": "Request body must be JSON."}), 400
+
+    voice_preferences.update(data)
+    voice_preferences.save()
+
+    # Apply to conversation engine if available
+    if conversation_engine:
+        conversation_engine.update_preferences(data)
+
+    return jsonify({"status": "updated", "preferences": voice_preferences.get_all()})
+
+
+@app.route('/api/voice/conversation/info', methods=['GET'])
+def voice_conversation_info():
+    """Get voice engine info for debugging."""
+    if not conversation_engine:
+        return jsonify({"status": "unavailable"})
+    return jsonify(conversation_engine.get_info())
+
+
+@app.route('/api/voice/tts/pause', methods=['POST'])
+@rate_limit(app, requests=30, window_seconds=60)
+def voice_tts_pause():
+    """Pause TTS playback."""
+    if tts_manager:
+        tts_manager.pause()
+        return jsonify({"status": "paused"})
+    return jsonify({"status": "error", "message": "TTS not available"}), 503
+
+
+@app.route('/api/voice/tts/resume', methods=['POST'])
+@rate_limit(app, requests=30, window_seconds=60)
+def voice_tts_resume():
+    """Resume TTS playback."""
+    if tts_manager:
+        tts_manager.resume()
+        return jsonify({"status": "resumed"})
+    return jsonify({"status": "error", "message": "TTS not available"}), 503
+
+
+# ── Accuracy System Endpoints ───────────────────────────────────
+
+@app.route('/api/accuracy/summary', methods=['GET'])
+def accuracy_summary():
+    """Return accuracy summary from AccuracyLogger."""
+    try:
+        summary = accuracy_logger.get_summary()
+        return jsonify(summary)
+    except Exception as e:
+        logger.error("Accuracy summary failed: %s", e)
+        return jsonify({"error": "accuracy_error", "message": str(e)}), 500
+
+
+@app.route('/api/accuracy/recent', methods=['GET'])
+def accuracy_recent():
+    """Return recent logged interactions."""
+    try:
+        n = request.args.get('n', 50, type=int)
+        recent = accuracy_logger.get_recent(n=min(n, 200))
+        return jsonify({"entries": recent, "count": len(recent)})
+    except Exception as e:
+        logger.error("Accuracy recent failed: %s", e)
+        return jsonify({"error": "accuracy_error", "message": str(e)}), 500
+
+
+@app.route('/api/accuracy/report', methods=['GET'])
+def accuracy_report():
+    """Return the last generated accuracy report."""
+    try:
+        report_path = Path(__file__).parent / "logs" / "accuracy_report.json"
+        if report_path.exists():
+            with open(report_path, "r", encoding="utf-8") as f:
+                report = json.load(f)
+            return jsonify(report)
+        return jsonify({"status": "no_report", "message": "No accuracy report found. Run tests first."})
+    except Exception as e:
+        logger.error("Accuracy report failed: %s", e)
+        return jsonify({"error": "accuracy_error", "message": str(e)}), 500
+
+
+@app.route('/api/accuracy/correction', methods=['POST'])
+@rate_limit(app, requests=30, window_seconds=60)
+def accuracy_correction():
+    """Submit a user correction for logging."""
+    data = request.get_json(silent=True) or {}
+    text = data.get('text', '')
+    if not text:
+        return jsonify({"error": "invalid_input", "message": "Text is required."}), 400
+
+    try:
+        language = data.get('language', 'en')
+        detection = correction_detector.detect(text, language)
+        if detection.get("is_correction"):
+            correction_detector.store_correction(
+                text=text,
+                detection_result=detection,
+                detected_intent=data.get('detected_intent', ''),
+                context=data.get('context', ''),
+            )
+        return jsonify({
+            "correction_detected": detection.get("is_correction", False),
+            "correction_type": detection.get("correction_type"),
+            "matched_phrase": detection.get("original_phrase"),
+            "confidence": detection.get("confidence", 0.0),
+        })
+    except Exception as e:
+        logger.error("Correction processing failed: %s", e)
+        return jsonify({"error": "correction_error", "message": str(e)}), 500
+
+
+@app.route('/api/accuracy/evaluate', methods=['POST'])
+@rate_limit(app, requests=5, window_seconds=60)
+def accuracy_evaluate():
+    """Trigger an accuracy evaluation run."""
+    try:
+        from evaluation.accuracy_evaluator import AccuracyEvaluator
+        from evaluation.report_generator import ReportGenerator
+
+        evaluator = AccuracyEvaluator(
+            emotion_engine=emotion_engine,
+            safety_layer=safety_layer,
+            text_handler=text_handler,
+        )
+        results = evaluator.run_all()
+
+        report_gen = ReportGenerator()
+        report_gen.generate_json_report(results)
+
+        return jsonify({
+            "status": "complete",
+            "overall_accuracy": results.get("overall", 0.0),
+            "all_targets_met": results.get("all_targets_met", False),
+            "category_results": results.get("category_results", {}),
+            "recommendations": report_gen.generate_recommendations(results),
+        })
+    except Exception as e:
+        logger.error("Accuracy evaluation failed: %s", e)
+        return jsonify({"error": "evaluation_error", "message": str(e)}), 500
+
 
 if __name__ == '__main__':
     debug = os.environ.get("FLASK_DEBUG", "0") == "1"

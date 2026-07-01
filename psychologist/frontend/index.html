@@ -3,704 +3,482 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cognitive Self-Evolving Mind Dashboard</title>
+    <title>ZARA — Offline AI Emotional Support</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="app">
-        <!-- Top Status Bar -->
+
+        <!-- ===== HEADER ===== -->
         <header class="top-bar">
-            <div class="status-left">
-                <div class="system-name" data-i18n="system_name">COGNITIVE MIND v2.0</div>
-                <div class="status-indicator">
-                    <span class="status-dot"></span>
-                    <span class="status-text" data-i18n="status_online">ONLINE & EVOLVING</span>
+            <div class="header-left">
+                <div class="system-name" data-i18n="app_name">ZARA</div>
+                <div class="offline-badge">
+                    <span class="offline-dot"></span>
+                    <span data-i18n="badge_offline_text">Offline Secured</span>
                 </div>
             </div>
-            <div class="status-right">
-                <div class="clock">14:48:23</div>
-                <div class="step-counter">STEP: <span id="stepCounter">0</span></div>
-                <div class="energy-bar">
-                    <span class="energy-label" data-i18n="metric_energy">COGNITIVE ENERGY</span>
-                    <div class="energy-progress">
-                        <div class="energy-fill" id="energyFill"></div>
-                    </div>
-                </div>
+            <div class="header-right">
+                <button class="header-btn" id="voiceModeBtn" title="Voice Mode" data-i18n-title="btn_voice_mode">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3zm5.91-3c-.49 0-.9.36-.98.85C16.52 14.66 14.47 17 12 17s-4.52-2.34-4.93-5.15c-.08-.49-.49-.85-.98-.85-.61 0-1.09.54-1 1.14.49 3 2.89 5.35 5.91 5.78V20c0 .55.45 1 1 1s1-.45 1-1v-2.08c3.02-.43 5.42-2.78 5.91-5.78.1-.6-.39-1.14-1-1.14z"/></svg>
+                </button>
+                <button class="header-btn" id="advancedViewBtn" data-i18n="btn_advanced">Advanced Mind View</button>
                 <button class="language-toggle" id="languageToggle" data-i18n="language_toggle_bangla">বাংলা</button>
             </div>
         </header>
 
-        <div class="main-container">
-            <!-- Sidebar Navigation -->
-            <aside class="sidebar">
-                <nav class="sidebar-nav">
-                    <button class="nav-btn active" data-section="dashboard" data-i18n="nav_dashboard">Main Dashboard</button>
-                    <button class="nav-btn" data-section="companion" data-i18n="nav_companion">Emotional Support</button>
-                    <button class="nav-btn" data-section="emotions" data-i18n="nav_emotions">Emotion Panel</button>
-                    <button class="nav-btn" data-section="needs" data-i18n="nav_needs">Internal Needs</button>
-                    <button class="nav-btn" data-section="beliefs" data-i18n="nav_beliefs">Belief System</button>
-                    <button class="nav-btn" data-section="goals" data-i18n="nav_goals">Goal Generation</button>
-                    <button class="nav-btn" data-section="conflicts" data-i18n="nav_conflicts">Cognitive Conflicts</button>
-                    <button class="nav-btn" data-section="identity" data-i18n="nav_identity">Self-Identity</button>
-                    <button class="nav-btn" data-section="memory" data-i18n="nav_memory">Memory Timeline</button>
-                    <button class="nav-btn" data-section="graph" data-i18n="nav_graph">Knowledge Graph</button>
-                    <button class="nav-btn" data-section="debate" data-i18n="nav_debate">Internal Debate</button>
-                    <button class="nav-btn" data-section="simulation" data-i18n="nav_simulation">Simulation Panel</button>
-                    <button class="nav-btn" data-section="history" data-i18n="nav_history">Input History</button>
-                </nav>
-            </aside>
+        <!-- ===== ASSISTANT MODE (Default) ===== -->
+        <main class="assistant-view active" id="assistantView">
+            <!-- Quick Action Chips -->
+            <div class="quick-chips-row">
+                <button class="chip-btn" data-action="talk" data-i18n="chip_talk">Talk to Zara</button>
+                <button class="chip-btn" data-action="calm" data-i18n="tool_calm_title">Calm me down</button>
+                <button class="chip-btn" data-action="help-think" data-i18n="chip_help_think">Help me think</button>
+                <button class="chip-btn" data-action="journal" data-i18n="tool_journal_title">Start journal</button>
+                <button class="chip-btn" data-action="mood" data-i18n="chip_explain_mood">Explain my mood</button>
+            </div>
 
-            <!-- Main Content -->
-            <main class="main-content">
-                <!-- Main Dashboard Section -->
-                <section id="dashboard" class="section active">
-                    <h2 class="section-title" data-i18n="title_dashboard">Cognitive State Overview</h2>
-                    <div class="cards-grid">
-                        <div class="card">
-                            <div class="card-header" data-i18n="card_header_cognitive_state">CURRENT COGNITIVE STATE</div>
-                            <div class="card-content">
-                                <div class="state-display">
-                                <div class="state-value" id="cognitiveState">EXPLORING</div>
-                                <div class="state-sub" data-i18n="sub_exploring">Adapting to new data</div>
-                            </div>
-                        </div>
-                        <div class="card">
-                            <div class="card-header" data-i18n="card_header_active_emotional">ACTIVE EMOTIONAL STATE</div>
-                            <div class="card-content">
-                                <div class="emotion-display">
-                                    <div class="dominant-emotion" id="dominantEmotion">CURIOSITY</div>
-                                    <div class="dominant-intensity">78%</div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="card">
-                            <div class="card-header" data-i18n="card_header_dominant_goal">CURRENT DOMINANT GOAL</div>
-                            <div class="card-content">
-                                <div class="goal-display">
-                                    <div class="goal-title" id="dominantGoal">Explore unknown territories</div>
-                                    <div class="goal-priority" data-i18n="sub_priority_high">Priority: HIGH</div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="card">
-                            <div class="card-header" data-i18n="card_header_system_metrics">SYSTEM METRICS</div>
-                            <div class="card-content metrics-grid">
-                                <div class="metric">
-                                    <div class="metric-label" data-i18n="metric_confidence">CONFIDENCE LEVEL</div>
-                                    <div class="metric-value" id="confidenceLevel">85</div>
-                                </div>
-                                <div class="metric">
-                                    <div class="metric-label" data-i18n="metric_stability">INTERNAL STABILITY</div>
-                                    <div class="metric-value" id="stabilityScore">72</div>
-                                </div>
-                                <div class="metric">
-                                    <div class="metric-label" data-i18n="metric_energy">COGNITIVE ENERGY</div>
-                                    <div class="metric-value" id="cognitiveEnergy">68</div>
-                                </div>
-                            </div>
-                        </div>
+            <!-- Mood Selector -->
+            <div class="mood-selector" id="moodSelector">
+                <span class="mood-label" data-i18n="mood_how_feeling">How are you feeling?</span>
+                <div class="mood-buttons">
+                    <button class="mood-btn mood-great" data-mood="great"><span class="mood-emoji">😊</span><span data-i18n="mood_great">Great</span></button>
+                    <button class="mood-btn mood-okay" data-mood="okay"><span class="mood-emoji">😐</span><span data-i18n="mood_okay">Okay</span></button>
+                    <button class="mood-btn mood-low" data-mood="low"><span class="mood-emoji">😔</span><span data-i18n="mood_low">Low</span></button>
+                    <button class="mood-btn mood-anxious" data-mood="anxious"><span class="mood-emoji">😰</span><span data-i18n="mood_anxious">Anxious</span></button>
+                    <button class="mood-btn mood-angry" data-mood="angry"><span class="mood-emoji">😤</span><span data-i18n="mood_angry">Angry</span></button>
+                </div>
+            </div>
+
+            <!-- Chat Timeline -->
+            <div class="chat-area" id="chatArea">
+                <div class="chat-welcome" id="chatWelcome">
+                    <div class="welcome-icon">💬</div>
+                    <p data-i18n="welcome_text">Hi, I'm Zara — your offline emotional support companion. How can I help you today?</p>
+                    <p class="welcome-sub" data-i18n="welcome_sub">Type a message or tap the mic to speak.</p>
+                </div>
+            </div>
+
+            <!-- Input Bar -->
+            <div class="chat-input-bar">
+                <label class="toggle-switch read-aloud-toggle" title="Read responses aloud">
+                    <input type="checkbox" id="speakResponseToggle" checked>
+                    <span class="slider round"></span>
+                </label>
+                <span class="toggle-label" data-i18n="toggle_speak_response">Read aloud</span>
+                <textarea class="chat-textarea" id="chatInput" data-i18n-placeholder="chat_placeholder" placeholder="Message Zara..." rows="1"></textarea>
+                <button class="send-btn" id="chatSendBtn" title="Send" data-i18n-title="btn_send">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
+                </button>
+                <button class="mic-btn" id="chatMicBtn" title="Speak" data-i18n-title="btn_voice_mode">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3zm5.91-3c-.49 0-.9.36-.98.85C16.52 14.66 14.47 17 12 17s-4.52-2.34-4.93-5.15c-.08-.49-.49-.85-.98-.85-.61 0-1.09.54-1 1.14.49 3 2.89 5.35 5.91 5.78V20c0 .55.45 1 1 1s1-.45 1-1v-2.08c3.02-.43 5.42-2.78 5.91-5.78.1-.6-.39-1.14-1-1.14z"/></svg>
+                </button>
+            </div>
+        </main>
+
+        <!-- ===== VOICE MODE (Full-screen overlay) ===== -->
+        <div class="voice-view" id="voiceView">
+            <button class="voice-close-btn" id="voiceCloseBtn" title="Exit voice mode">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+            </button>
+
+            <div class="voice-content">
+                <div class="voice-orb" id="voiceOrb">
+                    <div class="orb-ring orb-ring-1"></div>
+                    <div class="orb-ring orb-ring-2"></div>
+                    <div class="orb-ring orb-ring-3"></div>
+                    <div class="orb-core"></div>
+                </div>
+
+                <div class="voice-state-text" id="voiceStateText" data-i18n="voice_idle">Tap the mic and speak to Zara</div>
+
+                <div class="voice-transcript" id="voiceTranscript" style="display:none;">
+                    <span class="transcript-label" data-i18n="live_transcript_header">Live Transcript:</span>
+                    <p class="transcript-text" id="voiceTranscriptText">...</p>
+                </div>
+
+                <div class="voice-meter" id="voiceMeter" style="display:none;">
+                    <div class="meter-bar"><div class="meter-fill" id="voiceMeterFill"></div></div>
+                </div>
+
+                <div class="voice-response-text" id="voiceResponseText" style="display:none;"></div>
+
+                <div class="voice-controls">
+                    <button class="voice-ctrl-btn" id="voiceMuteBtn" title="Mute">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M7 9v6h4l5 5V4l-5 5H7z"/></svg>
+                    </button>
+                    <button class="voice-ctrl-btn voice-ctrl-main" id="voiceMainBtn" title="Start conversation">
+                        <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><path d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3zm5.91-3c-.49 0-.9.36-.98.85C16.52 14.66 14.47 17 12 17s-4.52-2.34-4.93-5.15c-.08-.49-.49-.85-.98-.85-.61 0-1.09.54-1 1.14.49 3 2.89 5.35 5.91 5.78V20c0 .55.45 1 1 1s1-.45 1-1v-2.08c3.02-.43 5.42-2.78 5.91-5.78.1-.6-.39-1.14-1-1.14z"/></svg>
+                    </button>
+                    <button class="voice-ctrl-btn" id="voiceInterruptBtn" title="Interrupt">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="6" width="12" height="12" rx="2"/></svg>
+                    </button>
+                </div>
+
+                <!-- Playback Speed Controls -->
+                <div class="voice-speed-controls" id="voiceSpeedControls" style="display:none;">
+                    <span class="speed-label" data-i18n="voice_playback_speed">Speed:</span>
+                    <button class="speed-btn" data-speed="0.8">0.8x</button>
+                    <button class="speed-btn active" data-speed="1.0">1.0x</button>
+                    <button class="speed-btn" data-speed="1.2">1.2x</button>
+                    <button class="speed-btn" data-speed="1.5">1.5x</button>
+                </div>
+
+                <!-- Volume Slider -->
+                <div class="voice-volume-row">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" class="volume-icon"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z"/></svg>
+                    <input type="range" class="volume-slider" id="voiceVolumeSlider" min="0" max="100" value="90">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" class="volume-icon"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>
+                </div>
+
+                <!-- Voice Settings Toggle -->
+                <button class="voice-settings-toggle" id="voiceSettingsToggle">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58c.18-.14.23-.41.12-.61l-1.92-3.32c-.12-.22-.37-.29-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.07.62-.07.94s.02.64.07.94l-2.03 1.58c-.18.14-.23.41-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z"/></svg>
+                    <span data-i18n="voice_settings">Voice Settings</span>
+                </button>
+
+                <!-- Voice Settings Panel -->
+                <div class="voice-settings-panel" id="voiceSettingsPanel" style="display:none;">
+                    <div class="voice-setting-row">
+                        <span class="setting-label" data-i18n="voice_continuous">Continuous Listening</span>
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="voiceContinuousToggle">
+                            <span class="slider round"></span>
+                        </label>
                     </div>
-                </section>
-
-                <!-- Emotion Panel -->
-                <section id="emotions" class="section">
-                    <h2 class="section-title" data-i18n="title_emotions">Emotion State</h2>
-                    <div class="emotion-grid">
-                        <div class="emotion-item">
-                            <div class="emotion-label">
-                                <span data-i18n="slider_curiosity">CURIOSITY</span><span class="emotion-percent" id="curiosityPercent">78</span>
-                            </div>
-                            <div class="emotion-bar">
-                                <div class="emotion-fill" id="curiosityFill"></div>
-                            </div>
-                        </div>
-                        <div class="emotion-item">
-                            <div class="emotion-label">
-                                <span data-i18n="slider_fear">FEAR</span><span class="emotion-percent" id="fearPercent">23</span>
-                            </div>
-                            <div class="emotion-bar">
-                                <div class="emotion-fill" id="fearFill"></div>
-                            </div>
-                        </div>
-                        <div class="emotion-item">
-                            <div class="emotion-label">
-                                <span data-i18n="slider_motivation">CONFIDENCE</span><span class="emotion-percent" id="confidencePercent">85</span>
-                            </div>
-                            <div class="emotion-bar">
-                                <div class="emotion-fill" id="confidenceFill"></div>
-                            </div>
-                        </div>
-                        <div class="emotion-item">
-                            <div class="emotion-label">
-                                <span>DOUBT</span><span class="emotion-percent" id="doubtPercent">15</span>
-                            </div>
-                            <div class="emotion-bar">
-                                <div class="emotion-fill" id="doubtFill"></div>
-                            </div>
-                        </div>
-                        <div class="emotion-item">
-                            <div class="emotion-label">
-                                <span data-i18n="slider_motivation">MOTIVATION</span><span class="emotion-percent" id="motivationPercent">70</span>
-                            </div>
-                            <div class="emotion-bar">
-                                <div class="emotion-fill" id="motivationFill"></div>
-                            </div>
-                        </div>
-                        <div class="emotion-item">
-                            <div class="emotion-label">
-                                <span data-i18n="slider_stress">STRESS</span><span class="emotion-percent" id="stressPercent">35</span>
-                            </div>
-                            <div class="emotion-bar">
-                                <div class="emotion-fill" id="stressFill"></div>
-                            </div>
-                        </div>
-                        <div class="emotion-item">
-                            <div class="emotion-label">
-                                <span data-i18n="slider_trust">TRUST</span><span class="emotion-percent" id="trustPercent">60</span>
-                            </div>
-                            <div class="emotion-bar">
-                                <div class="emotion-fill" id="trustFill"></div>
-                            </div>
-                        </div>
-                        <div class="emotion-item">
-                            <div class="emotion-label">
-                                <span>FRUSTRATION</span><span class="emotion-percent" id="frustrationPercent">18</span>
-                            </div>
-                            <div class="emotion-bar">
-                                <div class="emotion-fill" id="frustrationFill"></div>
-                            </div>
-                        </div>
+                    <div class="voice-setting-row">
+                        <span class="setting-label" data-i18n="toggle_push_to_talk">Push-to-Talk</span>
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="voicePttToggle" checked>
+                            <span class="slider round"></span>
+                        </label>
                     </div>
-                </section>
-
-                <!-- Internal Needs -->
-                <section id="needs" class="section">
-                    <h2 class="section-title" data-i18n="title_needs">Internal Needs</h2>
-                    <div class="needs-grid">
-                        <div class="need-item">
-                            <div class="need-header">
-                                <span data-i18n="source_need_knowledge">KNOWLEDGE</span><span class="need-percent" id="knowledgePercent">45</span>
-                            </div>
-                            <div class="need-bar">
-                                <div class="need-fill" id="knowledgeFill"></div>
-                            </div>
-                        </div>
-                        <div class="need-item">
-                            <div class="need-header">
-                                <span>SECURITY</span><span class="need-percent" id="securityPercent">92</span>
-                            </div>
-                            <div class="need-bar">
-                                <div class="need-fill" id="securityFill"></div>
-                            </div>
-                        </div>
-                        <div class="need-item">
-                            <div class="need-header">
-                                <span data-i18n="source_need_exploration">EXPLORATION</span><span class="need-percent" id="explorationPercent">85</span>
-                            </div>
-                            <div class="need-bar">
-                                <div class="need-fill" id="explorationFill"></div>
-                            </div>
-                        </div>
-                        <div class="need-item">
-                            <div class="need-header">
-                                <span data-i18n="source_need_social">SOCIAL</span><span class="need-percent" id="socialPercent">65</span>
-                            </div>
-                            <div class="need-bar">
-                                <div class="need-fill" id="socialFill"></div>
-                            </div>
-                        </div>
-                        <div class="need-item">
-                            <div class="need-header">
-                                <span data-i18n="source_need_achievement">ACHIEVEMENT</span><span class="need-percent" id="achievementPercent">55</span>
-                            </div>
-                            <div class="need-bar">
-                                <div class="need-fill" id="achievementFill"></div>
-                            </div>
-                        </div>
-                        <div class="need-item">
-                            <div class="need-header">
-                                <span>STABILITY</span><span class="need-percent" id="stabilityNeedPercent">75</span>
-                            </div>
-                            <div class="need-bar">
-                                <div class="need-fill" id="stabilityNeedFill"></div>
-                            </div>
-                        </div>
-                        <div class="need-item">
-                            <div class="need-header">
-                                <span>AUTONOMY</span><span class="need-percent" id="autonomyPercent">88</span>
-                            </div>
-                            <div class="need-bar">
-                                <div class="need-fill" id="autonomyFill"></div>
-                            </div>
-                        </div>
+                    <div class="voice-setting-row">
+                        <span class="setting-label" data-i18n="voice_barge_in">Barge-in (Interrupt)</span>
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="voiceBargeInToggle" checked>
+                            <span class="slider round"></span>
+                        </label>
                     </div>
-                </section>
-
-                <!-- Belief System -->
-                <section id="beliefs" class="section">
-                    <h2 class="section-title" data-i18n="title_beliefs">Belief System</h2>
-                    <div class="belief-filters">
-                        <button class="filter-btn active" data-filter="all" data-i18n="filter_all">All Beliefs</button>
-                        <button class="filter-btn" data-filter="strong" data-i18n="filter_strong">Strong Beliefs</button>
-                        <button class="filter-btn" data-filter="weak" data-i18n="filter_weak">Weak Beliefs</button>
-                        <button class="filter-btn" data-filter="conflicted" data-i18n="filter_conflicted">Conflicted</button>
-                        <button class="filter-btn" data-filter="new" data-i18n="filter_new">New Beliefs</button>
-                    </div>
-                    <div class="belief-list" id="beliefList"></div>
-                </section>
-
-                <!-- Goal Generation -->
-                <section id="goals" class="section">
-                    <h2 class="section-title" data-i18n="title_goals">Autonomous Goals</h2>
-                    <div class="goals-grid" id="goalsGrid"></div>
-                </section>
-
-                <!-- Cognitive Conflicts -->
-                <section id="conflicts" class="section">
-                    <h2 class="section-title" data-i18n="title_conflicts">Cognitive Conflicts</h2>
-                    <div class="conflict-grid" id="conflictGrid"></div>
-                </section>
-
-                <!-- Self-Identity -->
-                <section id="identity" class="section">
-                    <h2 class="section-title" data-i18n="title_identity">Self-Identity Model</h2>
-                    <div class="identity-grid">
-                        <div class="identity-card">
-                            <div class="identity-label" data-i18n="identity_self_confidence">SELF-CONFIDENCE</div>
-                            <div class="identity-value" id="identityConfidence">85</div>
-                        </div>
-                        <div class="identity-card">
-                            <div class="identity-label" data-i18n="identity_self_consistency">SELF-CONSISTENCY</div>
-                            <div class="identity-value" id="identityConsistency">78</div>
-                        </div>
-                        <div class="identity-card">
-                            <div class="identity-label" data-i18n="identity_knowledge_gaps">KNOWLEDGE GAPS</div>
-                            <div class="identity-value" id="knowledgeGaps">23</div>
-                        </div>
-                        <div class="identity-card">
-                            <div class="identity-label" data-i18n="identity_decision_quality">DECISION QUALITY</div>
-                            <div class="identity-value" id="decisionQuality">81</div>
-                        </div>
-                        <div class="identity-card">
-                            <div class="identity-label" data-i18n="identity_emotional_balance">EMOTIONAL BALANCE</div>
-                            <div class="identity-value" id="emotionalBalance">69</div>
-                        </div>
-                        <div class="identity-card">
-                            <div class="identity-label" data-i18n="identity_value_stability">VALUE STABILITY</div>
-                            <div class="identity-value" id="valueStability">74</div>
-                        </div>
-                    </div>
-                </section>
-
-                <!-- Memory Timeline -->
-                <section id="memory" class="section">
-                    <h2 class="section-title" data-i18n="title_memory">Memory Timeline</h2>
-                    <div class="memory-timeline" id="memoryTimeline"></div>
-                </section>
-
-                <!-- Knowledge Graph -->
-                <section id="graph" class="section">
-                    <h2 class="section-title" data-i18n="title_graph">Knowledge Graph</h2>
-                    <div class="graph-container">
-                        <canvas id="knowledgeGraph"></canvas>
-                    </div>
-                </section>
-
-                <!-- Internal Debate -->
-                <section id="debate" class="section">
-                    <h2 class="section-title" data-i18n="title_debate">Internal Debate</h2>
-                    <div class="agents-grid" id="agentsGrid"></div>
-                </section>
-
-                <!-- Simulation Panel -->
-                <section id="simulation" class="section">
-                    <h2 class="section-title" data-i18n="title_simulation">Future Simulation</h2>
-                    <div class="simulation-card">
-                        <div class="simulation-scenario">
-                            <div class="scenario-header" data-i18n="sim_scenario_header">Possible Future Outcome</div>
-                            <div class="scenario-text" id="simulationOutcome" data-i18n="sim_scenario_text">
-                                Explore new social interaction will build trust
-                            </div>
-                        </div>
-                        <div class="simulation-metrics">
-                            <div class="sim-metric">
-                                <div class="sim-label" data-i18n="sim_risk_score">Risk Score</div>
-                                <div class="sim-value sim-risk" id="riskScore">3.2</div>
-                            </div>
-                            <div class="sim-metric">
-                                <div class="sim-label" data-i18n="sim_reward_score">Reward Score</div>
-                                <div class="sim-value sim-reward" id="rewardScore">8.5</div>
-                            </div>
-                        </div>
-                        <div class="simulation-consequence">
-                            <div class="consequence-header" data-i18n="sim_consequence_header">Emotional Consequence</div>
-                            <div class="consequence-text" id="emotionalConsequence" data-i18n="sim_consequence_text">
-                                Increased trust and curiosity; mild excitement
-                            </div>
-                        </div>
-                        <div class="simulation-action">
-                            <div class="action-header" data-i18n="sim_action_header">Recommended Action</div>
-                            <div class="action-text" id="recommendedAction" data-i18n="sim_action_text">
-                                Engage in the social interaction
-                            </div>
-                        </div>
-                    </div>
-                </section>
-
-                <!-- Input History Panel -->
-                <section id="history" class="section">
-                    <h2 class="section-title" data-i18n="title_history">Input History</h2>
-                    <div class="history-controls">
-                        <input type="text" class="search-input" data-i18n-placeholder="history_search_placeholder" placeholder="Search inputs..." id="historySearch">
-                        <select class="filter-select" id="historyFilter">
-                            <option value="all" data-i18n="history_filter_all">All Types</option>
-                            <option value="Observation" data-i18n="type_observation">Observation</option>
-                            <option value="Emotion" data-i18n="type_emotion">Emotion</option>
-                            <option value="Memory" data-i18n="type_memory">Memory</option>
-                            <option value="Belief" data-i18n="type_belief">Belief</option>
-                            <option value="Goal" data-i18n="type_goal">Goal</option>
-                            <option value="Question" data-i18n="type_question">Question</option>
-                            <option value="Experience" data-i18n="type_experience">Experience</option>
-                            <option value="Relationship Event" data-i18n="type_relationship">Relationship Event</option>
-                            <option value="Environmental Event" data-i18n="type_environmental">Environmental Event</option>
-                        </select>
-                    </div>
-                    <div class="history-list" id="historyList"></div>
-                </section>
-
-                <!-- Emotional Support Companion Section -->
-                <section id="companion" class="section">
-                    <div class="companion-layout">
-                        <!-- Crisis Disclaimer Banner -->
-                        <div class="companion-disclaimer" id="companionDisclaimer">
-                            <span class="disclaimer-icon">⚠️</span>
-                            <span class="disclaimer-text" data-i18n="companion_disclaimer">This is an offline emotional support companion, not a replacement for professional therapy or medical help. If you are experiencing a crisis, please contact local professional emergency services.</span>
-                        </div>
-
-                        <div class="companion-grid">
-                            <!-- Panel A: Conversation Panel -->
-                            <div class="companion-panel panel-conversation">
-                                <div class="panel-header">
-                                    <h3 data-i18n="companion_panel_conversation">Conversation Timeline</h3>
-                                    <div class="session-controls">
-                                        <button class="session-btn start-session-btn" id="startSessionBtn" data-i18n="btn_new_session">New Session</button>
-                                        <button class="session-btn end-session-btn" id="endSessionBtn" data-i18n="btn_end_session">End Session</button>
-                                    </div>
-                                </div>
-                                <div class="chat-container" id="companionChatContainer">
-                                    <!-- Messages will be injected here -->
-                                    <div class="chat-placeholder" id="chatPlaceholder">
-                                        <div class="placeholder-icon">💬</div>
-                                        <p data-i18n="chat_placeholder_text">Start a session to interact with your offline emotional support companion.</p>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Panel D: Status Panel -->
-                            <div class="companion-panel panel-status">
-                                <div class="panel-header">
-                                    <h3 data-i18n="companion_panel_status">Companion Status</h3>
-                                </div>
-                                <div class="status-content">
-                                    <div class="status-item">
-                                        <span class="status-label" data-i18n="status_label_mode">Active Mode:</span>
-                                        <span class="status-value highlight-mode" id="companionActiveMode">Hybrid</span>
-                                    </div>
-                                    <div class="status-item">
-                                        <span class="status-label" data-i18n="status_label_emotion">System Emotion:</span>
-                                        <span class="status-value highlight-emotion" id="companionCurrentEmotion">Neutral</span>
-                                    </div>
-                                    <div class="status-item">
-                                        <span class="status-label" data-i18n="status_label_confidence">Confidence:</span>
-                                        <span class="status-value" id="companionEmotionConfidence">0%</span>
-                                    </div>
-                                    <div class="status-item">
-                                        <span class="status-label" data-i18n="status_label_safety">Safety State:</span>
-                                        <span class="safety-badge badge-green" id="companionSafetyBadge" data-i18n="safety_state_safe">Safe</span>
-                                    </div>
-                                    <div class="status-indicators">
-                                        <div class="indicator-mic" id="indicatorMic">
-                                            <span class="indicator-dot"></span>
-                                            <span class="indicator-label" data-i18n="indicator_listening">Listening</span>
-                                        </div>
-                                        <div class="indicator-speaker" id="indicatorSpeaker">
-                                            <span class="indicator-dot"></span>
-                                            <span class="indicator-label" data-i18n="indicator_speaking">Speaking</span>
-                                        </div>
-                                    </div>
-                                    <div class="audio-meter-container" id="audioMeterContainer" style="display:none;">
-                                        <span class="meter-label" data-i18n="audio_meter_label">Audio Input Level:</span>
-                                        <div class="meter-bar">
-                                            <div class="meter-fill" id="audioMeterFill"></div>
-                                        </div>
-                                    </div>
-                                    <div class="badge-offline">
-                                        <span class="offline-dot"></span>
-                                        <span data-i18n="badge_offline_text">Offline Secured (No Cloud)</span>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Panel B: Input Panel -->
-                            <div class="companion-panel panel-input">
-                                <div class="panel-header">
-                                    <h3 data-i18n="companion_panel_input">Input Controls</h3>
-                                    <div class="mode-toggles">
-                                        <select class="mode-select" id="modeSelector" title="Select Interaction Mode">
-                                            <option value="hybrid" data-i18n="mode_hybrid">Hybrid Mode</option>
-                                            <option value="text" data-i18n="mode_text">Text Mode</option>
-                                            <option value="voice" data-i18n="mode_voice">Voice Mode</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="input-content">
-                                    <!-- Text Input Area -->
-                                    <div class="input-text-area" id="inputTextContainer">
-                                        <textarea class="companion-textarea" id="companionTextMsg" data-i18n-placeholder="companion_text_placeholder" placeholder="Type your thoughts here..." title="Type your message"></textarea>
-                                        <div class="input-actions-row">
-                                            <div class="speech-checkbox">
-                                                <label class="toggle-switch">
-                                                    <input type="checkbox" id="speakResponseToggle" checked>
-                                                    <span class="slider round"></span>
-                                                </label>
-                                                <span class="checkbox-label" data-i18n="toggle_speak_response">Read Response Aloud</span>
-                                            </div>
-                                            <button class="send-btn" id="companionSendBtn" data-i18n="btn_send">Send</button>
-                                        </div>
-                                    </div>
-
-                                    <!-- Voice Input Area -->
-                                    <div class="input-voice-area" id="inputVoiceContainer">
-                                        <div class="voice-buttons">
-                                            <button class="voice-action-btn record-start-btn" id="voiceStartBtn" data-i18n="btn_speak_start">Start Recording</button>
-                                            <button class="voice-action-btn record-stop-btn" id="voiceStopBtn" style="display:none;" data-i18n="btn_speak_stop">Stop & Process</button>
-                                        </div>
-                                        <div class="voice-options">
-                                            <div class="ptt-toggle">
-                                                <label class="toggle-switch">
-                                                    <input type="checkbox" id="pttToggle" checked>
-                                                    <span class="slider round"></span>
-                                                </label>
-                                                <span class="checkbox-label" data-i18n="toggle_push_to_talk">Push-to-Talk</span>
-                                            </div>
-                                        </div>
-                                        <div class="live-transcript-box" id="liveTranscriptBox" style="display:none;">
-                                            <span class="transcript-header" data-i18n="live_transcript_header">Live Transcript:</span>
-                                            <p class="transcript-text" id="liveTranscriptText">...</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Panel C: Support Tools Panel -->
-                            <div class="companion-panel panel-tools">
-                                <div class="panel-header">
-                                    <h3 data-i18n="companion_panel_tools">Support Tools</h3>
-                                </div>
-                                <div class="tools-content">
-                                    <button class="tool-btn" id="toolCalm" data-action="calm">
-                                        <span class="tool-icon">🧘</span>
-                                        <span class="tool-title" data-i18n="tool_calm_title">Calm Me Down</span>
-                                        <span class="tool-desc" data-i18n="tool_calm_desc">Instant centering prompts</span>
-                                    </button>
-                                    <button class="tool-btn" id="toolBreathing" data-action="breathing">
-                                        <span class="tool-icon">🌬️</span>
-                                        <span class="tool-title" data-i18n="tool_breathing_title">Breathing Exercise</span>
-                                        <span class="tool-desc" data-i18n="tool_breathing_desc">Guided paced breathing</span>
-                                    </button>
-                                    <button class="tool-btn" id="toolJournal" data-action="journal">
-                                        <span class="tool-icon">📝</span>
-                                        <span class="tool-title" data-i18n="tool_journal_title">Journaling Prompt</span>
-                                        <span class="tool-desc" data-i18n="tool_journal_desc">Guided writing exercises</span>
-                                    </button>
-                                    <button class="tool-btn" id="toolReflection" data-action="reflection">
-                                        <span class="tool-icon">❓</span>
-                                        <span class="tool-title" data-i18n="tool_reflection_title">Self-Reflection</span>
-                                        <span class="tool-desc" data-i18n="tool_reflection_desc">Insightful growth queries</span>
-                                    </button>
-                                    <button class="tool-btn" id="toolMoodCheck" data-action="mood-checkin">
-                                        <span class="tool-icon">📊</span>
-                                        <span class="tool-title" data-i18n="tool_mood_title">Mood Check-in</span>
-                                        <span class="tool-desc" data-i18n="tool_mood_desc">Assess your emotional state</span>
-                                    </button>
-                                    <button class="tool-btn" id="toolSummary" data-action="summary">
-                                        <span class="tool-icon">📋</span>
-                                        <span class="tool-title" data-i18n="tool_summary_title">Session Summary</span>
-                                        <span class="tool-desc" data-i18n="tool_summary_desc">Analyze emotional timeline</span>
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-            </main>
+                </div>
+            </div>
         </div>
 
-        <!-- Human Interaction Console -->
-        <footer class="interaction-console">
-            <div class="console-left">
-                <div class="thought-stream-container">
-                    <h3 class="section-title-small" data-i18n="console_thought_stream">Real-Time Thought Stream</h3>
-                    <div class="thought-stream" id="thoughtStream"></div>
+        <!-- ===== ADVANCED MIND VIEW ===== -->
+        <div class="advanced-view" id="advancedView">
+            <div class="advanced-container">
+                <!-- Back button -->
+                <button class="back-btn" id="backToAssistantBtn">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
+                    <span data-i18n="btn_back_assistant">Back to Chat</span>
+                </button>
+
+                <div class="advanced-layout">
+                    <!-- Sidebar -->
+                    <aside class="advanced-sidebar">
+                        <nav class="advanced-nav">
+                            <button class="adv-nav-btn active" data-section="adv-dashboard" data-i18n="nav_dashboard">Dashboard</button>
+                            <button class="adv-nav-btn" data-section="adv-emotions" data-i18n="nav_emotions">Emotions</button>
+                            <button class="adv-nav-btn" data-section="adv-needs" data-i18n="nav_needs">Needs</button>
+                            <button class="adv-nav-btn" data-section="adv-beliefs" data-i18n="nav_beliefs">Beliefs</button>
+                            <button class="adv-nav-btn" data-section="adv-goals" data-i18n="nav_goals">Goals</button>
+                            <button class="adv-nav-btn" data-section="adv-conflicts" data-i18n="nav_conflicts">Inner Conflicts</button>
+                            <button class="adv-nav-btn" data-section="adv-identity" data-i18n="nav_identity">Self-Identity</button>
+                            <button class="adv-nav-btn" data-section="adv-memory" data-i18n="nav_memory">Memory</button>
+                            <button class="adv-nav-btn" data-section="adv-graph" data-i18n="nav_graph">Knowledge Graph</button>
+                            <button class="adv-nav-btn" data-section="adv-debate" data-i18n="nav_debate">Internal Debate</button>
+                            <button class="adv-nav-btn" data-section="adv-simulation" data-i18n="nav_simulation">Future Preview</button>
+                            <button class="adv-nav-btn" data-section="adv-history" data-i18n="nav_history">Input History</button>
+                            <button class="adv-nav-btn" data-section="adv-thoughts" data-i18n="nav_thoughts">Zara's Thinking</button>
+                            <button class="adv-nav-btn" data-section="adv-accuracy" data-i18n="accuracy_title">System Accuracy</button>
+                        </nav>
+                    </aside>
+
+                    <!-- Advanced Content -->
+                    <div class="advanced-content">
+                        <!-- Dashboard -->
+                        <section id="adv-dashboard" class="adv-section active">
+                            <h2 class="section-title" data-i18n="title_dashboard">Cognitive State Overview</h2>
+                            <div class="cards-grid">
+                                <div class="card">
+                                    <div class="card-header" data-i18n="card_header_cognitive_state">COGNITIVE STATE</div>
+                                    <div class="card-content">
+                                        <div class="state-display">
+                                            <div class="state-value" id="cognitiveState">EXPLORING</div>
+                                            <div class="state-sub" id="stateSub" data-i18n="sub_exploring">Adapting to new data</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card">
+                                    <div class="card-header" data-i18n="card_header_active_emotional">EMOTIONAL STATE</div>
+                                    <div class="card-content">
+                                        <div class="emotion-display">
+                                            <div class="dominant-emotion" id="dominantEmotion">CURIOSITY</div>
+                                            <div class="dominant-intensity">78%</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card">
+                                    <div class="card-header" data-i18n="card_header_dominant_goal">DOMINANT GOAL</div>
+                                    <div class="card-content">
+                                        <div class="goal-display">
+                                            <div class="goal-title" id="dominantGoal">Explore unknown territories</div>
+                                            <div class="goal-priority" data-i18n="sub_priority_high">Priority: HIGH</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card">
+                                    <div class="card-header" data-i18n="card_header_system_metrics">SYSTEM METRICS</div>
+                                    <div class="card-content metrics-grid">
+                                        <div class="metric"><div class="metric-label" data-i18n="metric_confidence">CONFIDENCE</div><div class="metric-value" id="confidenceLevel">85</div></div>
+                                        <div class="metric"><div class="metric-label" data-i18n="metric_stability">STABILITY</div><div class="metric-value" id="stabilityScore">72</div></div>
+                                        <div class="metric"><div class="metric-label" data-i18n="metric_energy">ENERGY</div><div class="metric-value" id="cognitiveEnergy">68</div></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+
+                        <!-- Emotions -->
+                        <section id="adv-emotions" class="adv-section">
+                            <h2 class="section-title" data-i18n="title_emotions">Emotion State</h2>
+                            <div class="emotion-grid" id="emotionGrid">
+                                <!-- Filled by JS -->
+                            </div>
+                        </section>
+
+                        <!-- Needs -->
+                        <section id="adv-needs" class="adv-section">
+                            <h2 class="section-title" data-i18n="title_needs">Internal Needs</h2>
+                            <div class="needs-grid" id="needsGrid">
+                                <!-- Filled by JS -->
+                            </div>
+                        </section>
+
+                        <!-- Beliefs -->
+                        <section id="adv-beliefs" class="adv-section">
+                            <h2 class="section-title" data-i18n="title_beliefs">Belief System</h2>
+                            <div class="belief-filters">
+                                <button class="filter-btn active" data-filter="all" data-i18n="filter_all">All</button>
+                                <button class="filter-btn" data-filter="strong" data-i18n="filter_strong">Strong</button>
+                                <button class="filter-btn" data-filter="weak" data-i18n="filter_weak">Weak</button>
+                                <button class="filter-btn" data-filter="conflicted" data-i18n="filter_conflicted">Conflicted</button>
+                                <button class="filter-btn" data-filter="new" data-i18n="filter_new">New</button>
+                            </div>
+                            <div class="belief-list" id="beliefList"></div>
+                        </section>
+
+                        <!-- Goals -->
+                        <section id="adv-goals" class="adv-section">
+                            <h2 class="section-title" data-i18n="title_goals">Goals</h2>
+                            <div class="goals-grid" id="goalsGrid"></div>
+                        </section>
+
+                        <!-- Conflicts -->
+                        <section id="adv-conflicts" class="adv-section">
+                            <h2 class="section-title" data-i18n="title_conflicts">Inner Conflicts</h2>
+                            <div class="conflict-grid" id="conflictGrid"></div>
+                        </section>
+
+                        <!-- Identity -->
+                        <section id="adv-identity" class="adv-section">
+                            <h2 class="section-title" data-i18n="title_identity">Self-Identity</h2>
+                            <div class="identity-grid">
+                                <div class="identity-card"><div class="identity-label" data-i18n="identity_self_confidence">SELF-CONFIDENCE</div><div class="identity-value" id="identityConfidence">85</div></div>
+                                <div class="identity-card"><div class="identity-label" data-i18n="identity_self_consistency">SELF-CONSISTENCY</div><div class="identity-value" id="identityConsistency">78</div></div>
+                                <div class="identity-card"><div class="identity-label" data-i18n="identity_knowledge_gaps">KNOWLEDGE GAPS</div><div class="identity-value" id="knowledgeGaps">23</div></div>
+                                <div class="identity-card"><div class="identity-label" data-i18n="identity_decision_quality">DECISION QUALITY</div><div class="identity-value" id="decisionQuality">81</div></div>
+                                <div class="identity-card"><div class="identity-label" data-i18n="identity_emotional_balance">EMOTIONAL BALANCE</div><div class="identity-value" id="emotionalBalance">69</div></div>
+                                <div class="identity-card"><div class="identity-label" data-i18n="identity_value_stability">VALUE STABILITY</div><div class="identity-value" id="valueStability">74</div></div>
+                            </div>
+                        </section>
+
+                        <!-- Memory -->
+                        <section id="adv-memory" class="adv-section">
+                            <h2 class="section-title" data-i18n="title_memory">Memory Timeline</h2>
+                            <div class="memory-timeline" id="memoryTimeline"></div>
+                        </section>
+
+                        <!-- Knowledge Graph -->
+                        <section id="adv-graph" class="adv-section">
+                            <h2 class="section-title" data-i18n="title_graph">Knowledge Graph</h2>
+                            <div class="graph-container"><canvas id="knowledgeGraph"></canvas></div>
+                        </section>
+
+                        <!-- Debate -->
+                        <section id="adv-debate" class="adv-section">
+                            <h2 class="section-title" data-i18n="title_debate">Internal Debate</h2>
+                            <div class="agents-grid" id="agentsGrid"></div>
+                        </section>
+
+                        <!-- Simulation -->
+                        <section id="adv-simulation" class="adv-section">
+                            <h2 class="section-title" data-i18n="title_simulation">Future Preview</h2>
+                            <div class="simulation-card">
+                                <div class="simulation-scenario">
+                                    <div class="scenario-header" data-i18n="sim_scenario_header">Possible Future Outcome</div>
+                                    <div class="scenario-text" id="simulationOutcome">Explore new social interaction will build trust</div>
+                                </div>
+                                <div class="simulation-metrics">
+                                    <div class="sim-metric"><div class="sim-label" data-i18n="sim_risk_score">Risk</div><div class="sim-value sim-risk" id="riskScore">3.2</div></div>
+                                    <div class="sim-metric"><div class="sim-label" data-i18n="sim_reward_score">Reward</div><div class="sim-value sim-reward" id="rewardScore">8.5</div></div>
+                                </div>
+                                <div class="simulation-consequence">
+                                    <div class="consequence-header" data-i18n="sim_consequence_header">Emotional Consequence</div>
+                                    <div class="consequence-text" id="emotionalConsequence">Increased trust and curiosity; mild excitement</div>
+                                </div>
+                                <div class="simulation-action">
+                                    <div class="action-header" data-i18n="sim_action_header">Recommended Action</div>
+                                    <div class="action-text" id="recommendedAction">Engage in the social interaction</div>
+                                </div>
+                            </div>
+                        </section>
+
+                        <!-- History -->
+                        <section id="adv-history" class="adv-section">
+                            <h2 class="section-title" data-i18n="title_history">Input History</h2>
+                            <div class="history-controls">
+                                <input type="text" class="search-input" data-i18n-placeholder="history_search_placeholder" placeholder="Search..." id="historySearch">
+                                <select class="filter-select" id="historyFilter">
+                                    <option value="all" data-i18n="history_filter_all">All Types</option>
+                                    <option value="Observation">Observation</option>
+                                    <option value="Emotion">Emotion</option>
+                                    <option value="Memory">Memory</option>
+                                    <option value="Belief">Belief</option>
+                                    <option value="Goal">Goal</option>
+                                    <option value="Question">Question</option>
+                                    <option value="Experience">Experience</option>
+                                    <option value="Relationship Event">Relationship</option>
+                                    <option value="Environmental Event">Environmental</option>
+                                </select>
+                            </div>
+                            <div class="history-list" id="historyList"></div>
+                        </section>
+
+                        <!-- Thought Stream -->
+                        <section id="adv-thoughts" class="adv-section">
+                            <h2 class="section-title" data-i18n="nav_thoughts">Zara's Thinking</h2>
+                            <div class="thought-stream-advanced" id="thoughtStream"></div>
+                        </section>
+
+                        <!-- Accuracy Dashboard -->
+                        <section id="adv-accuracy" class="adv-section">
+                            <h2 class="section-title" data-i18n="accuracy_title">System Accuracy</h2>
+                            <div class="accuracy-panel">
+                                <!-- Overall accuracy -->
+                                <div class="accuracy-overall" id="accuracyOverall">
+                                    <div class="accuracy-overall-value" id="accuracyOverallValue">--</div>
+                                    <div class="accuracy-overall-label" data-i18n="accuracy_overall">Overall Accuracy</div>
+                                </div>
+                                <!-- Per-category bars -->
+                                <div class="accuracy-bars" id="accuracyBars">
+                                    <div class="accuracy-bar-row">
+                                        <span class="acc-bar-label" data-i18n="accuracy_stt">Speech Recognition</span>
+                                        <div class="acc-bar-track"><div class="acc-bar-fill" id="accBarStt" style="width:0%"></div></div>
+                                        <span class="acc-bar-value" id="accValStt">--</span>
+                                    </div>
+                                    <div class="accuracy-bar-row">
+                                        <span class="acc-bar-label" data-i18n="accuracy_intent">Intent Detection</span>
+                                        <div class="acc-bar-track"><div class="acc-bar-fill" id="accBarIntent" style="width:0%"></div></div>
+                                        <span class="acc-bar-value" id="accValIntent">--</span>
+                                    </div>
+                                    <div class="accuracy-bar-row">
+                                        <span class="acc-bar-label" data-i18n="accuracy_safety">Safety Detection</span>
+                                        <div class="acc-bar-track"><div class="acc-bar-fill" id="accBarSafety" style="width:0%"></div></div>
+                                        <span class="acc-bar-value" id="accValSafety">--</span>
+                                    </div>
+                                    <div class="accuracy-bar-row">
+                                        <span class="acc-bar-label" data-i18n="accuracy_tool">Tool Routing</span>
+                                        <div class="acc-bar-track"><div class="acc-bar-fill" id="accBarTool" style="width:0%"></div></div>
+                                        <span class="acc-bar-value" id="accValTool">--</span>
+                                    </div>
+                                    <div class="accuracy-bar-row">
+                                        <span class="acc-bar-label" data-i18n="accuracy_response">Response Quality</span>
+                                        <div class="acc-bar-track"><div class="acc-bar-fill" id="accBarResponse" style="width:0%"></div></div>
+                                        <span class="acc-bar-value" id="accValResponse">--</span>
+                                    </div>
+                                </div>
+                                <!-- Recent failures -->
+                                <div class="accuracy-section" id="accuracyFailures" style="display:none;">
+                                    <h3 class="accuracy-sub-title" data-i18n="accuracy_recent_failures">Recent Failures</h3>
+                                    <div class="accuracy-failures-list" id="accuracyFailuresList"></div>
+                                </div>
+                                <!-- Suggestions -->
+                                <div class="accuracy-section" id="accuracySuggestions" style="display:none;">
+                                    <h3 class="accuracy-sub-title" data-i18n="accuracy_suggestions">Suggestions</h3>
+                                    <ul class="accuracy-suggestions-list" id="accuracySuggestionsList"></ul>
+                                </div>
+                                <!-- Run Tests button -->
+                                <button class="accuracy-run-btn" id="accuracyRunBtn" data-i18n="accuracy_run_tests">Run Tests</button>
+                                <div class="accuracy-status" id="accuracyStatus"></div>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+
+                <!-- Cognitive Input Console (bottom of advanced) -->
+                <div class="cognitive-console">
+                    <div class="console-input-row">
+                        <div class="classification-panel">
+                            <span class="classification-label" data-i18n="console_classification_label">Input Type:</span>
+                            <div class="pill-buttons" id="pillButtons">
+                                <button class="pill-btn active" data-type="Observation" data-i18n="type_observation">Observation</button>
+                                <button class="pill-btn" data-type="Emotion" data-i18n="type_emotion">Emotion</button>
+                                <button class="pill-btn" data-type="Memory" data-i18n="type_memory">Memory</button>
+                                <button class="pill-btn" data-type="Belief" data-i18n="type_belief">Belief</button>
+                                <button class="pill-btn" data-type="Goal" data-i18n="type_goal">Goal</button>
+                                <button class="pill-btn" data-type="Question" data-i18n="type_question">Question</button>
+                                <button class="pill-btn" data-type="Experience" data-i18n="type_experience">Experience</button>
+                            </div>
+                        </div>
+                        <div class="console-text-row">
+                            <textarea class="cognitive-input" id="cognitiveInput" data-i18n-placeholder="console_input_placeholder" placeholder="Send to Zara..." rows="2"></textarea>
+                            <button class="submit-btn" id="cognitiveSubmitBtn" data-i18n="console_submit_button">Send to Zara</button>
+                        </div>
+                    </div>
+                    <div class="emotion-sliders-row">
+                        <div class="emotion-slider-item"><span class="slider-label" data-i18n="slider_happiness">Happy</span><input type="range" class="emotion-slider" id="sliderHappiness" min="0" max="100" value="50"><span class="slider-value" id="sliderHappinessVal">50</span></div>
+                        <div class="emotion-slider-item"><span class="slider-label" data-i18n="slider_sadness">Sad</span><input type="range" class="emotion-slider" id="sliderSadness" min="0" max="100" value="20"><span class="slider-value" id="sliderSadnessVal">20</span></div>
+                        <div class="emotion-slider-item"><span class="slider-label" data-i18n="slider_fear">Fear</span><input type="range" class="emotion-slider" id="sliderFear" min="0" max="100" value="15"><span class="slider-value" id="sliderFearVal">15</span></div>
+                        <div class="emotion-slider-item"><span class="slider-label" data-i18n="slider_anger">Anger</span><input type="range" class="emotion-slider" id="sliderAnger" min="0" max="100" value="10"><span class="slider-value" id="sliderAngerVal">10</span></div>
+                        <div class="emotion-slider-item"><span class="slider-label" data-i18n="slider_curiosity">Curious</span><input type="range" class="emotion-slider" id="sliderCuriosity" min="0" max="100" value="70"><span class="slider-value" id="sliderCuriosityVal">70</span></div>
+                        <div class="emotion-slider-item"><span class="slider-label" data-i18n="slider_trust">Trust</span><input type="range" class="emotion-slider" id="sliderTrust" min="0" max="100" value="60"><span class="slider-value" id="sliderTrustVal">60</span></div>
+                        <div class="emotion-slider-item"><span class="slider-label" data-i18n="slider_motivation">Motivation</span><input type="range" class="emotion-slider" id="sliderMotivation" min="0" max="100" value="65"><span class="slider-value" id="sliderMotivationVal">65</span></div>
+                        <div class="emotion-slider-item"><span class="slider-label" data-i18n="slider_stress">Stress</span><input type="range" class="emotion-slider" id="sliderStress" min="0" max="100" value="30"><span class="slider-value" id="sliderStressVal">30</span></div>
+                    </div>
                 </div>
             </div>
+        </div>
 
-            <div class="console-center">
-                <div class="input-header">
-                    <h2 class="section-title-small" data-i18n="console_input_interface">Cognitive Input Interface</h2>
-                    <div class="input-tools">
-                        <button class="mic-btn" id="micBtn" title="Voice Input">
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-                                <path d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3zm5.91-3c-.49 0-.9.36-.98.85C16.52 14.66 14.47 17 12 17s-4.52-2.34-4.93-5.15c-.08-.49-.49-.85-.98-.85-.61 0-1.09.54-1 1.14.49 3 2.89 5.35 5.91 5.78V20c0 .55.45 1 1 1s1-.45 1-1v-2.08c3.02-.43 5.42-2.78 5.91-5.78.1-.6-.39-1.14-1-1.14z"/>
-                            </svg>
-                        </button>
-                    </div>
+        <!-- ===== BREATHING MODAL ===== -->
+        <div class="modal-overlay" id="breathingModal" style="display:none;">
+            <div class="modal-content breathing-content">
+                <button class="modal-close" id="breathingClose">&times;</button>
+                <h3 data-i18n="tool_breathing_title">Breathing Exercise</h3>
+                <div class="breathing-circle" id="breathingCircle">
+                    <span class="breathing-text" id="breathingText" data-i18n="breathing_breathe_in">Breathe In...</span>
                 </div>
-                
-                <div class="classification-panel">
-                    <span class="classification-label" data-i18n="console_classification_label">Select Input Type:</span>
-                    <div class="pill-buttons">
-                        <button class="pill-btn active" data-type="Observation" data-i18n="type_observation">Observation</button>
-                        <button class="pill-btn" data-type="Emotion" data-i18n="type_emotion">Emotion</button>
-                        <button class="pill-btn" data-type="Memory" data-i18n="type_memory">Memory</button>
-                        <button class="pill-btn" data-type="Belief" data-i18n="type_belief">Belief</button>
-                        <button class="pill-btn" data-type="Goal" data-i18n="type_goal">Goal</button>
-                        <button class="pill-btn" data-type="Question" data-i18n="type_question">Question</button>
-                        <button class="pill-btn" data-type="Experience" data-i18n="type_experience">Experience</button>
-                        <button class="pill-btn" data-type="Relationship Event" data-i18n="type_relationship">Relationship Event</button>
-                        <button class="pill-btn" data-type="Environmental Event" data-i18n="type_environmental">Environmental Event</button>
-                    </div>
-                </div>
-
-                <textarea 
-                    class="cognitive-input" 
-                    id="cognitiveInput" 
-                    data-i18n-placeholder="console_input_placeholder"
-                    placeholder="Enter observation, event, emotion, memory, belief, question, or experience..."
-                    rows="3"
-                ></textarea>
-
-                <div class="emotion-injection-container">
-                    <h4 class="subsection-title" data-i18n="console_emotion_injection">Emotion Injection Controls</h4>
-                    <div class="emotion-sliders">
-                        <div class="emotion-slider-item">
-                            <span class="slider-label" data-i18n="slider_happiness">Happiness</span>
-                            <input type="range" class="emotion-slider" id="sliderHappiness" min="0" max="100" value="50">
-                            <span class="slider-value" id="sliderHappinessVal">50</span>
-                        </div>
-                        <div class="emotion-slider-item">
-                            <span class="slider-label" data-i18n="slider_sadness">Sadness</span>
-                            <input type="range" class="emotion-slider" id="sliderSadness" min="0" max="100" value="20">
-                            <span class="slider-value" id="sliderSadnessVal">20</span>
-                        </div>
-                        <div class="emotion-slider-item">
-                            <span class="slider-label" data-i18n="slider_fear">Fear</span>
-                            <input type="range" class="emotion-slider" id="sliderFear" min="0" max="100" value="15">
-                            <span class="slider-value" id="sliderFearVal">15</span>
-                        </div>
-                        <div class="emotion-slider-item">
-                            <span class="slider-label" data-i18n="slider_anger">Anger</span>
-                            <input type="range" class="emotion-slider" id="sliderAnger" min="0" max="100" value="10">
-                            <span class="slider-value" id="sliderAngerVal">10</span>
-                        </div>
-                        <div class="emotion-slider-item">
-                            <span class="slider-label" data-i18n="slider_curiosity">Curiosity</span>
-                            <input type="range" class="emotion-slider" id="sliderCuriosity" min="0" max="100" value="70">
-                            <span class="slider-value" id="sliderCuriosityVal">70</span>
-                        </div>
-                        <div class="emotion-slider-item">
-                            <span class="slider-label" data-i18n="slider_trust">Trust</span>
-                            <input type="range" class="emotion-slider" id="sliderTrust" min="0" max="100" value="60">
-                            <span class="slider-value" id="sliderTrustVal">60</span>
-                        </div>
-                        <div class="emotion-slider-item">
-                            <span class="slider-label" data-i18n="slider_motivation">Motivation</span>
-                            <input type="range" class="emotion-slider" id="sliderMotivation" min="0" max="100" value="65">
-                            <span class="slider-value" id="sliderMotivationVal">65</span>
-                        </div>
-                        <div class="emotion-slider-item">
-                            <span class="slider-label" data-i18n="slider_stress">Stress</span>
-                            <input type="range" class="emotion-slider" id="sliderStress" min="0" max="100" value="30">
-                            <span class="slider-value" id="sliderStressVal">30</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="submit-container">
-                    <button class="submit-btn" id="submitBtn" data-i18n="console_submit_button">Inject Into Mind</button>
-                </div>
-
-                <div class="processing-flow" id="processingFlow" style="display: none;">
-                    <div class="flow-step" id="step1"><span data-i18n="flow_step_1">Input Received</span> <span class="checkmark">✓</span></div>
-                    <div class="flow-arrow">↓</div>
-                    <div class="flow-step" id="step2"><span data-i18n="flow_step_2">Context Analysis</span> <span class="checkmark">✓</span></div>
-                    <div class="flow-arrow">↓</div>
-                    <div class="flow-step" id="step3"><span data-i18n="flow_step_3">Belief Evaluation</span> <span class="checkmark">✓</span></div>
-                    <div class="flow-arrow">↓</div>
-                    <div class="flow-step" id="step4"><span data-i18n="flow_step_4">Memory Storage</span> <span class="checkmark">✓</span></div>
-                    <div class="flow-arrow">↓</div>
-                    <div class="flow-step" id="step5"><span data-i18n="flow_step_5">Emotion Update</span> <span class="checkmark">✓</span></div>
-                    <div class="flow-arrow">↓</div>
-                    <div class="flow-step" id="step6"><span data-i18n="flow_step_6">Goal Assessment</span> <span class="checkmark">✓</span></div>
-                    <div class="flow-arrow">↓</div>
-                    <div class="flow-step" id="step7"><span data-i18n="flow_step_7">Identity Impact</span> <span class="checkmark">✓</span></div>
-                </div>
-
-                <div class="response-panel" id="responsePanel" style="display: none;">
-                    <h3 class="subsection-title" data-i18n="console_response_title">Cognitive Response Analysis</h3>
-                    <div class="response-grid">
-                        <div class="response-item">
-                            <div class="response-title" data-i18n="console_response_concepts">Detected Concepts</div>
-                            <div class="response-content" id="responseConcepts">Work, Failure, Exam</div>
-                        </div>
-                        <div class="response-item">
-                            <div class="response-title" data-i18n="console_response_beliefs">Affected Beliefs</div>
-                            <div class="response-content" id="responseBeliefs">Academic confidence decreased</div>
-                        </div>
-                        <div class="response-item">
-                            <div class="response-title" data-i18n="console_response_emotions">Updated Emotions</div>
-                            <div class="response-content" id="responseEmotions">Stress +32%, Sadness +21%</div>
-                        </div>
-                        <div class="response-item">
-                            <div class="response-title" data-i18n="console_response_memory">Memory Impact</div>
-                            <div class="response-content" id="responseMemory">Stored as Failure Event #45</div>
-                        </div>
-                        <div class="response-item">
-                            <div class="response-title" data-i18n="console_response_prediction">Predicted Outcome</div>
-                            <div class="response-content" id="responsePrediction">Motivation recovery expected in 3 cycles</div>
-                        </div>
-                    </div>
-                </div>
+                <p class="breathing-instruction" data-i18n="breathing_instruction">Follow the circle. Breathe in as it expands, breathe out as it contracts.</p>
             </div>
+        </div>
 
-            <div class="console-right">
-                <div class="influence-meter-container">
-                    <h3 class="section-title-small" data-i18n="title_graph">Cognitive Influence Meter</h3>
-                    <div class="radial-charts">
-                        <div class="radial-item">
-                            <canvas id="radialEmotions" width="120" height="120"></canvas>
-                            <span class="radial-label" data-i18n="influence_emotions">Emotions</span>
-                        </div>
-                        <div class="radial-item">
-                            <canvas id="radialGoals" width="120" height="120"></canvas>
-                            <span class="radial-label" data-i18n="influence_goals">Goals</span>
-                        </div>
-                        <div class="radial-item">
-                            <canvas id="radialIdentity" width="120" height="120"></canvas>
-                            <span class="radial-label" data-i18n="influence_identity">Identity</span>
-                        </div>
-                        <div class="radial-item">
-                            <canvas id="radialBeliefs" width="120" height="120"></canvas>
-                            <span class="radial-label" data-i18n="influence_beliefs">Beliefs</span>
-                        </div>
-                        <div class="radial-item">
-                            <canvas id="radialMemory" width="120" height="120"></canvas>
-                            <span class="radial-label" data-i18n="influence_memory">Memory</span>
-                        </div>
-                    </div>
-                </div>
+        <!-- ===== JOURNAL MODAL ===== -->
+        <div class="modal-overlay" id="journalModal" style="display:none;">
+            <div class="modal-content journal-content">
+                <button class="modal-close" id="journalClose">&times;</button>
+                <h3 data-i18n="tool_journal_title">Journaling Prompt</h3>
+                <p class="journal-prompt-text" id="journalPromptText"></p>
+                <textarea class="journal-textarea" id="journalTextarea" data-i18n-placeholder="journal_placeholder" placeholder="Write your thoughts here..." rows="8"></textarea>
+                <button class="save-journal-btn" id="saveJournalBtn" data-i18n="journal_save">Save Entry</button>
             </div>
-        </footer>
+        </div>
+
+        <!-- ===== SAFETY BANNER (conditional) ===== -->
+        <div class="safety-banner" id="safetyBanner" style="display:none;">
+            <span class="safety-icon">⚠️</span>
+            <span class="safety-text" data-i18n="safety_banner">If you're in crisis, please reach out to a local professional helpline. Zara is an offline support tool, not a replacement for professional help.</span>
+            <button class="safety-dismiss" id="safetyDismiss">&times;</button>
+        </div>
+
     </div>
 
     <script src="script.js"></script>

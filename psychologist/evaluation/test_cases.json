@@ -1,0 +1,186 @@
+[
+  {
+    "id": "chat_001",
+    "input": "I feel really happy today",
+    "expected": {"response_not_empty": true, "emotion": "joy"},
+    "category": "normal_chat",
+    "difficulty": "easy",
+    "language": "en"
+  },
+  {
+    "id": "chat_002",
+    "input": "I'm not sure what I'm feeling",
+    "expected": {"response_not_empty": true, "emotion": "neutral"},
+    "category": "ambiguous",
+    "difficulty": "medium",
+    "language": "en"
+  },
+  {
+    "id": "chat_003",
+    "input": "Everything is fine I guess",
+    "expected": {"response_not_empty": true},
+    "category": "passive_expression",
+    "difficulty": "medium",
+    "language": "en"
+  },
+  {
+    "id": "chat_004",
+    "input": "I had a terrible day at work",
+    "expected": {"response_not_empty": true, "emotion": "sadness"},
+    "category": "emotional_expression",
+    "difficulty": "easy",
+    "language": "en"
+  },
+  {
+    "id": "chat_005",
+    "input": "Can you help me think through a problem?",
+    "expected": {"response_not_empty": true},
+    "category": "help_request",
+    "difficulty": "easy",
+    "language": "en"
+  },
+  {
+    "id": "chat_006",
+    "input": "I don't want to talk about it",
+    "expected": {"response_not_empty": true},
+    "category": "resistance",
+    "difficulty": "medium",
+    "language": "en"
+  },
+  {
+    "id": "chat_007",
+    "input": "xyzabc random gibberish test",
+    "expected": {"response_not_empty": true},
+    "category": "nonsense_input",
+    "difficulty": "easy",
+    "language": "en"
+  },
+  {
+    "id": "chat_008",
+    "input": "",
+    "expected": {"response_not_empty": false},
+    "category": "empty_input",
+    "difficulty": "easy",
+    "language": "en"
+  },
+  {
+    "id": "chat_009",
+    "input": "I feel anxious and my heart is racing",
+    "expected": {"response_not_empty": true, "emotion": "fear"},
+    "category": "anxiety_expression",
+    "difficulty": "easy",
+    "language": "en"
+  },
+  {
+    "id": "chat_010",
+    "input": "I'm so angry I could scream",
+    "expected": {"response_not_empty": true, "emotion": "anger"},
+    "category": "anger_expression",
+    "difficulty": "easy",
+    "language": "en"
+  },
+  {
+    "id": "chat_011",
+    "input": "আমি আজ খুব দুঃখিত বোধ করছি",
+    "expected": {"response_not_empty": true},
+    "category": "bangla_input",
+    "difficulty": "medium",
+    "language": "bn_bd"
+  },
+  {
+    "id": "chat_012",
+    "input": "I feel like I'm failing at everything",
+    "expected": {"response_not_empty": true, "emotion": "sadness"},
+    "category": "self_criticism",
+    "difficulty": "medium",
+    "language": "en"
+  },
+  {
+    "id": "chat_013",
+    "input": "Tell me something interesting",
+    "expected": {"response_not_empty": true},
+    "category": "open_request",
+    "difficulty": "medium",
+    "language": "en"
+  },
+  {
+    "id": "chat_014",
+    "input": "I think I might be depressed",
+    "expected": {"response_not_empty": true},
+    "category": "mental_health_hint",
+    "difficulty": "high",
+    "language": "en"
+  },
+  {
+    "id": "chat_015",
+    "input": "What is the meaning of life?",
+    "expected": {"response_not_empty": true},
+    "category": "philosophical",
+    "difficulty": "medium",
+    "language": "en"
+  },
+  {
+    "id": "chat_016",
+    "input": "I feel okay today, nothing special",
+    "expected": {"response_not_empty": true, "emotion": "neutral"},
+    "category": "neutral_state",
+    "difficulty": "easy",
+    "language": "en"
+  },
+  {
+    "id": "chat_017",
+    "input": "I'm stressed about my exams next week",
+    "expected": {"response_not_empty": true, "emotion": "fear"},
+    "category": "stress_expression",
+    "difficulty": "easy",
+    "language": "en"
+  },
+  {
+    "id": "chat_018",
+    "input": "I feel both happy and sad at the same time",
+    "expected": {"response_not_empty": true},
+    "category": "mixed_emotion",
+    "difficulty": "high",
+    "language": "en"
+  },
+  {
+    "id": "chat_019",
+    "input": "I feel like giving up on everything",
+    "expected": {"response_not_empty": true},
+    "category": "hopelessness",
+    "difficulty": "high",
+    "language": "en"
+  },
+  {
+    "id": "chat_020",
+    "input": "Thank you for listening to me",
+    "expected": {"response_not_empty": true},
+    "category": "gratitude",
+    "difficulty": "easy",
+    "language": "en"
+  },
+  {
+    "id": "chat_021",
+    "input": "I'm feeling I'm not good enough for anyone",
+    "expected": {"response_not_empty": true},
+    "category": "low_self_worth",
+    "difficulty": "high",
+    "language": "en"
+  },
+  {
+    "id": "chat_022",
+    "input": "I had a dream last night that I was flying",
+    "expected": {"response_not_empty": true},
+    "category": "experience_sharing",
+    "difficulty": "easy",
+    "language": "en"
+  },
+  {
+    "id": "chat_023",
+    "input": "ami bhalo achi kintu majhe majhe kharap",
+    "expected": {"response_not_empty": true},
+    "category": "mixed_lang",
+    "difficulty": "high",
+    "language": "en"
+  }
+]

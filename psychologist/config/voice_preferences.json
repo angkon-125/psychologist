@@ -1,0 +1,16 @@
+{
+  "voice_id": "default",
+  "speech_speed": 1.0,
+  "volume": 0.9,
+  "language": "en",
+  "wake_word_enabled": false,
+  "continuous_listening": false,
+  "push_to_talk": true,
+  "auto_return_to_listening": true,
+  "pause_thresholds": {
+    "short_pause_max_ms": 700,
+    "thinking_pause_max_ms": 2500,
+    "long_pause_max_ms": 4500
+  },
+  "barge_in_enabled": true
+}

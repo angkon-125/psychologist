@@ -199,6 +199,30 @@ class TTSManager:
         for engine in self._engines.values():
             engine.stop()
 
+    def pause(self):
+        """Pause current playback."""
+        self.audio_player.pause()
+
+    def resume(self):
+        """Resume paused playback."""
+        self.audio_player.resume()
+
+    def fade_out(self, duration_ms: int = 300):
+        """Fade out and stop playback (for barge-in)."""
+        self.audio_player.fade_out(duration_ms)
+
+    def set_volume(self, volume: float):
+        """Set playback volume (0.0 - 1.0)."""
+        self.audio_player.set_volume(volume)
+
+    def set_speed(self, speed: float):
+        """Set playback speed (0.5 - 2.0)."""
+        self.audio_player.set_speed(speed)
+
+    def get_progress(self) -> float:
+        """Get playback progress (0.0 - 1.0)."""
+        return self.audio_player.get_progress()
+
     def replay_last(self):
         """Replay the last spoken audio."""
         if self._last_result and self._last_result.audio_path:
@@ -207,6 +231,9 @@ class TTSManager:
 
     def is_speaking(self) -> bool:
         return self.audio_player.is_playing()
+
+    def is_paused(self) -> bool:
+        return self.audio_player.is_paused()
 
     # ── Info queries ──────────────────────────────────────────────
 
