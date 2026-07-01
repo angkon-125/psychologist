@@ -1,0 +1,210 @@
+{
+  "session_id": "cb2eb143-56ce-4010-8939-befd77db9a5d",
+  "active_mode": "hybrid",
+  "start_time": "2026-07-01T18:56:11.329933",
+  "end_time": null,
+  "last_interaction_time": "2026-07-01T19:03:38.826960",
+  "current_emotion_state": {
+    "timestamp": "2026-07-01T18:58:09.224601",
+    "primary_emotions": {
+      "happiness": 0.0,
+      "sadness": 0.213425143421997,
+      "anger": 0.0,
+      "fear": 0.0,
+      "surprise": 0.0,
+      "disgust": 0.0
+    },
+    "secondary_emotions": {
+      "excitement": 0.025431321710998534,
+      "anxiety": 0.13380632171099854,
+      "frustration": 0.012715660855499267,
+      "curiosity": 0.0,
+      "hope": 0.0,
+      "confidence": 0.0,
+      "embarrassment": 0.0,
+      "pride": 0.0,
+      "jealousy": 0.0,
+      "gratitude": 0.0,
+      "sympathy": 0.0,
+      "empathy": 0.0
+    },
+    "advanced_emotions": {
+      "burnout": 0.0,
+      "motivation": 0.0,
+      "stress": 0.0,
+      "loneliness": 0.0,
+      "trust": 0.0,
+      "distrust": 0.0,
+      "attachment": 0.0,
+      "nostalgia": 0.0,
+      "emotional_fatigue": 0.0,
+      "emotional_recovery": 0.0
+    },
+    "intensity": 0.595
+  },
+  "mood_timeline": [
+    {
+      "emotion": "sadness",
+      "confidence": 0.0,
+      "timestamp": "2026-07-01T18:56:11.332130",
+      "input_type": "text"
+    },
+    {
+      "emotion": "sadness",
+      "confidence": 0.0,
+      "timestamp": "2026-07-01T18:57:17.276467",
+      "input_type": "text"
+    },
+    {
+      "emotion": "sadness",
+      "confidence": 0.0,
+      "timestamp": "2026-07-01T18:57:37.347710",
+      "input_type": "text"
+    },
+    {
+      "emotion": "sadness",
+      "confidence": 0.595,
+      "timestamp": "2026-07-01T18:58:09.224659",
+      "input_type": "text"
+    },
+    {
+      "emotion": "sadness",
+      "confidence": 0.0,
+      "timestamp": "2026-07-01T19:03:38.826934",
+      "input_type": "text"
+    }
+  ],
+  "safety_flags": [
+    "moderate"
+  ],
+  "user_messages": [
+    {
+      "message_id": "ba8d0dcd-4a39-4798-8279-9f9d50681a81",
+      "session_id": "cb2eb143-56ce-4010-8939-befd77db9a5d",
+      "input_type": "text",
+      "raw_text": "hello",
+      "normalized_text": "hello",
+      "language": "en",
+      "timestamp": "2026-07-01T18:56:11.332130",
+      "detected_emotion": "sadness",
+      "confidence": 0.0,
+      "user_selected_mood": null
+    },
+    {
+      "message_id": "01f5642e-78f9-4a3b-80d2-be84f3e8d00b",
+      "session_id": "cb2eb143-56ce-4010-8939-befd77db9a5d",
+      "input_type": "text",
+      "raw_text": "are you listening me  that's good",
+      "normalized_text": "are you listening me that's good",
+      "language": "en",
+      "timestamp": "2026-07-01T18:57:17.276467",
+      "detected_emotion": "sadness",
+      "confidence": 0.0,
+      "user_selected_mood": null
+    },
+    {
+      "message_id": "daeace04-1b2a-4fb1-be2f-bb53c2ad7efa",
+      "session_id": "cb2eb143-56ce-4010-8939-befd77db9a5d",
+      "input_type": "text",
+      "raw_text": "do you understand",
+      "normalized_text": "do you understand",
+      "language": "en",
+      "timestamp": "2026-07-01T18:57:37.347710",
+      "detected_emotion": "sadness",
+      "confidence": 0.0,
+      "user_selected_mood": null
+    },
+    {
+      "message_id": "949d64c5-dba0-48a8-a842-7abbedab151d",
+      "session_id": "cb2eb143-56ce-4010-8939-befd77db9a5d",
+      "input_type": "text",
+      "raw_text": "I am feeling suffering  and nothing else  but I feel so anxious and  traumaatize  can you please help me to elaborate this feelings and I want to understand this",
+      "normalized_text": "I am feeling suffering and nothing else but I feel so anxious and traumaatize can you please help me to elaborate this feelings and I want to understand this",
+      "language": "en",
+      "timestamp": "2026-07-01T18:58:09.224659",
+      "detected_emotion": "sadness",
+      "confidence": 0.595,
+      "user_selected_mood": null
+    },
+    {
+      "message_id": "1f61a227-ebaa-4e47-a115-66d262d79c12",
+      "session_id": "cb2eb143-56ce-4010-8939-befd77db9a5d",
+      "input_type": "text",
+      "raw_text": "are you listening man",
+      "normalized_text": "are you listening man",
+      "language": "en",
+      "timestamp": "2026-07-01T19:03:38.826934",
+      "detected_emotion": "sadness",
+      "confidence": 0.0,
+      "user_selected_mood": null
+    }
+  ],
+  "assistant_messages": [
+    {
+      "message_id": "f0c5e07c-a921-4bb4-aec3-2c3f338c164f",
+      "session_id": "cb2eb143-56ce-4010-8939-befd77db9a5d",
+      "response_text": "I'm listening. What else is on your mind?",
+      "response_language": "en",
+      "response_type": "neutral",
+      "spoken": false,
+      "audio_path": null,
+      "safety_level": "none",
+      "timestamp": "2026-07-01T18:56:11.332175"
+    },
+    {
+      "message_id": "12b2a90f-3237-46fc-a565-add2ee842d18",
+      "session_id": "cb2eb143-56ce-4010-8939-befd77db9a5d",
+      "response_text": "I understand. Tell me more about that.",
+      "response_language": "en",
+      "response_type": "neutral",
+      "spoken": false,
+      "audio_path": null,
+      "safety_level": "none",
+      "timestamp": "2026-07-01T18:57:17.276502"
+    },
+    {
+      "message_id": "ae8989d3-d42e-41a9-aee7-72682bd693ca",
+      "session_id": "cb2eb143-56ce-4010-8939-befd77db9a5d",
+      "response_text": "Thank you for sharing that with me.",
+      "response_language": "en",
+      "response_type": "neutral",
+      "spoken": false,
+      "audio_path": null,
+      "safety_level": "none",
+      "timestamp": "2026-07-01T18:57:37.347739"
+    },
+    {
+      "message_id": "e4e53f1d-4d9a-458f-a017-1b6e5382c2a3",
+      "session_id": "cb2eb143-56ce-4010-8939-befd77db9a5d",
+      "response_text": "It sounds like a lot is happening right now. Would you like to try a grounding exercise? Let's start by noticing 5 things you can see around you.",
+      "response_language": "en",
+      "response_type": "neutral",
+      "spoken": false,
+      "audio_path": null,
+      "safety_level": "moderate",
+      "timestamp": "2026-07-01T18:58:09.224676"
+    },
+    {
+      "message_id": "6cf45111-0905-470a-aa28-c3847e9e87bb",
+      "session_id": "cb2eb143-56ce-4010-8939-befd77db9a5d",
+      "response_text": "I appreciate you opening up.",
+      "response_language": "en",
+      "response_type": "neutral",
+      "spoken": false,
+      "audio_path": null,
+      "safety_level": "none",
+      "timestamp": "2026-07-01T19:03:38.826954"
+    }
+  ],
+  "detected_emotions": [
+    "sadness",
+    "sadness",
+    "sadness",
+    "sadness",
+    "sadness"
+  ],
+  "summary": "",
+  "follow_up_suggestions": [],
+  "user_preference_snapshot": {},
+  "language": "en"
+}

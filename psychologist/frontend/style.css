@@ -224,6 +224,12 @@ body {
 /* Voice states */
 .voice-view[data-state="listening"] .orb-core { background: radial-gradient(circle, var(--neon-green), #00aa55); box-shadow: 0 0 40px var(--neon-green), 0 0 80px rgba(0,255,136,0.3); }
 .voice-view[data-state="listening"] .orb-ring { border-color: rgba(0,255,136,0.2); }
+.voice-view[data-state="user_speaking"] .orb-core { background: radial-gradient(circle, #00ff88, var(--neon-green)); box-shadow: 0 0 50px var(--neon-green), 0 0 100px rgba(0,255,136,0.4); animation: orbPulse 0.6s ease-in-out infinite; }
+.voice-view[data-state="user_speaking"] .orb-ring { border-color: rgba(0,255,136,0.4); animation: orbRingExpand 1.5s ease-in-out infinite; }
+.voice-view[data-state="user_paused"] .orb-core { background: radial-gradient(circle, var(--neon-orange), #cc7700); box-shadow: 0 0 40px var(--neon-orange); }
+.voice-view[data-state="user_paused"] .orb-ring { border-color: rgba(255,149,0,0.3); }
+.voice-view[data-state="finalizing"] .orb-core { background: radial-gradient(circle, var(--neon-purple), #7c3aed); box-shadow: 0 0 40px var(--neon-purple); animation: orbSpin 2s linear infinite; }
+.voice-view[data-state="finalizing"] .orb-ring { border-color: rgba(168,85,247,0.3); }
 .voice-view[data-state="processing"] .orb-core { background: radial-gradient(circle, var(--neon-purple), #7c3aed); box-shadow: 0 0 40px var(--neon-purple); animation: orbSpin 1s linear infinite; }
 .voice-view[data-state="processing"] .orb-ring { border-color: rgba(168,85,247,0.3); }
 .voice-view[data-state="speaking"] .orb-core { background: radial-gradient(circle, var(--neon-blue), var(--neon-purple)); box-shadow: 0 0 40px var(--neon-blue), 0 0 80px rgba(0,102,255,0.3); animation: orbSpeak 0.5s ease-in-out infinite alternate; }
@@ -260,6 +266,8 @@ body {
 }
 .voice-ctrl-main:hover { box-shadow: 0 0 30px rgba(0,240,255,0.5); transform: scale(1.05); }
 .voice-ctrl-main.recording { background: linear-gradient(135deg, var(--neon-red), #cc0033); box-shadow: 0 0 20px rgba(255,51,102,0.4); animation: pulse-glow 0.8s infinite; }
+.voice-ctrl-btn.voice-active { border-color: var(--neon-cyan); color: var(--neon-cyan); background: rgba(0,240,255,0.1); }
+.voice-ctrl-btn.voice-stop-active { border-color: var(--neon-red); color: var(--neon-red); background: rgba(255,51,102,0.1); }
 /* Playback Speed Controls */
 .voice-speed-controls { display: flex; align-items: center; gap: 8px; }
 .speed-label { font-size: 0.8rem; color: var(--text-secondary); }

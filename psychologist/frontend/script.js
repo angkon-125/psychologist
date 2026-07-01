@@ -5,7 +5,6 @@ document.addEventListener('DOMContentLoaded', () => {
     let currentLanguage = localStorage.getItem('cognitiveMindLanguage') || 'en';
     let companionSessionActive = false;
     let companionSessionId = null;
-    let voiceState = 'idle'; // 'idle' | 'listening' | 'pause_analysis' | 'thinking' | 'speaking' | 'error'
     let selectedInputType = 'Observation';
     let inputHistory = JSON.parse(localStorage.getItem('cognitiveMindHistory') || '[]');
     let currentFilter = 'all';
@@ -45,12 +44,19 @@ document.addEventListener('DOMContentLoaded', () => {
             "voice_volume": "Volume",
             "voice_continuous": "Continuous Listening",
             "voice_playback_speed": "Playback Speed",
+            "voice_barge_in": "Barge-in (Interrupt)",
+            "voice_start": "Start Voice Mode",
+            "voice_end": "End Voice Mode",
+            "voice_paused": "Paused",
+            "voice_i_heard": "I heard:",
+            "voice_repeat": "Could you say more?",
+            "voice_no_stt": "Live transcript not supported. Recording still works.",
             "live_transcript_header": "Live Transcript:",
             "nav_dashboard": "Dashboard", "nav_emotions": "Emotions", "nav_needs": "Needs",
             "nav_beliefs": "Beliefs", "nav_goals": "Goals", "nav_conflicts": "Inner Conflicts",
             "nav_identity": "Self-Identity", "nav_memory": "Memory", "nav_graph": "Knowledge Graph",
-            "nav_debate": "Internal Debate", "nav_simulation": "Future Preview", "nav_history": "Input History",
-            "nav_thoughts": "Zara's Thinking",
+            "nav_debate": "Internal Debate", "nav_simulation": "Future Preview", "nav_history": "Message Zara",
+            "nav_thoughts": "Zara Thinking",
             "title_dashboard": "Cognitive State Overview", "title_emotions": "Emotion State",
             "title_needs": "Internal Needs", "title_beliefs": "Belief System",
             "title_goals": "Goals", "title_conflicts": "Inner Conflicts",
@@ -133,20 +139,27 @@ document.addEventListener('DOMContentLoaded', () => {
             "voice_processing": "স্থানীয়ভাবে চিন্তা করছি...",
             "voice_speaking": "ঝারা বলছে...",
             "voice_error": "মাইক্রোফোন পাওয়া যাচ্ছে না। অনুগ্রহ করে অনুমতি পরীক্ষা করুন।",
-            "voice_take_your_time": "ধীরে নিন।",
-            "voice_thinking": "স্থানীয়ভাবে চিন্তা করছি...",
-            "voice_interrupted": "বাধা দেওয়া হয়েছে। আমি শুনছি।",
-            "voice_settings": "ভয়েস সেটিংস",
-            "voice_speed": "কথার গতি",
-            "voice_volume": "ভলিউম",
-            "voice_continuous": "ক্রমাগত শ্রবণ",
-            "voice_playback_speed": "প্লেব্যাক গতি",
+            "voice_take_your_time": "\u09a7\u09c0\u09b0\u09c7 \u09a8\u09bf\u09a8\u0964",
+            "voice_thinking": "\u09b8\u09cd\u09a5\u09be\u09a8\u09c0\u09af\u09bc\u09ad\u09be\u09ac\u09c7 \u099a\u09bf\u09a8\u09cd\u09a4\u09be \u0995\u09b0\u099b\u09bf...",
+            "voice_interrupted": "\u09ac\u09be\u09a7\u09be \u09a6\u09c7\u0993\u09af\u09bc\u09be \u09b9\u09af\u09bc\u09c7\u099b\u09c7\u0964 \u0986\u09ae\u09bf \u09b6\u09c1\u09a8\u099b\u09bf\u0964",
+            "voice_settings": "\u09ad\u09af\u09bc\u09c7\u09b8 \u09b8\u09c7\u099f\u09bf\u0982\u09b8",
+            "voice_speed": "\u0995\u09a5\u09be\u09b0 \u0997\u09a4\u09bf",
+            "voice_volume": "\u09ad\u09b2\u09bf\u0989\u09ae",
+            "voice_continuous": "\u0995\u09cd\u09b0\u09ae\u09be\u0997\u09a4 \u09b6\u09cd\u09b0\u09ac\u09a3",
+            "voice_playback_speed": "\u09aa\u09cd\u09b2\u09c7\u09ac\u09cd\u09af\u09be\u0995 \u0997\u09a4\u09bf",
+            "voice_barge_in": "\u09ac\u09be\u09a7\u09be (\u0987\u09a8\u09cd\u099f\u09be\u09b0\u09aa\u09cd\u099f)",
+            "voice_start": "\u09ad\u09af\u09bc\u09c7\u09b8 \u09ae\u09cb\u09a1 \u09b6\u09c1\u09b0\u09c1 \u0995\u09b0\u09c1\u09a8",
+            "voice_end": "\u09ad\u09af\u09bc\u09c7\u09b8 \u09ae\u09cb\u09a1 \u09ac\u09a8\u09cd\u09a7 \u0995\u09b0\u09c1\u09a8",
+            "voice_paused": "\u09b8\u09cd\u09a5\u0997\u09bf\u09a4",
+            "voice_i_heard": "\u0986\u09ae\u09bf \u09b6\u09c1\u09a8\u09c7\u099b\u09bf:",
+            "voice_repeat": "\u0986\u09b0\u0993 \u09ac\u09b2\u09a4\u09c7 \u09aa\u09be\u09b0\u09c7\u09a8?",
+            "voice_no_stt": "\u09b2\u09be\u0987\u09ad \u099f\u09cd\u09b0\u09be\u09a8\u09cd\u09b8\u0995\u09cd\u09b0\u09bf\u09aa\u09cd\u099f \u09b8\u09ae\u09b0\u09cd\u09a5\u09bf\u09a4 \u09a8\u09df\u0964",
             "live_transcript_header": "লাইভ প্রতিলিপি:",
             "nav_dashboard": "ড্যাশবোর্ড", "nav_emotions": "আবেগ", "nav_needs": "প্রয়োজন",
             "nav_beliefs": "বিশ্বাস", "nav_goals": "লক্ষ্য", "nav_conflicts": "অভ্যন্তরীণ দ্বন্দ্ব",
             "nav_identity": "আত্ম-পরিচয়", "nav_memory": "স্মৃতি", "nav_graph": "জ্ঞান গ্রাফ",
-            "nav_debate": "অভ্যন্তরীণ বিতর্ক", "nav_simulation": "ভবিষ্যৎ প্রিভিউ", "nav_history": "ইনপুট ইতিহাস",
-            "nav_thoughts": "ঝারার চিন্তা",
+            "nav_debate": "\u0985\u09ad\u09cd\u09af\u09a8\u09cd\u09a4\u09b0\u09c0\u09a3 \u09ac\u09bf\u09a4\u09b0\u09cd\u0995", "nav_simulation": "\u09ad\u09ac\u09bf\u09b7\u09cd\u09af\u09ce \u09aa\u09cd\u09b0\u09bf\u09ad\u09bf\u0989", "nav_history": "\u099d\u09be\u09b0\u09be \u0995\u09c7 \u09ac\u09be\u09b0\u09cd\u09a4\u09be",
+            "nav_thoughts": "\u099d\u09be\u09b0\u09be\u09b0 \u099a\u09bf\u09a8\u09cd\u09a4\u09be",
             "title_dashboard": "জ্ঞানীয় অবস্থা", "title_emotions": "আবেগের অবস্থা",
             "title_needs": "অন্তর্নিহিত প্রয়োজনীয়তা", "title_beliefs": "বিশ্বাস ব্যবস্থা",
             "title_goals": "লক্ষ্য", "title_conflicts": "অভ্যন্তরীণ দ্বন্দ্ব",
@@ -373,7 +386,43 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // ===== VOICE MODE (Conversation Engine) =====
+    // ===== VOICE MODE — Full Rewrite =====
+    // --- Configurable Constants ---
+    const VOICE_CONFIG = {
+        SILENCE_IGNORE_MS: 1200,      // ignore silence under this
+        SILENCE_THINKING_MS: 4000,    // thinking pause threshold
+        SILENCE_LONG_MS: 7000,        // long pause -> finalize
+        SILENCE_SHORT_TRANSCRIPT_MS: 9000, // wait longer if transcript is very short
+        SHORT_TRANSCRIPT_WORDS: 3,    // below this = short transcript
+        IMMEDIATE_FINALIZE_PHRASES: ['go ahead', 'answer now', "that's all", 'that is all', '\u0986\u09ae\u09bf \u09b6\u09c7\u09b7'],
+        NOISE_CALIBRATION_MS: 1000,
+        SPEECH_THRESHOLD_MULTIPLIER: 2.5, // above noise floor = speech
+        MIN_SPEECH_DURATION_MS: 150,
+        MIN_SILENCE_DURATION_MS: 100,
+    };
+
+    // --- Voice State ---
+    const VoiceState = { IDLE:'idle', LISTENING:'listening', USER_SPEAKING:'user_speaking', USER_PAUSED:'user_paused', FINALIZING:'finalizing', PROCESSING:'processing', SPEAKING:'speaking' };
+    let voiceState = VoiceState.IDLE;
+    let voiceActive = false; // mic + recognition running
+    let finalTranscript = '';
+    let interimTranscript = '';
+    let lastResponseText = '';
+    let silenceTimer = null;
+    let silenceStart = 0;
+    let speechStart = 0;
+    let isCalibrating = false;
+    let noiseFloor = 0.01;
+    let audioContext = null;
+    let analyserNode = null;
+    let micStream = null;
+    let vadAnimFrame = null;
+    let recognition = null;
+    let recognitionActive = false;
+    let synthUtterance = null;
+    let synthPaused = false;
+
+    // --- DOM refs ---
     const voiceOrb = document.getElementById('voiceOrb');
     const voiceStateText = document.getElementById('voiceStateText');
     const voiceTranscript = document.getElementById('voiceTranscript');
@@ -381,189 +430,486 @@ document.addEventListener('DOMContentLoaded', () => {
     const voiceMeter = document.getElementById('voiceMeter');
     const voiceMeterFill = document.getElementById('voiceMeterFill');
     const voiceMainBtn = document.getElementById('voiceMainBtn');
-    const voiceMuteBtn = document.getElementById('voiceMuteBtn');
-    const voiceInterruptBtn = document.getElementById('voiceInterruptBtn');
+    const voicePauseBtn = document.getElementById('voicePauseBtn');
+    const voiceResumeBtn = document.getElementById('voiceResumeBtn');
+    const voiceStopBtn = document.getElementById('voiceStopBtn');
+    const voiceReplayBtn = document.getElementById('voiceReplayBtn');
     const voiceResponseText = document.getElementById('voiceResponseText');
-    // New controls
     const voiceSpeedControls = document.getElementById('voiceSpeedControls');
     const voiceVolumeSlider = document.getElementById('voiceVolumeSlider');
     const voiceSettingsToggle = document.getElementById('voiceSettingsToggle');
     const voiceSettingsPanel = document.getElementById('voiceSettingsPanel');
+    const voiceContinuousToggle = document.getElementById('voiceContinuousToggle');
+    const voiceBargeInToggle = document.getElementById('voiceBargeInToggle');
 
-    let voiceEventSource = null;
-    let conversationActive = false;
-    let lastUserTranscript = '';
+    // --- State Machine ---
+    function logVoice(msg) { console.log('[VOICE ' + new Date().toISOString().substr(11,12) + '] ' + msg); }
 
-    function setVoiceState(state) {
-        voiceState = state;
-        voiceView.setAttribute('data-state', state);
-        // Map backend states to display keys
-        const stateKeyMap = {
-            'idle': 'voice_idle', 'listening': 'voice_listening',
-            'pause_analysis': 'voice_listening', 'thinking': 'voice_processing',
-            'speaking': 'voice_speaking', 'error': 'voice_error'
+    function setVoiceState(newState) {
+        const old = voiceState;
+        voiceState = newState;
+        voiceView.setAttribute('data-state', newState);
+        logVoice(old + ' -> ' + newState);
+
+        const stateLabels = {
+            idle: 'voice_idle', listening: 'voice_listening',
+            user_speaking: 'voice_listening', user_paused: 'voice_take_your_time',
+            finalizing: 'voice_processing', processing: 'voice_processing',
+            speaking: 'voice_speaking'
         };
-        voiceStateText.textContent = t(stateKeyMap[state] || 'voice_idle');
-        voiceMainBtn.classList.toggle('recording', state === 'listening' || state === 'pause_analysis');
-        voiceTranscript.style.display = ['listening', 'pause_analysis', 'thinking'].includes(state) ? 'block' : 'none';
-        voiceMeter.style.display = ['listening', 'pause_analysis'].includes(state) ? 'block' : 'none';
-        voiceSpeedControls.style.display = state === 'speaking' ? 'flex' : 'none';
-        voiceResponseText.style.display = state === 'speaking' ? 'block' : 'none';
+        voiceStateText.textContent = t(stateLabels[newState] || 'voice_idle');
+
+        // Orb class
+        voiceMainBtn.classList.toggle('recording', [VoiceState.LISTENING, VoiceState.USER_SPEAKING, VoiceState.USER_PAUSED].includes(newState));
+
+        // Show/hide transcript & meter
+        const showTranscript = [VoiceState.LISTENING, VoiceState.USER_SPEAKING, VoiceState.USER_PAUSED, VoiceState.FINALIZING].includes(newState);
+        voiceTranscript.style.display = showTranscript ? 'block' : 'none';
+        voiceMeter.style.display = [VoiceState.LISTENING, VoiceState.USER_SPEAKING].includes(newState) ? 'block' : 'none';
+
+        // Show/hide control buttons
+        const isRunning = newState !== VoiceState.IDLE;
+        voicePauseBtn.style.display = newState === VoiceState.SPEAKING ? 'flex' : 'none';
+        voiceResumeBtn.style.display = 'none'; // shown only when paused
+        voiceStopBtn.style.display = isRunning ? 'flex' : 'none';
+        voiceReplayBtn.style.display = (newState === VoiceState.IDLE && lastResponseText) ? 'flex' : 'none';
+        voiceSpeedControls.style.display = newState === VoiceState.SPEAKING ? 'flex' : 'none';
+
+        // Main button label
+        if (newState === VoiceState.IDLE) {
+            voiceMainBtn.title = t('voice_idle');
+        } else {
+            voiceMainBtn.title = 'End Voice Mode';
+        }
     }
 
-    function openSSEStream() {
-        if (voiceEventSource) { voiceEventSource.close(); }
-        voiceEventSource = new EventSource('/api/voice/conversation/events');
-
-        voiceEventSource.addEventListener('state_change', (e) => {
-            try {
-                const data = JSON.parse(e.data);
-                setVoiceState(data.state);
-                if (data.message) voiceStateText.textContent = data.message;
-            } catch (err) { console.warn('SSE state_parse error:', err); }
-        });
-
-        voiceEventSource.addEventListener('partial_transcript', (e) => {
-            try {
-                const data = JSON.parse(e.data);
-                voiceTranscriptText.textContent = data.text || '';
-                if (data.text) lastUserTranscript = data.text;
-            } catch (err) { console.warn('SSE transcript_parse error:', err); }
-        });
-
-        voiceEventSource.addEventListener('audio_level', (e) => {
-            try {
-                const data = JSON.parse(e.data);
-                voiceMeterFill.style.width = Math.min(100, Math.round((data.level || 0) * 1000)) + '%';
-            } catch (err) { /* ignore */ }
-        });
-
-        voiceEventSource.addEventListener('response', (e) => {
-            try {
-                const data = JSON.parse(e.data);
-                voiceResponseText.style.display = 'block';
-                voiceResponseText.textContent = data.text || '';
-                // Add to chat history
-                if (lastUserTranscript) appendMessage('user', lastUserTranscript);
-                if (data.text) appendMessage('assistant', data.text, data.emotion);
-                lastUserTranscript = '';
-            } catch (err) { console.warn('SSE response_parse error:', err); }
-        });
-
-        voiceEventSource.addEventListener('playback_state', (e) => {
-            try {
-                const data = JSON.parse(e.data);
-                if (data.progress !== undefined) {
-                    // Could update a progress bar here in future
+    // --- Web Audio API: VAD ---
+    async function startAudioCapture() {
+        try {
+            micStream = await navigator.mediaDevices.getUserMedia({ audio: true });
+            audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            const source = audioContext.createMediaStreamSource(micStream);
+            analyserNode = audioContext.createAnalyser();
+            analyserNode.fftSize = 512;
+            analyserNode.smoothingTimeConstant = 0.3;
+            source.connect(analyserNode);
+            // Noise calibration for first second
+            isCalibrating = true;
+            noiseFloor = 0.01;
+            let calSamples = 0, calSum = 0;
+            const calStartTime = Date.now();
+            const calInterval = setInterval(() => {
+                const data = new Uint8Array(analyserNode.frequencyBinCount);
+                analyserNode.getByteTimeDomainData(data);
+                let rms = 0;
+                for (let i = 0; i < data.length; i++) { const v = (data[i] - 128) / 128; rms += v * v; }
+                rms = Math.sqrt(rms / data.length);
+                calSum += rms; calSamples++;
+                if (Date.now() - calStartTime > VOICE_CONFIG.NOISE_CALIBRATION_MS) {
+                    clearInterval(calInterval);
+                    noiseFloor = Math.max(0.005, (calSum / calSamples) * VOICE_CONFIG.SPEECH_THRESHOLD_MULTIPLIER);
+                    isCalibrating = false;
+                    logVoice('Noise floor calibrated: ' + noiseFloor.toFixed(4));
                 }
-            } catch (err) { /* ignore */ }
-        });
+            }, 50);
+            startVADLoop();
+            return true;
+        } catch (e) {
+            logVoice('Mic error: ' + e.message);
+            setVoiceState(VoiceState.IDLE);
+            voiceStateText.textContent = t('voice_error');
+            return false;
+        }
+    }
 
-        voiceEventSource.addEventListener('error', (e) => {
-            try {
-                const data = JSON.parse(e.data);
-                setVoiceState('error');
-                voiceStateText.textContent = data.message || t('voice_error');
-            } catch (err) {
-                // SSE connection error (not a data event)
-                console.warn('SSE connection error, reconnecting...');
+    function startVADLoop() {
+        const dataArr = new Uint8Array(analyserNode.frequencyBinCount);
+        let speechFrameCount = 0;
+        let silenceFrameCount = 0;
+        const FRAME_MS = 30;
+        const SPEECH_FRAMES = Math.ceil(VOICE_CONFIG.MIN_SPEECH_DURATION_MS / FRAME_MS);
+        const SILENCE_FRAMES = Math.ceil(VOICE_CONFIG.MIN_SILENCE_DURATION_MS / FRAME_MS);
+
+        function tick() {
+            if (!voiceActive) return;
+            analyserNode.getByteTimeDomainData(dataArr);
+            let rms = 0;
+            for (let i = 0; i < dataArr.length; i++) { const v = (dataArr[i] - 128) / 128; rms += v * v; }
+            rms = Math.sqrt(rms / dataArr.length);
+            // Update meter
+            const pct = Math.min(100, Math.round((rms / Math.max(noiseFloor * 3, 0.1)) * 100));
+            voiceMeterFill.style.width = pct + '%';
+
+            const isSpeech = rms > noiseFloor;
+            // Barge-in detection: if speaking and user starts talking
+            if (voiceState === VoiceState.SPEAKING && isSpeech && speechFrameCount >= SPEECH_FRAMES * 2) {
+                handleBargeIn();
+                speechFrameCount = 0;
             }
-        });
+            if (isSpeech) {
+                speechFrameCount++;
+                silenceFrameCount = 0;
+                if (voiceState === VoiceState.LISTENING && speechFrameCount >= SPEECH_FRAMES) {
+                    setVoiceState(VoiceState.USER_SPEAKING);
+                    speechStart = Date.now();
+                    clearSilenceTimer();
+                } else if (voiceState === VoiceState.USER_PAUSED && speechFrameCount >= SPEECH_FRAMES) {
+                    // User resumed speaking after pause
+                    setVoiceState(VoiceState.USER_SPEAKING);
+                    clearSilenceTimer();
+                }
+            } else {
+                silenceFrameCount++;
+                if (voiceState === VoiceState.USER_SPEAKING && silenceFrameCount >= SILENCE_FRAMES) {
+                    setVoiceState(VoiceState.USER_PAUSED);
+                    startSilenceTimer();
+                }
+                speechFrameCount = 0;
+            }
+            vadAnimFrame = requestAnimationFrame(tick);
+        }
+        vadAnimFrame = requestAnimationFrame(tick);
+    }
 
-        voiceEventSource.onerror = () => {
-            // EventSource will auto-reconnect; if conversation ended, clean up
-            if (!conversationActive && voiceEventSource) {
-                voiceEventSource.close();
-                voiceEventSource = null;
+    function stopAudioCapture() {
+        if (vadAnimFrame) { cancelAnimationFrame(vadAnimFrame); vadAnimFrame = null; }
+        if (micStream) { micStream.getTracks().forEach(t => t.stop()); micStream = null; }
+        if (audioContext) { audioContext.close().catch(()=>{}); audioContext = null; analyserNode = null; }
+        voiceMeterFill.style.width = '0%';
+    }
+
+    // --- Silence / Pause Detection ---
+    function clearSilenceTimer() { if (silenceTimer) { clearTimeout(silenceTimer); silenceTimer = null; } }
+
+    function startSilenceTimer() {
+        silenceStart = Date.now();
+        clearSilenceTimer();
+        const transcriptWordCount = (finalTranscript + ' ' + interimTranscript).trim().split(/\s+/).filter(w => w).length;
+        const isShort = transcriptWordCount < VOICE_CONFIG.SHORT_TRANSCRIPT_WORDS;
+        const finalizeMs = isShort ? VOICE_CONFIG.SILENCE_SHORT_TRANSCRIPT_MS : VOICE_CONFIG.SILENCE_LONG_MS;
+
+        // Stage 1: thinking pause indicator at SILENCE_THINKING_MS
+        silenceTimer = setTimeout(() => {
+            if (voiceState === VoiceState.USER_PAUSED) {
+                voiceStateText.textContent = t('voice_take_your_time');
+            }
+        }, VOICE_CONFIG.SILENCE_THINKING_MS);
+
+        // Stage 2: finalize
+        silenceTimer = setTimeout(() => {
+            if (voiceState === VoiceState.USER_PAUSED) {
+                finalizeTranscript();
+            }
+        }, finalizeMs);
+    }
+
+    function checkImmediateFinalize(text) {
+        const lower = text.toLowerCase().trim();
+        return VOICE_CONFIG.IMMEDIATE_FINALIZE_PHRASES.some(p => lower.includes(p));
+    }
+
+    // --- Speech Recognition ---
+    function initRecognition() {
+        const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+        if (!SR) {
+            logVoice('SpeechRecognition not supported');
+            return null;
+        }
+        const rec = new SR();
+        rec.continuous = true;
+        rec.interimResults = true;
+        rec.lang = currentLanguage === 'bn_bd' ? 'bn-BD' : 'en-US';
+        rec.maxAlternatives = 1;
+
+        rec.onresult = (event) => {
+            let interim = '';
+            let final = '';
+            for (let i = event.resultIndex; i < event.results.length; i++) {
+                const transcript = event.results[i][0].transcript;
+                if (event.results[i].isFinal) {
+                    final += transcript;
+                } else {
+                    interim += transcript;
+                }
+            }
+            if (final) {
+                finalTranscript = (finalTranscript + ' ' + final).trim();
+                // Check immediate finalize
+                if (checkImmediateFinalize(final)) {
+                    finalizeTranscript();
+                    return;
+                }
+            }
+            interimTranscript = interim;
+            const display = (finalTranscript + ' ' + interimTranscript).trim();
+            voiceTranscriptText.textContent = display || t('voice_listening');
+            // If we get interim results while in paused state, user is speaking again
+            if (interim && voiceState === VoiceState.USER_PAUSED) {
+                clearSilenceTimer();
+                setVoiceState(VoiceState.USER_SPEAKING);
             }
         };
+        rec.onerror = (e) => {
+            logVoice('Recognition error: ' + e.error);
+            if (e.error === 'not-allowed' || e.error === 'no-speech') {
+                if (voiceActive) {
+                    // Try restart
+                    setTimeout(() => { if (voiceActive) startRecognition(); }, 500);
+                }
+            }
+        };
+        rec.onend = () => {
+            recognitionActive = false;
+            logVoice('Recognition ended');
+            // Auto-restart if still active
+            if (voiceActive && voiceState !== VoiceState.PROCESSING && voiceState !== VoiceState.SPEAKING) {
+                setTimeout(() => { if (voiceActive) startRecognition(); }, 300);
+            }
+        };
+        return rec;
     }
 
-    function closeSSEStream() {
-        if (voiceEventSource) { voiceEventSource.close(); voiceEventSource = null; }
+    function startRecognition() {
+        if (!recognition) recognition = initRecognition();
+        if (!recognition) {
+            voiceTranscriptText.textContent = 'Live transcript is not supported in this browser. Recording still works if backend STT is connected.';
+            return false;
+        }
+        try {
+            recognition.lang = currentLanguage === 'bn_bd' ? 'bn-BD' : 'en-US';
+            recognition.start();
+            recognitionActive = true;
+            logVoice('Recognition started');
+            return true;
+        } catch (e) {
+            logVoice('Recognition start error: ' + e.message);
+            return false;
+        }
     }
 
-    // Main voice button: start/stop conversation
-    voiceMainBtn.addEventListener('click', async () => {
-        if (voiceState === 'idle' || voiceState === 'error') {
-            // Start conversation
+    function stopRecognition() {
+        if (recognition && recognitionActive) {
+            try { recognition.stop(); } catch(e) {}
+            recognitionActive = false;
+        }
+    }
+
+    // --- Finalize & Send ---
+    async function finalizeTranscript() {
+        clearSilenceTimer();
+        const transcript = (finalTranscript + ' ' + interimTranscript).trim();
+        if (!transcript) {
+            logVoice('Empty transcript, returning to listening');
+            setVoiceState(VoiceState.LISTENING);
+            return;
+        }
+        setVoiceState(VoiceState.PROCESSING);
+        voiceTranscriptText.textContent = transcript;
+        logVoice('Final transcript (' + transcript.split(/\s+/).length + ' words): ' + transcript);
+        await sendVoiceMessage(transcript);
+    }
+
+    // --- Backend Integration ---
+    async function sendVoiceMessage(transcript) {
+        // Show "I heard..." for low confidence / short transcripts
+        const wordCount = transcript.split(/\s+/).length;
+        if (wordCount < 3) {
+            voiceStateText.textContent = 'I heard: "' + transcript + '" — could you say more?';
+        }
+        // Ensure session
+        if (!companionSessionActive) {
             try {
-                const res = await fetch('/api/voice/conversation/start', {
-                    method: 'POST', headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ language: currentLanguage })
-                });
+                const res = await fetch('/api/session/start', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ mode: 'text', language: currentLanguage }) });
                 const data = await res.json();
-                if (data.status === 'started' || data.status === 'listening') {
-                    conversationActive = true;
-                    openSSEStream();
-                    setVoiceState('listening');
-                    voiceTranscriptText.textContent = t('voice_listening');
-                } else if (data.error) {
-                    setVoiceState('error');
-                    voiceStateText.textContent = data.error;
-                }
-            } catch (e) {
-                console.error('Voice conversation start error:', e);
-                setVoiceState('error');
+                if (data.session_id) { companionSessionId = data.session_id; companionSessionActive = true; }
+            } catch (e) { console.error('Session start error:', e); }
+        }
+        try {
+            const res = await fetch('/api/interaction/message', {
+                method: 'POST', headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ text: transcript, language: currentLanguage, speak_response: false })
+            });
+            const result = await res.json();
+            let responseText = '';
+            if (result.assistant_message) responseText = result.assistant_message.response_text;
+            else if (result.response) responseText = result.response;
+            else responseText = currentLanguage === 'bn_bd' ? '\u09a6\u09c1\u0983\u0996\u09bf\u09a4, \u0986\u09ae\u09bf \u098f\u0996\u09a8 \u09b8\u09be\u09b9\u09be\u09af\u09cd\u09af \u0995\u09b0\u09a4\u09c7 \u09aa\u09be\u09b0\u099b\u09bf \u09a8\u09be\u0964' : 'Sorry, I couldn\'t process that.';
+            lastResponseText = responseText;
+            // Add to chat
+            appendMessage('user', transcript);
+            appendMessage('assistant', responseText);
+            // Show in voice panel
+            voiceResponseText.textContent = responseText;
+            voiceResponseText.style.display = 'block';
+            // Speak if enabled
+            const readAloud = document.getElementById('speakResponseToggle').checked;
+            if (readAloud) {
+                speakResponse(responseText);
+            } else {
+                // Go back to listening
+                setTimeout(() => {
+                    if (voiceActive) setVoiceState(VoiceState.LISTENING);
+                    else setVoiceState(VoiceState.IDLE);
+                }, 500);
             }
-        } else if (voiceState === 'listening' || voiceState === 'pause_analysis') {
-            // Stop conversation
-            conversationActive = false;
-            try { await fetch('/api/voice/conversation/stop', { method: 'POST' }); } catch (e) {}
-            closeSSEStream();
-            voiceMeterFill.style.width = '0%';
-            setVoiceState('idle');
-            voiceTranscriptText.textContent = '';
-            voiceResponseText.style.display = 'none';
+        } catch (e) {
+            logVoice('Backend error: ' + e.message);
+            voiceStateText.textContent = currentLanguage === 'bn_bd' ? '\u09b8\u0982\u09af\u09cb\u0997 \u09a4\u09cd\u09b0\u09c1\u099f\u09bf\u0964 \u0986\u09ac\u09be\u09b0 \u099a\u09c7\u09b7\u09cd\u099f\u09be \u0995\u09b0\u09c1\u09a8\u0964' : 'Connection error. Trying again...';
+            setTimeout(() => { if (voiceActive) setVoiceState(VoiceState.LISTENING); }, 2000);
+        }
+    }
+
+    // --- Speech Synthesis (Browser TTS) ---
+    function speakResponse(text) {
+        if (!window.speechSynthesis) {
+            logVoice('SpeechSynthesis not available');
+            setVoiceState(VoiceState.IDLE);
+            return;
+        }
+        // Cancel any ongoing speech
+        window.speechSynthesis.cancel();
+        synthUtterance = new SpeechSynthesisUtterance(text);
+        synthUtterance.lang = currentLanguage === 'bn_bd' ? 'bn-BD' : 'en-US';
+        synthUtterance.rate = parseFloat(voiceVolumeSlider?.dataset?.speed || '1.0');
+        // Try to pick a female voice
+        const voices = window.speechSynthesis.getVoices();
+        if (voices.length) {
+            const preferred = voices.find(v => v.lang.startsWith(synthUtterance.lang.substring(0,2)) && /female|woman|zira|samantha|google.*female/i.test(v.name))
+                || voices.find(v => v.lang.startsWith(synthUtterance.lang.substring(0,2)))
+                || voices[0];
+            if (preferred) synthUtterance.voice = preferred;
+        }
+        synthUtterance.onstart = () => {
+            setVoiceState(VoiceState.SPEAKING);
+            synthPaused = false;
+        };
+        synthUtterance.onend = () => {
+            synthUtterance = null;
+            synthPaused = false;
+            voicePauseBtn.style.display = 'none';
+            voiceResumeBtn.style.display = 'none';
+            if (voiceActive) {
+                setVoiceState(VoiceState.LISTENING);
+                // Reset transcript for next turn
+                finalTranscript = '';
+                interimTranscript = '';
+                voiceTranscriptText.textContent = '';
+            } else {
+                setVoiceState(VoiceState.IDLE);
+            }
+        };
+        synthUtterance.onerror = () => {
+            synthUtterance = null;
+            if (voiceActive) setVoiceState(VoiceState.LISTENING);
+        };
+        window.speechSynthesis.speak(synthUtterance);
+    }
+
+    function stopSpeaking() {
+        if (window.speechSynthesis) window.speechSynthesis.cancel();
+        synthUtterance = null;
+        synthPaused = false;
+        voicePauseBtn.style.display = 'none';
+        voiceResumeBtn.style.display = 'none';
+    }
+
+    // --- Barge-In (Interrupt ZARA while speaking) ---
+    function handleBargeIn() {
+        if (voiceState === VoiceState.SPEAKING && voiceActive) {
+            const bargeInEnabled = voiceBargeInToggle ? voiceBargeInToggle.checked : true;
+            if (bargeInEnabled) {
+                logVoice('Barge-in detected');
+                stopSpeaking();
+                voiceStateText.textContent = t('voice_interrupted');
+                setVoiceState(VoiceState.USER_SPEAKING);
+                finalTranscript = '';
+                interimTranscript = '';
+                voiceTranscriptText.textContent = '';
+            }
+        }
+    }
+
+    // --- Start / Stop Voice Mode ---
+    async function startVoiceMode() {
+        voiceActive = true;
+        finalTranscript = '';
+        interimTranscript = '';
+        lastResponseText = lastResponseText; // preserve
+        setVoiceState(VoiceState.LISTENING);
+        voiceTranscriptText.textContent = t('voice_listening');
+        const audioOk = await startAudioCapture();
+        if (audioOk) {
+            startRecognition();
+        }
+    }
+
+    function stopVoiceMode() {
+        voiceActive = false;
+        clearSilenceTimer();
+        stopRecognition();
+        stopAudioCapture();
+        stopSpeaking();
+        setVoiceState(VoiceState.IDLE);
+        voiceTranscriptText.textContent = '';
+        voiceResponseText.style.display = 'none';
+        voiceTranscript.style.display = 'none';
+        finalTranscript = '';
+        interimTranscript = '';
+    }
+
+    // --- Button Handlers ---
+    // Main button: Start / End voice mode
+    voiceMainBtn.addEventListener('click', () => {
+        if (voiceState === VoiceState.IDLE) {
+            startVoiceMode();
+        } else {
+            stopVoiceMode();
         }
     });
 
-    // Interrupt button: stop TTS, return to listening
-    voiceInterruptBtn.addEventListener('click', async () => {
-        try {
-            await fetch('/api/voice/conversation/interrupt', { method: 'POST' });
-        } catch (e) { /* ignore */ }
-        try { await fetch('/api/voice/tts/pause', { method: 'POST' }); } catch (e) {}
-        voiceStateText.textContent = t('voice_interrupted') || 'Interrupted. I\'m listening.';
+    // Stop button: finalize current transcript or stop
+    voiceStopBtn.addEventListener('click', () => {
+        if (voiceState === VoiceState.SPEAKING) {
+            stopSpeaking();
+            if (voiceActive) setVoiceState(VoiceState.LISTENING);
+        } else if ([VoiceState.LISTENING, VoiceState.USER_SPEAKING, VoiceState.USER_PAUSED].includes(voiceState)) {
+            stopRecognition();
+            finalizeTranscript();
+        } else {
+            stopVoiceMode();
+        }
     });
 
-    // Mute toggle
-    let isMuted = false;
-    voiceMuteBtn.addEventListener('click', () => {
-        isMuted = !isMuted;
-        speakResponseToggle.checked = !isMuted;
-        voiceMuteBtn.style.color = isMuted ? 'var(--neon-red)' : '';
+    // Pause TTS
+    voicePauseBtn.addEventListener('click', () => {
+        if (window.speechSynthesis.speaking && !window.speechSynthesis.paused) {
+            window.speechSynthesis.pause();
+            synthPaused = true;
+            voicePauseBtn.style.display = 'none';
+            voiceResumeBtn.style.display = 'flex';
+            voiceStateText.textContent = 'Paused';
+        }
     });
 
-    // Playback speed controls
-    document.querySelectorAll('.speed-btn').forEach(btn => {
-        btn.addEventListener('click', async () => {
-            document.querySelectorAll('.speed-btn').forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-            const speed = parseFloat(btn.dataset.speed);
-            try {
-                await fetch('/api/voice/preferences', {
-                    method: 'POST', headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ speech_speed: speed })
-                });
-            } catch (e) { /* ignore */ }
-        });
+    // Resume TTS
+    voiceResumeBtn.addEventListener('click', () => {
+        if (window.speechSynthesis.paused) {
+            window.speechSynthesis.resume();
+            synthPaused = false;
+            voiceResumeBtn.style.display = 'none';
+            voicePauseBtn.style.display = 'flex';
+            voiceStateText.textContent = t('voice_speaking');
+        }
     });
 
-    // Volume slider
-    if (voiceVolumeSlider) {
-        voiceVolumeSlider.addEventListener('input', async () => {
-            const vol = parseInt(voiceVolumeSlider.value) / 100;
-            try {
-                await fetch('/api/voice/preferences', {
-                    method: 'POST', headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ volume: vol })
-                });
-            } catch (e) { /* ignore */ }
-        });
-    }
+    // Replay last response
+    voiceReplayBtn.addEventListener('click', () => {
+        if (lastResponseText) {
+            speakResponse(lastResponseText);
+        }
+    });
 
-    // Settings panel toggle
+    // Settings toggles
     if (voiceSettingsToggle) {
         voiceSettingsToggle.addEventListener('click', () => {
             const panel = voiceSettingsPanel;
@@ -571,31 +917,48 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Settings toggles (continuous listening, push-to-talk, barge-in)
-    document.querySelectorAll('.voice-setting-toggle').forEach(toggle => {
-        toggle.addEventListener('change', async () => {
-            const key = toggle.dataset.setting;
-            const val = toggle.checked;
-            try {
-                await fetch('/api/voice/preferences', {
-                    method: 'POST', headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ [key]: val })
-                });
-            } catch (e) { /* ignore */ }
+    // Playback speed
+    document.querySelectorAll('.speed-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            document.querySelectorAll('.speed-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            const speed = parseFloat(btn.dataset.speed);
+            if (synthUtterance) {
+                // Restart speech at new speed
+                const text = lastResponseText;
+                stopSpeaking();
+                if (text) {
+                    synthUtterance = new SpeechSynthesisUtterance(text);
+                    synthUtterance.rate = speed;
+                    synthUtterance.lang = currentLanguage === 'bn_bd' ? 'bn-BD' : 'en-US';
+                    synthUtterance.onstart = () => setVoiceState(VoiceState.SPEAKING);
+                    synthUtterance.onend = () => {
+                        synthUtterance = null;
+                        if (voiceActive) { setVoiceState(VoiceState.LISTENING); finalTranscript=''; interimTranscript=''; voiceTranscriptText.textContent=''; }
+                        else setVoiceState(VoiceState.IDLE);
+                    };
+                    window.speechSynthesis.speak(synthUtterance);
+                }
+            }
         });
     });
 
-    // Clean up voice conversation when leaving voice view
-    document.getElementById('voiceCloseBtn').addEventListener('click', async () => {
-        if (conversationActive) {
-            conversationActive = false;
-            try { await fetch('/api/voice/conversation/stop', { method: 'POST' }); } catch (e) {}
-            closeSSEStream();
-        }
+    // Volume slider
+    if (voiceVolumeSlider) {
+        voiceVolumeSlider.addEventListener('input', () => {
+            // Volume for SpeechSynthesis
+            const vol = parseInt(voiceVolumeSlider.value) / 100;
+            if (synthUtterance) synthUtterance.volume = vol;
+        });
+    }
+
+    // Clean up when leaving voice view
+    document.getElementById('voiceCloseBtn').addEventListener('click', () => {
+        stopVoiceMode();
         showView('assistant');
     });
 
-    // Chat mic button -> enter voice mode and start conversation
+    // Chat mic button -> enter voice mode
     chatMicBtn.addEventListener('click', () => { showView('voice'); });
 
     // ===== BREATHING MODAL =====
