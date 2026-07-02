@@ -1,0 +1,51 @@
+{
+  "session_id": "640da948-3dcc-4f29-8f56-e0bb5421ee47",
+  "active_mode": "hybrid",
+  "start_time": "2026-07-02T14:31:39.061772",
+  "end_time": null,
+  "last_interaction_time": "2026-07-02T14:31:39.295357",
+  "current_emotion_state": {},
+  "mood_timeline": [
+    {
+      "emotion": "sadness",
+      "confidence": 0.17,
+      "timestamp": "2026-07-02T14:31:39.086703",
+      "input_type": "text"
+    }
+  ],
+  "safety_flags": [],
+  "user_messages": [
+    {
+      "message_id": "8eedb6d3-c765-4831-b479-3745cb2bd379",
+      "session_id": "640da948-3dcc-4f29-8f56-e0bb5421ee47",
+      "input_type": "text",
+      "raw_text": "Hi Zara.\n\nI'm not really sure why I opened this today.\n\nI almost closed it three times before pressing the microphone.\n\nI guess I just want someone to listen without immediately trying to solve me.",
+      "normalized_text": "Hi Zara. I'm not really sure why I opened this today. I almost closed it three times before pressing the microphone. I guess I just want someone to listen without immediately trying to solve me.",
+      "language": "en",
+      "timestamp": "2026-07-02T14:31:39.086703",
+      "detected_emotion": "sadness",
+      "confidence": 0.17,
+      "user_selected_mood": null
+    }
+  ],
+  "assistant_messages": [
+    {
+      "message_id": "f6ec1dac-9301-4f36-aa8c-bf9886cf0b8a",
+      "session_id": "640da948-3dcc-4f29-8f56-e0bb5421ee47",
+      "response_text": "That's interesting. Can you share more?",
+      "response_language": "en",
+      "response_type": "neutral",
+      "spoken": true,
+      "audio_path": "E:\\psychologist\\audio_outputs\\tts_8.wav",
+      "safety_level": "none",
+      "timestamp": "2026-07-02T14:31:39.086736"
+    }
+  ],
+  "detected_emotions": [
+    "sadness"
+  ],
+  "summary": "",
+  "follow_up_suggestions": [],
+  "user_preference_snapshot": {},
+  "language": "en"
+}
