@@ -1,5 +1,32 @@
 // ZARA — Offline AI Emotional Support Assistant
 document.addEventListener('DOMContentLoaded', () => {
+    // Debounce utility
+    function debounce(fn, ms) {
+        let timer;
+        return function(...args) { clearTimeout(timer); timer = setTimeout(() => fn.apply(this, args), ms); };
+    }
+
+    // ===== VIEWPORT HEIGHT FIX (mobile browsers) =====
+    function setViewportHeight() {
+        document.documentElement.style.setProperty('--vh', `${window.innerHeight * 0.01}px`);
+    }
+    setViewportHeight();
+    window.addEventListener('resize', debounce(setViewportHeight, 100));
+    window.addEventListener('orientationchange', () => setTimeout(setViewportHeight, 200));
+
+    // ===== VIEWPORT-AWARE RESPONSIVE BEHAVIOR =====
+    const mobileQuery = window.matchMedia('(max-width: 640px)');
+
+    function handleResponsiveLayout(e) {
+        const isMobile = e.matches;
+        if (isMobile) {
+            const advSidebar = document.querySelector('.advanced-sidebar');
+            if (advSidebar) advSidebar.style.display = 'none';
+        }
+    }
+    mobileQuery.addEventListener('change', handleResponsiveLayout);
+    handleResponsiveLayout(mobileQuery);
+
     // ===== STATE =====
     let currentView = 'assistant'; // 'assistant' | 'voice' | 'advanced'
     let currentLanguage = localStorage.getItem('cognitiveMindLanguage') || 'en';

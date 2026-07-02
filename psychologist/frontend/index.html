@@ -2,7 +2,8 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, maximum-scale=5">
+    <meta name="theme-color" content="#0a0a0f">
     <title>ZARA — Offline AI Emotional Support</title>
     <link rel="stylesheet" href="style.css">
 </head>
@@ -19,11 +20,11 @@
                 </div>
             </div>
             <div class="header-right">
-                <button class="header-btn" id="voiceModeBtn" title="Voice Mode" data-i18n-title="btn_voice_mode">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3zm5.91-3c-.49 0-.9.36-.98.85C16.52 14.66 14.47 17 12 17s-4.52-2.34-4.93-5.15c-.08-.49-.49-.85-.98-.85-.61 0-1.09.54-1 1.14.49 3 2.89 5.35 5.91 5.78V20c0 .55.45 1 1 1s1-.45 1-1v-2.08c3.02-.43 5.42-2.78 5.91-5.78.1-.6-.39-1.14-1-1.14z"/></svg>
+                <button class="header-btn" id="voiceModeBtn" title="Voice Mode" aria-label="Voice Mode" data-i18n-title="btn_voice_mode">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3zm5.91-3c-.49 0-.9.36-.98.85C16.52 14.66 14.47 17 12 17s-4.52-2.34-4.93-5.15c-.08-.49-.49-.85-.98-.85-.61 0-1.09.54-1 1.14.49 3 2.89 5.35 5.91 5.78V20c0 .55.45 1 1 1s1-.45 1-1v-2.08c3.02-.43 5.42-2.78 5.91-5.78.1-.6-.39-1.14-1-1.14z"/></svg>
                 </button>
-                <button class="header-btn" id="advancedViewBtn" data-i18n="btn_advanced">Advanced Mind View</button>
-                <button class="language-toggle" id="languageToggle" data-i18n="language_toggle_bangla">বাংলা</button>
+                <button class="header-btn" id="advancedViewBtn" aria-label="Advanced Mind View" data-i18n="btn_advanced">Advanced Mind View</button>
+                <button class="language-toggle" id="languageToggle" aria-label="Switch language" data-i18n="language_toggle_bangla">বাংলা</button>
             </div>
         </header>
 
@@ -66,20 +67,20 @@
                     <span class="slider round"></span>
                 </label>
                 <span class="toggle-label" data-i18n="toggle_speak_response">Read aloud</span>
-                <textarea class="chat-textarea" id="chatInput" data-i18n-placeholder="chat_placeholder" placeholder="Message Zara..." rows="1"></textarea>
-                <button class="send-btn" id="chatSendBtn" title="Send" data-i18n-title="btn_send">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
+                <textarea class="chat-textarea" id="chatInput" data-i18n-placeholder="chat_placeholder" placeholder="Message Zara..." rows="1" aria-label="Chat message input"></textarea>
+                <button class="send-btn" id="chatSendBtn" title="Send" aria-label="Send message" data-i18n-title="btn_send">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
                 </button>
-                <button class="mic-btn" id="chatMicBtn" title="Speak" data-i18n-title="btn_voice_mode">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3zm5.91-3c-.49 0-.9.36-.98.85C16.52 14.66 14.47 17 12 17s-4.52-2.34-4.93-5.15c-.08-.49-.49-.85-.98-.85-.61 0-1.09.54-1 1.14.49 3 2.89 5.35 5.91 5.78V20c0 .55.45 1 1 1s1-.45 1-1v-2.08c3.02-.43 5.42-2.78 5.91-5.78.1-.6-.39-1.14-1-1.14z"/></svg>
+                <button class="mic-btn" id="chatMicBtn" title="Speak" aria-label="Open voice mode" data-i18n-title="btn_voice_mode">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3zm5.91-3c-.49 0-.9.36-.98.85C16.52 14.66 14.47 17 12 17s-4.52-2.34-4.93-5.15c-.08-.49-.49-.85-.98-.85-.61 0-1.09.54-1 1.14.49 3 2.89 5.35 5.91 5.78V20c0 .55.45 1 1 1s1-.45 1-1v-2.08c3.02-.43 5.42-2.78 5.91-5.78.1-.6-.39-1.14-1-1.14z"/></svg>
                 </button>
             </div>
         </main>
 
         <!-- ===== VOICE MODE (Full-screen overlay) ===== -->
-        <div class="voice-view" id="voiceView">
-            <button class="voice-close-btn" id="voiceCloseBtn" title="Exit voice mode">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        <div class="voice-view" id="voiceView" role="dialog" aria-label="Voice Mode">
+            <button class="voice-close-btn" id="voiceCloseBtn" title="Exit voice mode" aria-label="Exit voice mode">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
             </button>
 
             <div class="voice-content">
@@ -90,7 +91,7 @@
                     <div class="orb-core"></div>
                 </div>
 
-                <div class="voice-state-text" id="voiceStateText" data-i18n="voice_idle">Tap the mic and speak to Zara</div>
+                <div class="voice-state-text" id="voiceStateText" aria-live="polite" data-i18n="voice_idle">Tap the mic and speak to Zara</div>
 
                 <div class="voice-transcript" id="voiceTranscript" style="display:none;">
                     <span class="transcript-label" data-i18n="live_transcript_header">Live Transcript:</span>
@@ -104,20 +105,20 @@
                 <div class="voice-response-text" id="voiceResponseText" style="display:none;"></div>
 
                 <div class="voice-controls">
-                    <button class="voice-ctrl-btn" id="voicePauseBtn" title="Pause" style="display:none;">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="4" width="4" height="16" rx="1"/><rect x="14" y="4" width="4" height="16" rx="1"/></svg>
+                    <button class="voice-ctrl-btn" id="voicePauseBtn" title="Pause" aria-label="Pause" style="display:none;">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="6" y="4" width="4" height="16" rx="1"/><rect x="14" y="4" width="4" height="16" rx="1"/></svg>
                     </button>
-                    <button class="voice-ctrl-btn" id="voiceResumeBtn" title="Resume" style="display:none;">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+                    <button class="voice-ctrl-btn" id="voiceResumeBtn" title="Resume" aria-label="Resume" style="display:none;">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
                     </button>
-                    <button class="voice-ctrl-btn voice-ctrl-main" id="voiceMainBtn" title="Start Voice Mode">
-                        <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><path d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3zm5.91-3c-.49 0-.9.36-.98.85C16.52 14.66 14.47 17 12 17s-4.52-2.34-4.93-5.15c-.08-.49-.49-.85-.98-.85-.61 0-1.09.54-1 1.14.49 3 2.89 5.35 5.91 5.78V20c0 .55.45 1 1 1s1-.45 1-1v-2.08c3.02-.43 5.42-2.78 5.91-5.78.1-.6-.39-1.14-1-1.14z"/></svg>
+                    <button class="voice-ctrl-btn voice-ctrl-main" id="voiceMainBtn" title="Start Voice Mode" aria-label="Start voice mode">
+                        <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3zm5.91-3c-.49 0-.9.36-.98.85C16.52 14.66 14.47 17 12 17s-4.52-2.34-4.93-5.15c-.08-.49-.49-.85-.98-.85-.61 0-1.09.54-1 1.14.49 3 2.89 5.35 5.91 5.78V20c0 .55.45 1 1 1s1-.45 1-1v-2.08c3.02-.43 5.42-2.78 5.91-5.78.1-.6-.39-1.14-1-1.14z"/></svg>
                     </button>
-                    <button class="voice-ctrl-btn" id="voiceStopBtn" title="Stop" style="display:none;">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="6" width="12" height="12" rx="2"/></svg>
+                    <button class="voice-ctrl-btn" id="voiceStopBtn" title="Stop" aria-label="Stop" style="display:none;">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="6" y="6" width="12" height="12" rx="2"/></svg>
                     </button>
-                    <button class="voice-ctrl-btn" id="voiceReplayBtn" title="Replay" style="display:none;">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M12 5V1L7 6l5 5V7c3.31 0 6 2.69 6 6s-2.69 6-6 6-6-2.69-6-6H4c0 4.42 3.58 8 8 8s8-3.58 8-8-3.58-8-8-8z"/></svg>
+                    <button class="voice-ctrl-btn" id="voiceReplayBtn" title="Replay" aria-label="Replay" style="display:none;">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 5V1L7 6l5 5V7c3.31 0 6 2.69 6 6s-2.69 6-6 6-6-2.69-6-6H4c0 4.42 3.58 8 8 8s8-3.58 8-8-3.58-8-8-8z"/></svg>
                     </button>
                 </div>
 
@@ -456,9 +457,9 @@
         </div>
 
         <!-- ===== BREATHING MODAL ===== -->
-        <div class="modal-overlay" id="breathingModal" style="display:none;">
+        <div class="modal-overlay" id="breathingModal" role="dialog" aria-label="Breathing Exercise" style="display:none;">
             <div class="modal-content breathing-content">
-                <button class="modal-close" id="breathingClose">&times;</button>
+                <button class="modal-close" id="breathingClose" aria-label="Close">&times;</button>
                 <h3 data-i18n="tool_breathing_title">Breathing Exercise</h3>
                 <div class="breathing-circle" id="breathingCircle">
                     <span class="breathing-text" id="breathingText" data-i18n="breathing_breathe_in">Breathe In...</span>
@@ -468,9 +469,9 @@
         </div>
 
         <!-- ===== JOURNAL MODAL ===== -->
-        <div class="modal-overlay" id="journalModal" style="display:none;">
+        <div class="modal-overlay" id="journalModal" role="dialog" aria-label="Journaling Prompt" style="display:none;">
             <div class="modal-content journal-content">
-                <button class="modal-close" id="journalClose">&times;</button>
+                <button class="modal-close" id="journalClose" aria-label="Close">&times;</button>
                 <h3 data-i18n="tool_journal_title">Journaling Prompt</h3>
                 <p class="journal-prompt-text" id="journalPromptText"></p>
                 <textarea class="journal-textarea" id="journalTextarea" data-i18n-placeholder="journal_placeholder" placeholder="Write your thoughts here..." rows="8"></textarea>
