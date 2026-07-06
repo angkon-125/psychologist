@@ -14,6 +14,7 @@ from .vad import VoiceActivityDetector
 from .pause_detector import SmartPauseDetector
 from .transcript_manager import TranscriptManager
 from .playback_controller import PlaybackController
+from .echo_guard import EchoGuard
 
 class VoiceAgent(BaseAgent):
     """
@@ -28,6 +29,7 @@ class VoiceAgent(BaseAgent):
         self.pause_detector = None
         self.transcripts = None
         self.playback = None
+        self.echo_guard = None
 
     def _get_agent_name(self) -> str:
         return "voice"
@@ -37,6 +39,7 @@ class VoiceAgent(BaseAgent):
         self.pause_detector = SmartPauseDetector()
         self.transcripts = TranscriptManager()
         self.playback = PlaybackController()
+        self.echo_guard = EchoGuard()
         self._initialized = True
         return True
 
@@ -71,12 +74,28 @@ class VoiceAgent(BaseAgent):
             text_to_speak = request.text
             language = request.language
             self.state_machine.transition_to(VoiceState.SPEAKING, "Playing response")
+            # Arm echo guard before TTS starts
+            if self.echo_guard:
+                self.echo_guard.arm(text_to_speak)
             success = self.playback.speak(text_to_speak, language=language)
+            # Disarm echo guard after TTS finishes
+            if self.echo_guard:
+                self.echo_guard.disarm()
             self.state_machine.transition_to(VoiceState.IDLE, "Playback finished")
             return AgentResponse(
                 success=success,
                 agent=self.name,
                 response="Spoken successfully" if success else "Playback failed"
+            )
+
+        elif purpose == "echo_check":
+            fragment = request.text
+            is_echo = self.echo_guard.is_echo(fragment) if self.echo_guard else False
+            return AgentResponse(
+                success=True,
+                agent=self.name,
+                response="echo" if is_echo else "speech",
+                metadata={"is_echo": is_echo, "echo_guard_armed": self.echo_guard.is_armed if self.echo_guard else False}
             )
 
         elif purpose == "stop_playback":

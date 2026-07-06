@@ -65,22 +65,20 @@ class Pyttsx3Engine(BaseTTSEngine):
             # Set properties
             rate = int(200 * request.speed)  # pyttsx3 default is ~200 wpm
             engine.setProperty('rate', rate)
-            engine.setProperty('volume', request.volume)
+            engine.setProperty('volume', max(0.0, min(1.0, request.volume)))
 
-            # Set voice based on language or voice_id
+            # Set voice: prefer female voices for ZARA
             voices = engine.getProperty('voices')
-            if request.voice_id:
-                for voice in voices:
-                    if request.voice_id in voice.id:
-                        engine.setProperty('voice', voice.id)
-                        break
-            else:
-                if request.language in ["bn", "bn_bd"]:
-                    # Try to find Bengali voice
-                    for voice in voices:
-                        if "bangla" in voice.name.lower() or "bengali" in voice.name.lower() or "bn" in voice.id.lower():
-                            engine.setProperty('voice', voice.id)
-                            break
+            selected_voice_id = self._select_female_voice(voices, request)
+            if selected_voice_id:
+                engine.setProperty('voice', selected_voice_id)
+
+            # Apply pitch if the engine supports it (pyttsx3 on some platforms)
+            try:
+                engine.setProperty('pitch', request.pitch)
+            except Exception:
+                # Pitch not supported on this platform — silently ignore
+                pass
 
             # Save to file if requested, otherwise play directly
             audio_path = None
@@ -108,6 +106,61 @@ class Pyttsx3Engine(BaseTTSEngine):
                     pass
 
         return result
+
+    def _select_female_voice(self, voices, request) -> str:
+        """
+        Select the best available female voice for ZARA.
+
+        Priority:
+        1. If voice_id is explicitly set, use it.
+        2. Search for known female voice names (Zira, Hazel, Susan, Heera, etc.)
+        3. Search for voices tagged with 'female' or 'woman'
+        4. For Bangla, try to find a Bangla voice
+        5. Fall back to default voice and log a warning
+        """
+        if not voices:
+            return None
+
+        # 1. Explicit voice_id
+        if request.voice_id:
+            for voice in voices:
+                if request.voice_id in voice.id:
+                    return voice.id
+
+        # Known female voice name patterns (case-insensitive)
+        female_name_patterns = [
+            'zira', 'hazel', 'susan', 'heera', 'samantha',
+            'karen', 'tessa', 'fiona', 'moira', 'veena',
+            'microsoft zira', 'microsoft hazel', 'microsoft susan',
+            'google uk english female', 'google us english',
+        ]
+
+        # 2. Search for known female voice names
+        for voice in voices:
+            name_lower = voice.name.lower()
+            for pattern in female_name_patterns:
+                if pattern in name_lower:
+                    logger.info("Selected female voice: %s", voice.name)
+                    return voice.id
+
+        # 3. Search for 'female' or 'woman' in voice name/id
+        for voice in voices:
+            combined = (voice.name + ' ' + getattr(voice, 'id', '')).lower()
+            if 'female' in combined or 'woman' in combined:
+                logger.info("Selected female-tagged voice: %s", voice.name)
+                return voice.id
+
+        # 4. For Bangla, try to find a Bangla voice
+        if request.language in ["bn", "bn_bd"]:
+            for voice in voices:
+                combined = (voice.name + ' ' + getattr(voice, 'id', '')).lower()
+                if "bangla" in combined or "bengali" in combined or "bn" in combined:
+                    logger.info("Selected Bangla voice: %s", voice.name)
+                    return voice.id
+
+        # 5. Fallback: use default voice
+        logger.warning("No female voice found, using default pyttsx3 voice")
+        return None
 
     def stop(self):
         if self.engine:

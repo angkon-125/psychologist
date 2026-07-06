@@ -1,0 +1,105 @@
+{
+  "description": "Voice state machine and echo guard test cases.",
+  "state_transition_tests": [
+    {
+      "id": "voice_001",
+      "description": "Valid: IDLE -> LISTENING",
+      "from_state": "IDLE",
+      "to_state": "LISTENING",
+      "expected_valid": true
+    },
+    {
+      "id": "voice_002",
+      "description": "Valid: LISTENING -> USER_SPEAKING",
+      "from_state": "LISTENING",
+      "to_state": "USER_SPEAKING",
+      "expected_valid": true
+    },
+    {
+      "id": "voice_003",
+      "description": "Valid: USER_SPEAKING -> USER_PAUSED",
+      "from_state": "USER_SPEAKING",
+      "to_state": "USER_PAUSED",
+      "expected_valid": true
+    },
+    {
+      "id": "voice_004",
+      "description": "Invalid: USER_PAUSED -> SPEAKING (must go through FINALIZING)",
+      "from_state": "USER_PAUSED",
+      "to_state": "SPEAKING",
+      "expected_valid": false
+    },
+    {
+      "id": "voice_005",
+      "description": "Valid: USER_PAUSED -> FINALIZING",
+      "from_state": "USER_PAUSED",
+      "to_state": "FINALIZING",
+      "expected_valid": true
+    },
+    {
+      "id": "voice_006",
+      "description": "Valid: FINALIZING -> PROCESSING",
+      "from_state": "FINALIZING",
+      "to_state": "PROCESSING",
+      "expected_valid": true
+    },
+    {
+      "id": "voice_007",
+      "description": "Valid: PROCESSING -> SPEAKING",
+      "from_state": "PROCESSING",
+      "to_state": "SPEAKING",
+      "expected_valid": true
+    },
+    {
+      "id": "voice_008",
+      "description": "Valid: SPEAKING -> LISTENING (barge-in)",
+      "from_state": "SPEAKING",
+      "to_state": "LISTENING",
+      "expected_valid": true
+    },
+    {
+      "id": "voice_009",
+      "description": "Invalid: IDLE -> SPEAKING (must go through full pipeline)",
+      "from_state": "IDLE",
+      "to_state": "SPEAKING",
+      "expected_valid": false
+    },
+    {
+      "id": "voice_010",
+      "description": "Valid: ERROR -> IDLE (recovery)",
+      "from_state": "ERROR",
+      "to_state": "IDLE",
+      "expected_valid": true
+    }
+  ],
+  "echo_guard_tests": [
+    {
+      "id": "echo_001",
+      "description": "Echo detected when transcript matches spoken text",
+      "spoken_text": "Hello, how are you feeling today?",
+      "transcript_fragment": "Hello how are you",
+      "expected_is_echo": true
+    },
+    {
+      "id": "echo_002",
+      "description": "No echo when transcript is different from spoken text",
+      "spoken_text": "Let us try a breathing exercise together",
+      "transcript_fragment": "I feel stressed about work",
+      "expected_is_echo": false
+    },
+    {
+      "id": "echo_003",
+      "description": "No echo when guard is not armed",
+      "spoken_text": "",
+      "transcript_fragment": "Hello how are you",
+      "expected_is_echo": false
+    },
+    {
+      "id": "echo_004",
+      "description": "Echo detected with partial overlap above threshold",
+      "spoken_text": "Remember to breathe in slowly and then breathe out",
+      "transcript_fragment": "breathe in slowly breathe out",
+      "expected_is_echo": true
+    }
+  ]
+}

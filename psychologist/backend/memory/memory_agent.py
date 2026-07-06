@@ -18,6 +18,9 @@ from backend.agent.schemas import AgentRequest, AgentResponse
 from backend.config import config
 from .sqlite_store import SQLiteStore
 from .vector_store import VectorStoreStub
+from .conversation_memory import ConversationMemory
+from .graph_memory import GraphMemory
+from backend.safety.privacy_guard import PrivacyGuard
 
 class MemoryAgent(BaseAgent):
     """
@@ -29,6 +32,9 @@ class MemoryAgent(BaseAgent):
         super().__init__()
         self.db = None
         self.vector_store = None
+        self.conversation_memory = None
+        self.privacy_guard = None
+        self.graph_memory = None
 
     def _get_agent_name(self) -> str:
         return "memory"
@@ -37,6 +43,9 @@ class MemoryAgent(BaseAgent):
         db_path = config.MEMORY_DB_PATH
         self.db = SQLiteStore(db_path)
         self.vector_store = VectorStoreStub()
+        self.conversation_memory = ConversationMemory()
+        self.privacy_guard = PrivacyGuard()
+        self.graph_memory = GraphMemory()
         self._initialized = True
         return True
 
@@ -46,6 +55,9 @@ class MemoryAgent(BaseAgent):
         
         if purpose == "save_interaction":
             text = request.text
+            # Sanitize PII before storage
+            if self.privacy_guard:
+                text = self.privacy_guard.sanitize_for_storage(text)
             # Parse text into role / content (e.g. 'User: Hi | ZARA: Hello')
             role = "user"
             content = text

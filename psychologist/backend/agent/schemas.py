@@ -22,6 +22,7 @@ class AgentRequest:
     language: str = "en"
     input_mode: str = "text"  # "text" | "voice"
     user_mood: Optional[str] = None
+    agent_mode: str = "assistant"  # "assistant" | "psychologist" | "coding" | "project" | "prediction" | "safety" | "night"
     metadata: Dict[str, Any] = field(default_factory=dict)
     timestamp: datetime = field(default_factory=datetime.now)
 
@@ -33,6 +34,7 @@ class AgentRequest:
             "language": self.language,
             "input_mode": self.input_mode,
             "user_mood": self.user_mood,
+            "agent_mode": self.agent_mode,
             "metadata": self.metadata,
             "timestamp": self.timestamp.isoformat(),
         }

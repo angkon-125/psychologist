@@ -13,6 +13,13 @@ from backend.agent.base import BaseAgent
 from backend.agent.schemas import AgentRequest, AgentResponse
 from backend.agent.router import IntentRouter
 from backend.agent.state import ConversationStateManager
+from backend.agent.mode_context import (
+    resolve_final_mode,
+    get_emotion_context_for_mode,
+    get_mode_label,
+    is_valid_mode,
+    DEFAULT_MODE,
+)
 
 logger = logging.getLogger("zara.orchestrator")
 
@@ -52,6 +59,9 @@ class OrchestratorAgent(BaseAgent):
         session_id = request.session_id or self.state_manager.session_id
         request.session_id = session_id
         
+        # Normalize agent_mode
+        frontend_mode = request.agent_mode if is_valid_mode(request.agent_mode) else DEFAULT_MODE
+        
         # 2. Safety Agent Pre-Check
         safety_agent = self.specialists.get("safety")
         if not safety_agent:
@@ -82,6 +92,10 @@ class OrchestratorAgent(BaseAgent):
                     metadata={"purpose": "save_interaction", "risk": safety_res.risk_level}
                 ))
             
+            # Resolve mode to safety for crisis
+            resolved_mode = "safety"
+            emotion_context = get_emotion_context_for_mode(resolved_mode)
+            
             return AgentResponse(
                 success=True,
                 agent=self.name,
@@ -89,13 +103,24 @@ class OrchestratorAgent(BaseAgent):
                 response=safety_res.response,
                 confidence=1.0,
                 risk_level=safety_res.risk_level,
-                metadata={"safety_assessment": safety_res.metadata}
+                metadata={
+                    "safety_assessment": safety_res.metadata,
+                    "resolved_mode": resolved_mode,
+                    "emotion_context": emotion_context,
+                    "mode_label": get_mode_label(resolved_mode),
+                }
             )
 
         # 3. Intent Routing
         intent, intent_conf, target_agent_name = self.router.classify(request.text)
         request.metadata["intent"] = intent
         request.metadata["intent_confidence"] = intent_conf
+        
+        # 3b. Resolve final mode based on frontend mode + intent
+        resolved_mode = resolve_final_mode(frontend_mode, intent, safety_override=False)
+        emotion_context = get_emotion_context_for_mode(resolved_mode)
+        request.metadata["resolved_mode"] = resolved_mode
+        request.metadata["emotion_context"] = emotion_context
         
         # 4. Memory Retrieval (Retrieve relevant past turns/context)
         memory_agent = self.specialists.get("memory")
@@ -222,6 +247,9 @@ class OrchestratorAgent(BaseAgent):
             metadata={
                 "selected_agent": response_source,
                 "latency_ms": latency,
-                "session_id": session_id
+                "session_id": session_id,
+                "resolved_mode": resolved_mode,
+                "emotion_context": emotion_context,
+                "mode_label": get_mode_label(resolved_mode),
             }
         )

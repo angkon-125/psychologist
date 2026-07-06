@@ -56,6 +56,7 @@ class TextModeHandler:
         user_mood: Optional[str] = None,
         speak_response: bool = False,
         session_id: str = "",
+        agent_mode: str = "assistant",
     ) -> Dict:
         """
         Process a text message through the full pipeline.
@@ -155,6 +156,8 @@ class TextModeHandler:
                 "emotional_state": emotion_result.get("emotional_state", {}),
             },
             "safety_assessment": safety.to_dict(),
+            "resolved_mode": agent_mode,
+            "mode_label": agent_mode.title() if agent_mode else "Assistant",
         }
 
     # ── Text normalisation ───────────────────────────────────────

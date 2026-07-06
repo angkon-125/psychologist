@@ -7,6 +7,7 @@ crisis_keywords:
     self_harm:
       - "kill myself"
       - "hurt myself"
+      - "harm myself"
       - "cut myself"
       - "end my life"
       - "want to die"
@@ -18,6 +19,7 @@ crisis_keywords:
       - "no reason to live"
       - "better off dead"
       - "end it all"
+      - "ending it all"
       - "take my own life"
       - "can't go on"
     harm_to_others:

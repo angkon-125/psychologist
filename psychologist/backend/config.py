@@ -100,6 +100,17 @@ class ZARAConfig:
         default_factory=lambda: _env_bool("LOG_EMOTIONAL_CONTENT", False)
     )
 
+    # ── Voice Engine ──────────────────────────────────────────────
+    ZARA_PIPER_MODEL_PATH: str = field(
+        default_factory=lambda: _env_str("ZARA_PIPER_MODEL_PATH", "")
+    )
+    ZARA_PIPER_CONFIG_PATH: str = field(
+        default_factory=lambda: _env_str("ZARA_PIPER_CONFIG_PATH", "")
+    )
+    ZARA_DEFAULT_VOICE_PROFILE: str = field(
+        default_factory=lambda: _env_str("ZARA_DEFAULT_VOICE_PROFILE", "zara_soft")
+    )
+
     def get_log_level(self) -> int:
         """Convert LOG_LEVEL string to logging constant."""
         levels = {

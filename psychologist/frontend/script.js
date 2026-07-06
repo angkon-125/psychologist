@@ -19,9 +19,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function handleResponsiveLayout(e) {
         const isMobile = e.matches;
+        const advSidebar = document.querySelector('.advanced-sidebar');
+        if (!advSidebar) return;
         if (isMobile) {
-            const advSidebar = document.querySelector('.advanced-sidebar');
-            if (advSidebar) advSidebar.style.display = 'none';
+            advSidebar.style.display = 'none';
+        } else {
+            advSidebar.style.display = '';  // clear inline style, let CSS handle
         }
     }
     mobileQuery.addEventListener('change', handleResponsiveLayout);
@@ -78,6 +81,15 @@ document.addEventListener('DOMContentLoaded', () => {
             "voice_i_heard": "I heard:",
             "voice_repeat": "Could you say more?",
             "voice_no_stt": "Live transcript not supported. Recording still works.",
+            "voice_profile_label": "Zara Voice",
+            "voice_profile_soft": "Soft",
+            "voice_profile_cute": "Cute",
+            "voice_profile_professional": "Professional",
+            "voice_profile_night": "Night",
+            "voice_preview_btn": "Preview Voice",
+            "voice_preview_playing": "Playing preview...",
+            "voice_preview_done": "Preview complete",
+            "voice_preview_error": "Preview unavailable",
             "live_transcript_header": "Live Transcript:",
             "nav_dashboard": "Dashboard", "nav_emotions": "Emotions", "nav_needs": "Needs",
             "nav_beliefs": "Beliefs", "nav_goals": "Goals", "nav_conflicts": "Inner Conflicts",
@@ -141,6 +153,16 @@ document.addEventListener('DOMContentLoaded', () => {
             "accuracy_run_tests": "Run Tests",
             "accuracy_recent_failures": "Recent Failures",
             "accuracy_suggestions": "Suggestions",
+            "voice_engine": "Voice Engine",
+            "voice_engine_auto": "Auto",
+            "voice_engine_backend": "Backend Offline Voice",
+            "voice_engine_browser": "Browser Voice",
+            "voice_engine_active_backend": "Engine: Backend",
+            "voice_engine_active_browser": "Engine: Browser",
+            "voice_engine_active_text": "Engine: Text Only",
+            "voice_backend_unavailable": "Backend voice unavailable. Using browser.",
+            "voice_browser_unavailable": "Browser voice unavailable. Text-only mode.",
+            "voice_stt_failed": "Speech recognition failed. Try again.",
         },
         bn_bd: {
             "app_name": "ঝারা",
@@ -181,7 +203,16 @@ document.addEventListener('DOMContentLoaded', () => {
             "voice_i_heard": "\u0986\u09ae\u09bf \u09b6\u09c1\u09a8\u09c7\u099b\u09bf:",
             "voice_repeat": "\u0986\u09b0\u0993 \u09ac\u09b2\u09a4\u09c7 \u09aa\u09be\u09b0\u09c7\u09a8?",
             "voice_no_stt": "\u09b2\u09be\u0987\u09ad \u099f\u09cd\u09b0\u09be\u09a8\u09cd\u09b8\u0995\u09cd\u09b0\u09bf\u09aa\u09cd\u099f \u09b8\u09ae\u09b0\u09cd\u09a5\u09bf\u09a4 \u09a8\u09df\u0964",
-            "live_transcript_header": "লাইভ প্রতিলিপি:",
+            "voice_profile_label": "\u099d\u09be\u09b0\u09be\u09b0 \u09ad\u09af\u09bc\u09c7\u09b8",
+            "voice_profile_soft": "\u09b8\u09ab\u099f",
+            "voice_profile_cute": "\u0995\u09bf\u0989\u099f",
+            "voice_profile_professional": "\u09aa\u09cd\u09b0\u09ab\u09c7\u09b6\u09a8\u09be\u09b2",
+            "voice_profile_night": "\u09a8\u09be\u0987\u099f",
+            "voice_preview_btn": "\u09ad\u09af\u09bc\u09c7\u09b8 \u09aa\u09cd\u09b0\u09bf\u09ad\u09bf\u0989",
+            "voice_preview_playing": "\u09aa\u09cd\u09b0\u09bf\u09ad\u09bf\u0989 \u099a\u09b2\u099b\u09c7...",
+            "voice_preview_done": "\u09aa\u09cd\u09b0\u09bf\u09ad\u09bf\u0989 \u09b8\u09ae\u09cd\u09aa\u09a8\u09cd\u09a8",
+            "voice_preview_error": "\u09aa\u09cd\u09b0\u09bf\u09ad\u09bf\u0989 \u09aa\u09be\u0993\u09af\u09bc\u09be \u09af\u09be\u099a\u09cd\u099b\u09c7 \u09a8\u09be",
+            "live_transcript_header": "\u09b2\u09be\u0987\u09ad \u09aa\u09cd\u09b0\u09a4\u09bf\u09b2\u09bf\u09aa\u09bf:",
             "nav_dashboard": "ড্যাশবোর্ড", "nav_emotions": "আবেগ", "nav_needs": "প্রয়োজন",
             "nav_beliefs": "বিশ্বাস", "nav_goals": "লক্ষ্য", "nav_conflicts": "অভ্যন্তরীণ দ্বন্দ্ব",
             "nav_identity": "আত্ম-পরিচয়", "nav_memory": "স্মৃতি", "nav_graph": "জ্ঞান গ্রাফ",
@@ -244,6 +275,16 @@ document.addEventListener('DOMContentLoaded', () => {
             "accuracy_run_tests": "\u09aa\u09b0\u09c0\u0995\u09cd\u09b7\u09be \u099a\u09be\u09b2\u09be\u09a8",
             "accuracy_recent_failures": "\u09b8\u09be\u09ae\u09cd\u09aa\u09cd\u09b0\u09a4\u09bf\u0995 \u09ac\u09cd\u09af\u09b0\u09cd\u09a5\u09a4\u09be",
             "accuracy_suggestions": "\u09aa\u09b0\u09be\u09ae\u09b0\u09cd\u09b6",
+            "voice_engine": "\u09ad\u09af\u09bc\u09b8 \u0987\u099e\u09cd\u099c\u09bf\u09a8",
+            "voice_engine_auto": "\u09b8\u09cd\u09ac\u09af\u09bc\u0982\u0995\u09cd\u09b0\u09bf\u09af\u09bc",
+            "voice_engine_backend": "\u09ac\u09cd\u09af\u09be\u0995\u098f\u0982\u09a1 \u0985\u09ab\u09b2\u09be\u0987\u09a8 \u09ad\u09af\u09bc\u09b8",
+            "voice_engine_browser": "\u09ac\u09cd\u09b0\u09be\u0989\u099c\u09be\u09b0 \u09ad\u09af\u09bc\u09b8",
+            "voice_engine_active_backend": "\u0987\u099e\u09cd\u099c\u09bf\u09a8: \u09ac\u09cd\u09af\u09be\u0995\u098f\u0982\u09a1",
+            "voice_engine_active_browser": "\u0987\u099e\u09cd\u099c\u09bf\u09a8: \u09ac\u09cd\u09b0\u09be\u0989\u099c\u09be\u09b0",
+            "voice_engine_active_text": "\u0987\u099e\u09cd\u099c\u09bf\u09a8: \u0995\u09c7\u09ac\u09b2 \u099f\u09c7\u0995\u09cd\u09b8\u099f",
+            "voice_backend_unavailable": "\u09ac\u09cd\u09af\u09be\u0995\u098f\u0982\u09a1 \u09ad\u09af\u09bc\u09b8 \u09aa\u09be\u0993\u09af\u09bc\u09be \u09af\u09be\u099a\u09cd\u099b\u09c7 \u09a8\u09be\u0964 \u09ac\u09cd\u09b0\u09be\u0989\u099c\u09be\u09b0 \u09ac\u09cd\u09af\u09ac\u09b9\u09be\u09b0 \u0995\u09b0\u09be \u09b9\u099a\u09cd\u099b\u09c7\u0964",
+            "voice_browser_unavailable": "\u09ac\u09cd\u09b0\u09be\u0989\u099c\u09be\u09b0 \u09ad\u09af\u09bc\u09b8 \u09aa\u09be\u0993\u09af\u09bc\u09be \u09af\u09be\u099a\u09cd\u099b\u09c7 \u09a8\u09be\u0964 \u0995\u09c7\u09ac\u09b2 \u099f\u09c7\u0995\u09cd\u09b8\u099f \u09ae\u09cb\u09a1\u0964",
+            "voice_stt_failed": "\u09b8\u09cd\u09aa\u09c0\u099a \u09b8\u09cd\u09ac\u09c0\u0995\u09c3\u09a4\u09bf \u09ac\u09cd\u09af\u09b0\u09cd\u09a5\u0964 \u0986\u09ac\u09be\u09b0 \u099a\u09c7\u09b7\u09cd\u099f\u09be \u0995\u09b0\u09c1\u09a8\u0964",
         }
     };
 
@@ -267,6 +308,52 @@ document.addEventListener('DOMContentLoaded', () => {
     const voiceView = document.getElementById('voiceView');
     const advancedView = document.getElementById('advancedView');
 
+    // Agent mode state
+    const VALID_AGENT_MODES = ['assistant', 'psychologist', 'coding', 'project', 'prediction', 'safety', 'night'];
+    const MODE_LABELS = {
+        assistant: 'Assistant',
+        psychologist: 'Support',
+        coding: 'Coding',
+        project: 'Project',
+        prediction: 'Prediction',
+        safety: 'Safety',
+        night: 'Night',
+    };
+
+    function setAgentMode(mode) {
+        if (!VALID_AGENT_MODES.includes(mode)) mode = 'assistant';
+        currentMode = mode;
+        localStorage.setItem('zaraAgentMode', mode);
+        updateModeIndicator();
+        updateProfileForMode();
+    }
+
+    function updateModeIndicator() {
+        const modeIndicator = document.getElementById('modeIndicator');
+        const modeLabel = document.getElementById('modeLabel');
+        if (modeIndicator) modeIndicator.style.display = 'block';
+        if (modeLabel) modeLabel.textContent = 'Mode: ' + (MODE_LABELS[currentMode] || currentMode);
+    }
+
+    function updateProfileForMode() {
+        // Auto-update voice profile when mode changes (if auto emotional voice is on)
+        if (autoEmotionalVoice && voiceProfileSelect) {
+            const modeToProfile = {
+                assistant: 'zara_cute',
+                psychologist: 'zara_soft',
+                coding: 'zara_professional',
+                project: 'zara_professional',
+                prediction: 'zara_professional',
+                safety: 'zara_professional',
+                night: 'zara_night',
+            };
+            const newProfile = modeToProfile[currentMode] || 'zara_soft';
+            currentVoiceProfile = newProfile;
+            voiceProfileSelect.value = newProfile;
+            updateProfileDescription();
+        }
+    }
+
     function showView(name) {
         assistantView.classList.remove('active');
         advancedView.classList.remove('active');
@@ -275,9 +362,13 @@ document.addEventListener('DOMContentLoaded', () => {
         if (name === 'assistant') assistantView.classList.add('active');
         else if (name === 'voice') voiceView.classList.add('active');
         else if (name === 'advanced') advancedView.classList.add('active');
+        // Set mode based on view
+        if (name === 'assistant') setAgentMode('assistant');
+        else if (name === 'voice') setAgentMode('psychologist');
+        else if (name === 'advanced') setAgentMode('project');
     }
 
-    document.getElementById('voiceModeBtn').addEventListener('click', () => { showView('voice'); });
+    document.getElementById('voiceModeBtn').addEventListener('click', () => { showView('voice'); if (voiceState === VoiceState.IDLE) startVoiceMode(); });
     // voiceCloseBtn handler is in the Voice Mode section (with conversation cleanup)
     document.getElementById('advancedViewBtn').addEventListener('click', () => { showView('advanced'); });
     document.getElementById('backToAssistantBtn').addEventListener('click', () => { showView('assistant'); });
@@ -345,10 +436,14 @@ document.addEventListener('DOMContentLoaded', () => {
         try {
             const res = await fetch('/api/interaction/message', {
                 method: 'POST', headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ text, language: currentLanguage, speak_response: speakResponseToggle.checked })
+                body: JSON.stringify({ text, language: currentLanguage, speak_response: speakResponseToggle.checked, mode: currentMode })
             });
             const result = await res.json();
             removeTypingIndicator();
+            // Update mode from backend response if resolved differently
+            if (result.resolved_mode && result.resolved_mode !== currentMode) {
+                setAgentMode(result.resolved_mode);
+            }
             if (result.assistant_message) {
                 appendMessage('assistant', result.assistant_message.response_text, result.assistant_message.response_type);
             } else if (result.response) {
@@ -435,7 +530,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let finalTranscript = '';
     let interimTranscript = '';
     let lastResponseText = '';
-    let silenceTimer = null;
+    let silenceTimers = [];
     let silenceStart = 0;
     let speechStart = 0;
     let isCalibrating = false;
@@ -448,6 +543,18 @@ document.addEventListener('DOMContentLoaded', () => {
     let recognitionActive = false;
     let synthUtterance = null;
     let synthPaused = false;
+    let backendAvailable = false;
+    let backendCheckInterval = null;
+    let voiceEngineMode = 'auto'; // 'auto' | 'backend' | 'browser'
+    let activeVoiceEngine = 'browser'; // resolved: 'backend' | 'browser' | 'text'
+    let currentMode = localStorage.getItem('zaraAgentMode') || 'assistant'; // Agent mode
+    let currentVoiceProfile = 'zara_soft'; // 'zara_soft' | 'zara_cute' | 'zara_professional' | 'zara_night'
+    let backendSTTAvailable = false;
+    let backendTTSAvailable = false;
+    let mediaRecorder = null;
+    let audioChunks = [];
+    let backendAudioElement = null;
+    let backendAudioPlaying = false;
 
     // --- DOM refs ---
     const voiceOrb = document.getElementById('voiceOrb');
@@ -468,6 +575,315 @@ document.addEventListener('DOMContentLoaded', () => {
     const voiceSettingsPanel = document.getElementById('voiceSettingsPanel');
     const voiceContinuousToggle = document.getElementById('voiceContinuousToggle');
     const voiceBargeInToggle = document.getElementById('voiceBargeInToggle');
+    const voiceProfileSelect = document.getElementById('voiceProfileSelect');
+    const voiceProfileDesc = document.getElementById('voiceProfileDesc');
+    const voicePreviewBtn = document.getElementById('voicePreviewBtn');
+    const voicePreviewStatus = document.getElementById('voicePreviewStatus');
+    const voiceAutoEmotionalToggle = document.getElementById('voiceAutoEmotionalToggle');
+    const voiceSpeakingIndicator = document.getElementById('voiceSpeakingIndicator');
+    const speakingStatusText = document.getElementById('speakingStatusText');
+    const speakingSentenceText = document.getElementById('speakingSentenceText');
+    const voicePreviewSample = document.getElementById('voicePreviewSample');
+
+    // Auto emotional voice state
+    let autoEmotionalVoice = true;
+
+    // Preview sample texts
+    const previewSampleTexts = {
+        'friendly': "Hey there! I'm Zara. How can I help you today?",
+        'supportive': "Hi, I'm Zara. I'm here with you. Take your time.",
+        'professional': "Hello. I'm Zara. Let's focus on the task at hand.",
+        'night': "Hi... I'm Zara. It's okay to rest. I'm here.",
+    };
+
+    // Speaking style status messages
+    const styleStatusMessages = {
+        'calm_support': 'Zara is speaking in support mode...',
+        'friendly_assistant': 'Zara is speaking softly...',
+        'professional_clear': 'Zara is speaking clearly...',
+        'night_soft': 'Zara is speaking gently...',
+        'emergency_clear': 'Zara is speaking directly...',
+    };
+
+    // Voice profile descriptions
+    const voiceProfileDescriptions = {
+        'zara_soft': 'Warm, calm voice for support conversations',
+        'zara_cute': 'Bright, friendly assistant voice',
+        'zara_professional': 'Clear, professional voice',
+        'zara_night': 'Soft, quiet voice for night use',
+    };
+
+    // --- Backend Connectivity ---
+    async function checkBackendHealth() {
+        try {
+            const controller = new AbortController();
+            const timeoutId = setTimeout(() => controller.abort(), 3000);
+            const res = await fetch('/api/health', { signal: controller.signal });
+            clearTimeout(timeoutId);
+            const data = await res.json();
+            const wasOffline = !backendAvailable;
+            backendAvailable = data.status === 'healthy';
+            if (wasOffline && backendAvailable) {
+                logVoice('Backend came online');
+                if (voiceState === VoiceState.IDLE && voiceActive) {
+                    voiceStateText.textContent = t('voice_listening');
+                }
+            }
+            return backendAvailable;
+        } catch (e) {
+            backendAvailable = false;
+            return false;
+        }
+    }
+
+    async function syncVoiceState(backendState, reason) {
+        if (!backendAvailable) return;
+        try {
+            await fetch('/api/voice/state', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ state: backendState, reason: reason || 'frontend_state_change' })
+            });
+        } catch (e) {
+            logVoice('Voice state sync failed: ' + e.message);
+        }
+    }
+
+    function startBackendHealthMonitor() {
+        checkBackendHealth();
+        backendCheckInterval = setInterval(checkBackendHealth, 15000);
+    }
+
+    function stopBackendHealthMonitor() {
+        if (backendCheckInterval) { clearInterval(backendCheckInterval); backendCheckInterval = null; }
+    }
+
+    // --- Voice Engine Detection ---
+    async function detectBackendVoiceEngines() {
+        if (!backendAvailable) {
+            backendSTTAvailable = false;
+            backendTTSAvailable = false;
+            return;
+        }
+        try {
+            const res = await fetch('/api/voice/engines');
+            const data = await res.json();
+            backendSTTAvailable = data.stt && data.stt.available;
+            backendTTSAvailable = data.tts && data.tts.available;
+            logVoice('Backend voice engines: STT=' + backendSTTAvailable + ' TTS=' + backendTTSAvailable);
+        } catch (e) {
+            backendSTTAvailable = false;
+            backendTTSAvailable = false;
+        }
+        resolveActiveEngine();
+    }
+
+    function resolveActiveEngine() {
+        const indicator = document.getElementById('voiceEngineIndicator');
+        if (voiceEngineMode === 'backend') {
+            if (backendSTTAvailable || backendTTSAvailable) {
+                activeVoiceEngine = 'backend';
+                if (indicator) indicator.textContent = t('voice_engine_active_backend');
+            } else {
+                activeVoiceEngine = 'text';
+                if (indicator) indicator.textContent = t('voice_engine_active_text');
+            }
+        } else if (voiceEngineMode === 'browser') {
+            activeVoiceEngine = 'browser';
+            if (indicator) indicator.textContent = t('voice_engine_active_browser');
+        } else {
+            // Auto mode: prefer backend, fallback to browser
+            if (backendSTTAvailable || backendTTSAvailable) {
+                activeVoiceEngine = 'backend';
+                if (indicator) indicator.textContent = t('voice_engine_active_backend');
+            } else if (window.SpeechRecognition || window.webkitSpeechRecognition || window.speechSynthesis) {
+                activeVoiceEngine = 'browser';
+                if (indicator) indicator.textContent = t('voice_engine_active_browser');
+            } else {
+                activeVoiceEngine = 'text';
+                if (indicator) indicator.textContent = t('voice_engine_active_text');
+            }
+        }
+        logVoice('Active voice engine: ' + activeVoiceEngine);
+    }
+
+    // --- Backend STT (MediaRecorder → /api/voice/stt) ---
+    async function startBackendRecording() {
+        try {
+            if (!micStream) {
+                micStream = await navigator.mediaDevices.getUserMedia({ audio: true });
+            }
+            audioChunks = [];
+            const mimeType = MediaRecorder.isTypeSupported('audio/webm;codecs=opus') ? 'audio/webm;codecs=opus' : 'audio/webm';
+            mediaRecorder = new MediaRecorder(micStream, { mimeType: mimeType });
+            mediaRecorder.ondataavailable = (e) => { if (e.data.size > 0) audioChunks.push(e.data); };
+            mediaRecorder.onstop = async () => {
+                if (audioChunks.length === 0) return;
+                const audioBlob = new Blob(audioChunks, { type: mimeType });
+                await sendAudioToBackendSTT(audioBlob);
+            };
+            mediaRecorder.start(250); // Collect data every 250ms
+            logVoice('Backend recording started');
+            return true;
+        } catch (e) {
+            logVoice('Backend recording failed: ' + e.message);
+            return false;
+        }
+    }
+
+    function stopBackendRecording() {
+        if (mediaRecorder && mediaRecorder.state !== 'inactive') {
+            mediaRecorder.stop();
+            logVoice('Backend recording stopped');
+        }
+    }
+
+    async function sendAudioToBackendSTT(audioBlob) {
+        const formData = new FormData();
+        formData.append('file', audioBlob, 'recording.webm');
+        formData.append('language', currentLanguage);
+        try {
+            const res = await fetch('/api/voice/stt', {
+                method: 'POST',
+                body: formData
+            });
+            const result = await res.json();
+            if (result.success && result.transcript) {
+                finalTranscript = result.transcript;
+                voiceTranscriptText.textContent = result.transcript;
+                logVoice('Backend STT transcript: ' + result.transcript);
+                // Send to voice transcript + chat
+                await sendVoiceMessage(result.transcript);
+            } else {
+                logVoice('Backend STT failed: ' + (result.errors || ['unknown']).join(', '));
+                handleSTTFallback();
+            }
+        } catch (e) {
+            logVoice('Backend STT error: ' + e.message);
+            handleSTTFallback();
+        }
+    }
+
+    function handleSTTFallback() {
+        // Fallback to browser SpeechRecognition if available
+        if (activeVoiceEngine === 'backend' && (window.SpeechRecognition || window.webkitSpeechRecognition)) {
+            voiceStateText.textContent = t('voice_backend_unavailable');
+            startRecognition();
+        } else {
+            voiceStateText.textContent = t('voice_stt_failed');
+            setTimeout(() => { if (voiceActive) setVoiceState(VoiceState.LISTENING); }, 2000);
+        }
+    }
+
+    // --- Backend TTS (/api/voice/tts → HTMLAudioElement) ---
+    async function speakResponseBackend(text) {
+        if (!backendTTSAvailable) return false;
+        try {
+            // Determine emotion context based on auto mode
+            let emotionCtx = null;
+            let speakingStyle = null;
+            if (autoEmotionalVoice) {
+                // Map current app mode to emotion context
+                const modeMap = {
+                    psychologist: 'support',
+                    assistant: 'chat',
+                    coding: 'coding',
+                    project: 'coding',
+                    prediction: 'coding',
+                    safety: 'crisis',
+                    night: 'night'
+                };
+                emotionCtx = modeMap[currentMode] || 'chat';
+            }
+
+            // Signal backend to arm EchoGuard
+            fetch('/api/voice/playback', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ action: 'speak', text: text, language: currentLanguage })
+            }).catch(() => {});
+
+            const ttsPayload = {
+                text: text,
+                voice: 'female',
+                voice_profile: currentVoiceProfile,
+                language: currentLanguage,
+                speed: parseFloat(document.querySelector('.speed-btn.active')?.dataset.speed || '1.0')
+            };
+            if (emotionCtx) ttsPayload.emotion_context = emotionCtx;
+            if (speakingStyle) ttsPayload.speaking_style = speakingStyle;
+
+            const res = await fetch('/api/voice/tts', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(ttsPayload)
+            });
+
+            if (!res.ok) {
+                logVoice('Backend TTS returned ' + res.status);
+                return false;
+            }
+
+            const contentType = res.headers.get('content-type') || '';
+            if (contentType.includes('audio')) {
+                // Show speaking indicator
+                const styleHeader = res.headers.get('X-TTS-Style') || 'calm_support';
+                showSpeakingIndicator(styleHeader, text);
+
+                // Play audio via HTMLAudioElement
+                const audioUrl = URL.createObjectURL(await res.blob());
+                if (backendAudioElement) {
+                    backendAudioElement.pause();
+                    URL.revokeObjectURL(backendAudioElement.src);
+                }
+                backendAudioElement = new Audio(audioUrl);
+                backendAudioPlaying = true;
+                setVoiceState(VoiceState.SPEAKING);
+
+                backendAudioElement.onended = () => {
+                    backendAudioPlaying = false;
+                    URL.revokeObjectURL(audioUrl);
+                    hideSpeakingIndicator();
+                    // Disarm EchoGuard
+                    fetch('/api/voice/playback', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ action: 'stop' })
+                    }).catch(() => {});
+                    if (voiceActive) {
+                        setVoiceState(VoiceState.LISTENING);
+                        finalTranscript = '';
+                        interimTranscript = '';
+                        voiceTranscriptText.textContent = '';
+                    } else {
+                        setVoiceState(VoiceState.IDLE);
+                    }
+                };
+                backendAudioElement.onerror = () => {
+                    backendAudioPlaying = false;
+                    URL.revokeObjectURL(audioUrl);
+                    hideSpeakingIndicator();
+                    if (voiceActive) setVoiceState(VoiceState.LISTENING);
+                };
+                await backendAudioElement.play();
+                return true;
+            } else {
+                // Non-audio response (JSON error)
+                logVoice('Backend TTS did not return audio');
+                return false;
+            }
+        } catch (e) {
+            logVoice('Backend TTS error: ' + e.message);
+            return false;
+        }
+    }
+
+    function stopBackendAudio() {
+        if (backendAudioElement) {
+            backendAudioElement.pause();
+            backendAudioPlaying = false;
+        }
+    }
 
     // --- State Machine ---
     function logVoice(msg) { console.log('[VOICE ' + new Date().toISOString().substr(11,12) + '] ' + msg); }
@@ -486,6 +902,16 @@ document.addEventListener('DOMContentLoaded', () => {
         };
         voiceStateText.textContent = t(stateLabels[newState] || 'voice_idle');
 
+        // Sync state to backend voice agent
+        const backendStateMap = {
+            idle: 'IDLE', listening: 'LISTENING', user_speaking: 'USER_SPEAKING',
+            user_paused: 'USER_PAUSED', finalizing: 'FINALIZING',
+            processing: 'PROCESSING', speaking: 'SPEAKING'
+        };
+        if (backendStateMap[newState]) {
+            syncVoiceState(backendStateMap[newState], 'frontend_transition');
+        }
+
         // Orb class
         voiceMainBtn.classList.toggle('recording', [VoiceState.LISTENING, VoiceState.USER_SPEAKING, VoiceState.USER_PAUSED].includes(newState));
 
@@ -496,8 +922,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Show/hide control buttons
         const isRunning = newState !== VoiceState.IDLE;
-        voicePauseBtn.style.display = newState === VoiceState.SPEAKING ? 'flex' : 'none';
-        voiceResumeBtn.style.display = 'none'; // shown only when paused
+        voicePauseBtn.style.display = (newState === VoiceState.SPEAKING && !synthPaused) ? 'flex' : 'none';
+        voiceResumeBtn.style.display = (newState === VoiceState.SPEAKING && synthPaused) ? 'flex' : 'none';
         voiceStopBtn.style.display = isRunning ? 'flex' : 'none';
         voiceReplayBtn.style.display = (newState === VoiceState.IDLE && lastResponseText) ? 'flex' : 'none';
         voiceSpeedControls.style.display = newState === VoiceState.SPEAKING ? 'flex' : 'none';
@@ -606,7 +1032,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // --- Silence / Pause Detection ---
-    function clearSilenceTimer() { if (silenceTimer) { clearTimeout(silenceTimer); silenceTimer = null; } }
+    function clearSilenceTimer() { silenceTimers.forEach(t => clearTimeout(t)); silenceTimers = []; }
 
     function startSilenceTimer() {
         silenceStart = Date.now();
@@ -615,19 +1041,27 @@ document.addEventListener('DOMContentLoaded', () => {
         const isShort = transcriptWordCount < VOICE_CONFIG.SHORT_TRANSCRIPT_WORDS;
         const finalizeMs = isShort ? VOICE_CONFIG.SILENCE_SHORT_TRANSCRIPT_MS : VOICE_CONFIG.SILENCE_LONG_MS;
 
-        // Stage 1: thinking pause indicator at SILENCE_THINKING_MS
-        silenceTimer = setTimeout(() => {
+        // Stage 0: Under SILENCE_IGNORE_MS — just continue, no feedback change
+        // Stage 1: At SILENCE_IGNORE_MS (1200ms) — show "take your time" (continue indicator)
+        silenceTimers.push(setTimeout(() => {
             if (voiceState === VoiceState.USER_PAUSED) {
                 voiceStateText.textContent = t('voice_take_your_time');
             }
-        }, VOICE_CONFIG.SILENCE_THINKING_MS);
+        }, VOICE_CONFIG.SILENCE_IGNORE_MS));
 
-        // Stage 2: finalize
-        silenceTimer = setTimeout(() => {
+        // Stage 2: At SILENCE_THINKING_MS (4000ms) — thinking pause indicator
+        silenceTimers.push(setTimeout(() => {
+            if (voiceState === VoiceState.USER_PAUSED) {
+                voiceStateText.textContent = t('voice_thinking');
+            }
+        }, VOICE_CONFIG.SILENCE_THINKING_MS));
+
+        // Stage 3: Finalize at SILENCE_LONG_MS (7000ms) or longer for short transcripts
+        silenceTimers.push(setTimeout(() => {
             if (voiceState === VoiceState.USER_PAUSED) {
                 finalizeTranscript();
             }
-        }, finalizeMs);
+        }, finalizeMs));
     }
 
     function checkImmediateFinalize(text) {
@@ -724,14 +1158,28 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- Finalize & Send ---
     async function finalizeTranscript() {
         clearSilenceTimer();
+
+        // Backend STT flow: stop recording and upload audio
+        if (activeVoiceEngine === 'backend' && backendSTTAvailable) {
+            setVoiceState(VoiceState.FINALIZING);
+            logVoice('Finalizing with backend STT...');
+            stopBackendRecording();
+            // The onstop handler of MediaRecorder will call sendAudioToBackendSTT
+            // which will then call sendVoiceMessage with the transcript
+            return;
+        }
+
+        // Browser STT flow: use SpeechRecognition transcript
         const transcript = (finalTranscript + ' ' + interimTranscript).trim();
         if (!transcript) {
             logVoice('Empty transcript, returning to listening');
             setVoiceState(VoiceState.LISTENING);
             return;
         }
-        setVoiceState(VoiceState.PROCESSING);
+        setVoiceState(VoiceState.FINALIZING);
         voiceTranscriptText.textContent = transcript;
+        await new Promise(r => setTimeout(r, 300));
+        setVoiceState(VoiceState.PROCESSING);
         logVoice('Final transcript (' + transcript.split(/\s+/).length + ' words): ' + transcript);
         await sendVoiceMessage(transcript);
     }
@@ -741,26 +1189,67 @@ document.addEventListener('DOMContentLoaded', () => {
         // Show "I heard..." for low confidence / short transcripts
         const wordCount = transcript.split(/\s+/).length;
         if (wordCount < 3) {
-            voiceStateText.textContent = 'I heard: "' + transcript + '" — could you say more?';
+            voiceStateText.textContent = t('voice_i_heard') + ' "' + transcript + '" \u2014 ' + t('voice_repeat');
         }
-        // Ensure session
-        if (!companionSessionActive) {
-            try {
-                const res = await fetch('/api/session/start', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ mode: 'text', language: currentLanguage }) });
-                const data = await res.json();
-                if (data.session_id) { companionSessionId = data.session_id; companionSessionActive = true; }
-            } catch (e) { console.error('Session start error:', e); }
+    
+        // Check backend availability
+        if (!backendAvailable) {
+            const isHealthy = await checkBackendHealth();
+            if (!isHealthy) {
+                logVoice('Backend offline, cannot send transcript');
+                voiceStateText.textContent = currentLanguage === 'bn_bd'
+                    ? '\u09ac\u09cd\u09af\u09be\u0995\u098f\u0982\u09a1 \u0985\u09ab\u09b2\u09be\u0987\u09a8\u0964 \u0986\u09ac\u09be\u09b0 \u099a\u09c7\u09b7\u09cd\u099f\u09be \u0995\u09b0\u09c1\u09a8\u0964'
+                    : 'Backend is offline. Please check connection.';
+                setTimeout(() => { if (voiceActive) setVoiceState(VoiceState.LISTENING); }, 3000);
+                return;
+            }
         }
+    
+        // Step 1: Save transcript via /api/voice/transcript
         try {
-            const res = await fetch('/api/interaction/message', {
-                method: 'POST', headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ text: transcript, language: currentLanguage, speak_response: false })
+            await fetch('/api/voice/transcript', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    text: transcript,
+                    session_id: companionSessionId || '',
+                    language: currentLanguage
+                })
+            });
+        } catch (e) {
+            logVoice('Transcript save failed: ' + e.message);
+            // Continue to chat anyway
+        }
+    
+        // Step 2: Get response via /api/chat
+        try {
+            const res = await fetch('/api/chat', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    text: transcript,
+                    session_id: companionSessionId || '',
+                    language: currentLanguage,
+                    input_mode: 'voice',
+                    mode: currentMode
+                })
             });
             const result = await res.json();
             let responseText = '';
-            if (result.assistant_message) responseText = result.assistant_message.response_text;
-            else if (result.response) responseText = result.response;
-            else responseText = currentLanguage === 'bn_bd' ? '\u09a6\u09c1\u0983\u0996\u09bf\u09a4, \u0986\u09ae\u09bf \u098f\u0996\u09a8 \u09b8\u09be\u09b9\u09be\u09af\u09cd\u09af \u0995\u09b0\u09a4\u09c7 \u09aa\u09be\u09b0\u099b\u09bf \u09a8\u09be\u0964' : 'Sorry, I couldn\'t process that.';
+            if (result.response) {
+                responseText = result.response;
+            } else if (result.assistant_message) {
+                responseText = result.assistant_message.response_text || result.assistant_message.response || '';
+            }
+            // Update mode from backend response
+            if (result.metadata && result.metadata.resolved_mode && result.metadata.resolved_mode !== currentMode) {
+                setAgentMode(result.metadata.resolved_mode);
+            }
+            if (!responseText) {
+                responseText = currentLanguage === 'bn_bd'
+                    ? '\u09a6\u09c1\u0983\u0996\u09bf\u09a4, \u0986\u09ae\u09bf \u098f\u0996\u09a8 \u09b8\u09be\u09b9\u09be\u09af\u09cd\u09af \u0995\u09b0\u09a4\u09c7 \u09aa\u09be\u09b0\u099b\u09bf \u09a8\u09be\u0964'
+                    : 'Sorry, I couldn\'t process that.';
+            }
             lastResponseText = responseText;
             // Add to chat
             appendMessage('user', transcript);
@@ -781,13 +1270,56 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         } catch (e) {
             logVoice('Backend error: ' + e.message);
-            voiceStateText.textContent = currentLanguage === 'bn_bd' ? '\u09b8\u0982\u09af\u09cb\u0997 \u09a4\u09cd\u09b0\u09c1\u099f\u09bf\u0964 \u0986\u09ac\u09be\u09b0 \u099a\u09c7\u09b7\u09cd\u099f\u09be \u0995\u09b0\u09c1\u09a8\u0964' : 'Connection error. Trying again...';
-            setTimeout(() => { if (voiceActive) setVoiceState(VoiceState.LISTENING); }, 2000);
+            // Retry once after short delay
+            try {
+                const retryRes = await fetch('/api/chat', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        text: transcript,
+                        session_id: companionSessionId || '',
+                        language: currentLanguage,
+                        input_mode: 'voice',
+                        mode: currentMode
+                    })
+                });
+                const retryResult = await retryRes.json();
+                const responseText = retryResult.response || (currentLanguage === 'bn_bd'
+                    ? '\u09a6\u09c1\u0983\u0996\u09bf\u09a4, \u0986\u09ae\u09bf \u098f\u0996\u09a8 \u09b8\u09be\u09b9\u09be\u09af\u09cd\u09af \u0995\u09b0\u09a4\u09c7 \u09aa\u09be\u09b0\u099b\u09bf \u09a8\u09be\u0964'
+                    : 'Sorry, I couldn\'t process that.');
+                lastResponseText = responseText;
+                appendMessage('user', transcript);
+                appendMessage('assistant', responseText);
+                voiceResponseText.textContent = responseText;
+                voiceResponseText.style.display = 'block';
+                const readAloud = document.getElementById('speakResponseToggle').checked;
+                if (readAloud) {
+                    speakResponse(responseText);
+                } else {
+                    setTimeout(() => { if (voiceActive) setVoiceState(VoiceState.LISTENING); else setVoiceState(VoiceState.IDLE); }, 500);
+                }
+            } catch (retryErr) {
+                logVoice('Retry also failed: ' + retryErr.message);
+                voiceStateText.textContent = currentLanguage === 'bn_bd'
+                    ? '\u09b8\u0982\u09af\u09cb\u0997 \u09a4\u09cd\u09b0\u09c1\u099f\u09bf\u0964 \u0986\u09ac\u09be\u09b0 \u099a\u09c7\u09b7\u09cd\u099f\u09be \u0995\u09b0\u09c1\u09a8\u0964'
+                    : 'Connection error. Trying again...';
+                backendAvailable = false;
+                setTimeout(() => { if (voiceActive) setVoiceState(VoiceState.LISTENING); }, 3000);
+            }
         }
     }
 
-    // --- Speech Synthesis (Browser TTS) ---
-    function speakResponse(text) {
+    // --- Speech Synthesis (Browser TTS + Backend TTS) ---
+    async function speakResponse(text) {
+        // Try backend TTS first if active engine is backend
+        if (activeVoiceEngine === 'backend' && backendTTSAvailable) {
+            const success = await speakResponseBackend(text);
+            if (success) return;
+            // Backend TTS failed, fallback to browser
+            logVoice('Backend TTS failed, falling back to browser');
+        }
+
+        // Browser TTS fallback
         if (!window.speechSynthesis) {
             logVoice('SpeechSynthesis not available');
             setVoiceState(VoiceState.IDLE);
@@ -797,7 +1329,8 @@ document.addEventListener('DOMContentLoaded', () => {
         window.speechSynthesis.cancel();
         synthUtterance = new SpeechSynthesisUtterance(text);
         synthUtterance.lang = currentLanguage === 'bn_bd' ? 'bn-BD' : 'en-US';
-        synthUtterance.rate = parseFloat(voiceVolumeSlider?.dataset?.speed || '1.0');
+        const activeSpeedBtn = document.querySelector('.speed-btn.active');
+        synthUtterance.rate = activeSpeedBtn ? parseFloat(activeSpeedBtn.dataset.speed) : 1.0;
         // Try to pick a female voice
         const voices = window.speechSynthesis.getVoices();
         if (voices.length) {
@@ -809,12 +1342,28 @@ document.addEventListener('DOMContentLoaded', () => {
         synthUtterance.onstart = () => {
             setVoiceState(VoiceState.SPEAKING);
             synthPaused = false;
+            // Arm backend EchoGuard
+            if (backendAvailable) {
+                fetch('/api/voice/playback', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ action: 'speak', text: text, language: currentLanguage })
+                }).catch(() => {});
+            }
         };
         synthUtterance.onend = () => {
             synthUtterance = null;
             synthPaused = false;
             voicePauseBtn.style.display = 'none';
             voiceResumeBtn.style.display = 'none';
+            // Disarm backend EchoGuard
+            if (backendAvailable) {
+                fetch('/api/voice/playback', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ action: 'stop' })
+                }).catch(() => {});
+            }
             if (voiceActive) {
                 setVoiceState(VoiceState.LISTENING);
                 // Reset transcript for next turn
@@ -838,6 +1387,16 @@ document.addEventListener('DOMContentLoaded', () => {
         synthPaused = false;
         voicePauseBtn.style.display = 'none';
         voiceResumeBtn.style.display = 'none';
+        // Stop backend audio if playing
+        stopBackendAudio();
+        // Notify backend to disarm EchoGuard
+        if (backendAvailable) {
+            fetch('/api/voice/playback', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ action: 'stop' })
+            }).catch(() => {});
+        }
     }
 
     // --- Barge-In (Interrupt ZARA while speaking) ---
@@ -852,6 +1411,14 @@ document.addEventListener('DOMContentLoaded', () => {
                 finalTranscript = '';
                 interimTranscript = '';
                 voiceTranscriptText.textContent = '';
+                // Notify backend to disarm EchoGuard
+                if (backendAvailable) {
+                    fetch('/api/voice/playback', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ action: 'stop' })
+                    }).catch(() => {});
+                }
             }
         }
     }
@@ -861,12 +1428,43 @@ document.addEventListener('DOMContentLoaded', () => {
         voiceActive = true;
         finalTranscript = '';
         interimTranscript = '';
-        lastResponseText = lastResponseText; // preserve
+        lastResponseText = '';
+        voiceResponseText.style.display = 'none';
+        voiceResponseText.textContent = '';
         setVoiceState(VoiceState.LISTENING);
         voiceTranscriptText.textContent = t('voice_listening');
+
+        // Check backend health before starting
+        const isHealthy = await checkBackendHealth();
+        if (!isHealthy) {
+            logVoice('Backend offline at voice mode start');
+            voiceStateText.textContent = currentLanguage === 'bn_bd'
+                ? '\u09ac\u09cd\u09af\u09be\u0995\u098f\u0982\u09a1 \u0985\u09ab\u09b2\u09be\u0987\u09a8\u0964 \u0986\u09ac\u09be\u09b0 \u099a\u09c7\u09b7\u09cd\u099f\u09be \u0995\u09b0\u09c1\u09a8\u0964'
+                : 'Backend is offline. Voice mode needs the backend.';
+        }
+
+        // Start backend health monitor
+        startBackendHealthMonitor();
+
+        // Detect backend voice engines
+        await detectBackendVoiceEngines();
+
         const audioOk = await startAudioCapture();
         if (audioOk) {
-            startRecognition();
+            if (activeVoiceEngine === 'backend' && backendSTTAvailable) {
+                // Use backend STT: record audio with MediaRecorder
+                startBackendRecording();
+                logVoice('Using backend STT (MediaRecorder)');
+            } else {
+                // Use browser SpeechRecognition
+                startRecognition();
+                logVoice('Using browser SpeechRecognition');
+            }
+        } else {
+            // Mic denied
+            voiceStateText.textContent = t('voice_error');
+            voiceActive = false;
+            setVoiceState(VoiceState.IDLE);
         }
     }
 
@@ -876,6 +1474,9 @@ document.addEventListener('DOMContentLoaded', () => {
         stopRecognition();
         stopAudioCapture();
         stopSpeaking();
+        stopBackendAudio();
+        stopBackendRecording();
+        stopBackendHealthMonitor();
         setVoiceState(VoiceState.IDLE);
         voiceTranscriptText.textContent = '';
         voiceResponseText.style.display = 'none';
@@ -914,7 +1515,7 @@ document.addEventListener('DOMContentLoaded', () => {
             synthPaused = true;
             voicePauseBtn.style.display = 'none';
             voiceResumeBtn.style.display = 'flex';
-            voiceStateText.textContent = 'Paused';
+            voiceStateText.textContent = t('voice_paused');
         }
     });
 
@@ -930,8 +1531,12 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // Replay last response
-    voiceReplayBtn.addEventListener('click', () => {
+    voiceReplayBtn.addEventListener('click', async () => {
         if (lastResponseText) {
+            if (activeVoiceEngine === 'backend' && backendTTSAvailable) {
+                const success = await speakResponseBackend(lastResponseText);
+                if (success) return;
+            }
             speakResponse(lastResponseText);
         }
     });
@@ -941,6 +1546,160 @@ document.addEventListener('DOMContentLoaded', () => {
         voiceSettingsToggle.addEventListener('click', () => {
             const panel = voiceSettingsPanel;
             panel.style.display = panel.style.display === 'none' ? 'block' : 'none';
+        });
+    }
+
+    // Voice engine selector
+    const voiceEngineSelect = document.getElementById('voiceEngineSelect');
+    if (voiceEngineSelect) {
+        // Restore saved preference
+        const savedEngine = localStorage.getItem('zaraVoiceEngine');
+        if (savedEngine) {
+            voiceEngineSelect.value = savedEngine;
+            voiceEngineMode = savedEngine;
+        }
+        voiceEngineSelect.addEventListener('change', () => {
+            voiceEngineMode = voiceEngineSelect.value;
+            localStorage.setItem('zaraVoiceEngine', voiceEngineMode);
+            resolveActiveEngine();
+            logVoice('Voice engine changed to: ' + voiceEngineMode);
+        });
+    }
+
+    // Voice profile selector
+    if (voiceProfileSelect) {
+        // Restore saved preference
+        const savedProfile = localStorage.getItem('zaraVoiceProfile');
+        if (savedProfile && voiceProfileDescriptions[savedProfile]) {
+            voiceProfileSelect.value = savedProfile;
+            currentVoiceProfile = savedProfile;
+        }
+        // Show initial description
+        updateProfileDescription();
+
+        voiceProfileSelect.addEventListener('change', () => {
+            currentVoiceProfile = voiceProfileSelect.value;
+            localStorage.setItem('zaraVoiceProfile', currentVoiceProfile);
+            updateProfileDescription();
+            logVoice('Voice profile changed to: ' + currentVoiceProfile);
+        });
+    }
+
+    // Auto emotional voice toggle
+    if (voiceAutoEmotionalToggle) {
+        const savedAuto = localStorage.getItem('zaraAutoVoice');
+        if (savedAuto !== null) {
+            autoEmotionalVoice = savedAuto !== 'false';
+            voiceAutoEmotionalToggle.checked = autoEmotionalVoice;
+        }
+        voiceAutoEmotionalToggle.addEventListener('change', () => {
+            autoEmotionalVoice = voiceAutoEmotionalToggle.checked;
+            localStorage.setItem('zaraAutoVoice', String(autoEmotionalVoice));
+            logVoice('Auto emotional voice: ' + (autoEmotionalVoice ? 'on' : 'off'));
+        });
+    }
+
+    function updateProfileDescription() {
+        if (voiceProfileDesc) {
+            voiceProfileDesc.textContent = voiceProfileDescriptions[currentVoiceProfile] || '';
+        }
+    }
+
+    // Speaking indicator helpers
+    function showSpeakingIndicator(style, text) {
+        if (!voiceSpeakingIndicator) return;
+        voiceSpeakingIndicator.style.display = 'flex';
+        if (speakingStatusText) {
+            speakingStatusText.textContent = styleStatusMessages[style] || 'Zara is speaking...';
+        }
+        if (speakingSentenceText && text) {
+            // Show first sentence as preview
+            const firstSentence = text.split(/[.!?]/)[0].trim();
+            speakingSentenceText.textContent = firstSentence.length > 80 ? firstSentence.slice(0, 80) + '...' : firstSentence;
+        }
+    }
+
+    function hideSpeakingIndicator() {
+        if (voiceSpeakingIndicator) voiceSpeakingIndicator.style.display = 'none';
+        if (speakingStatusText) speakingStatusText.textContent = '';
+        if (speakingSentenceText) speakingSentenceText.textContent = '';
+    }
+
+    // Voice preview button
+    if (voicePreviewBtn) {
+        voicePreviewBtn.addEventListener('click', async () => {
+            // Use selected preview sample
+            const sampleKey = voicePreviewSample ? voicePreviewSample.value : 'supportive';
+            const previewText = previewSampleTexts[sampleKey] || "Hi, I'm Zara. I'm here with you.";
+            voicePreviewBtn.disabled = true;
+            if (voicePreviewStatus) voicePreviewStatus.textContent = 'Playing...';
+
+            // Try backend TTS first
+            if (backendTTSAvailable) {
+                try {
+                    const res = await fetch('/api/voice/tts', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            text: previewText,
+                            voice: 'female',
+                            voice_profile: currentVoiceProfile,
+                            language: 'en',
+                            speed: 1.0
+                        })
+                    });
+                    if (res.ok) {
+                        const contentType = res.headers.get('content-type') || '';
+                        if (contentType.includes('audio')) {
+                            const audioUrl = URL.createObjectURL(await res.blob());
+                            const previewAudio = new Audio(audioUrl);
+                            previewAudio.onended = () => {
+                                URL.revokeObjectURL(audioUrl);
+                                voicePreviewBtn.disabled = false;
+                                if (voicePreviewStatus) voicePreviewStatus.textContent = '';
+                            };
+                            previewAudio.onerror = () => {
+                                URL.revokeObjectURL(audioUrl);
+                                voicePreviewBtn.disabled = false;
+                                if (voicePreviewStatus) voicePreviewStatus.textContent = 'Playback error';
+                            };
+                            await previewAudio.play();
+                            return;
+                        }
+                    }
+                } catch (e) {
+                    logVoice('Preview backend TTS failed: ' + e.message);
+                }
+            }
+
+            // Fallback to browser TTS
+            if (window.speechSynthesis) {
+                window.speechSynthesis.cancel();
+                const utt = new SpeechSynthesisUtterance(previewText);
+                utt.lang = 'en-US';
+                utt.rate = 0.95;
+                const voices = window.speechSynthesis.getVoices();
+                if (voices.length) {
+                    const preferred = voices.find(v => /female|woman|zira|samantha/i.test(v.name) && v.lang.startsWith('en'))
+                        || voices.find(v => v.lang.startsWith('en'))
+                        || voices[0];
+                    if (preferred) utt.voice = preferred;
+                }
+                utt.onend = () => {
+                    voicePreviewBtn.disabled = false;
+                    if (voicePreviewStatus) voicePreviewStatus.textContent = '';
+                };
+                utt.onerror = () => {
+                    voicePreviewBtn.disabled = false;
+                    if (voicePreviewStatus) voicePreviewStatus.textContent = 'Playback error';
+                };
+                window.speechSynthesis.speak(utt);
+                return;
+            }
+
+            // No TTS available
+            voicePreviewBtn.disabled = false;
+            if (voicePreviewStatus) voicePreviewStatus.textContent = 'No TTS available';
         });
     }
 
@@ -985,8 +1744,8 @@ document.addEventListener('DOMContentLoaded', () => {
         showView('assistant');
     });
 
-    // Chat mic button -> enter voice mode
-    chatMicBtn.addEventListener('click', () => { showView('voice'); });
+    // Chat mic button -> enter voice mode and start listening
+    chatMicBtn.addEventListener('click', () => { showView('voice'); if (voiceState === VoiceState.IDLE) startVoiceMode(); });
 
     // ===== BREATHING MODAL =====
     const breathingModal = document.getElementById('breathingModal');
@@ -1257,7 +2016,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const timeStr = new Date().toLocaleTimeString([], { hour12: false });
             const item = document.createElement('div');
             item.className = 'thought-item';
-            item.innerHTML = `<div class="thought-time">${timeStr}</div><strong>${t(tmpl.label)}:</strong> ${tmpl.content}`;
+            item.innerHTML  = `<div class="thought-time">${timeStr}</div><strong>${t(tmpl.label)}:</strong> ${tmpl.content}`;
             el.prepend(item);
             if (el.children.length > 15) el.removeChild(el.lastChild);
         };
@@ -1276,8 +2035,17 @@ document.addEventListener('DOMContentLoaded', () => {
     startThoughtStream();
     showView('assistant');
 
-    // Auto-init session
+    // Auto-init session + system status check
     (async function initSession() {
+        // Check backend health on startup
+        await checkBackendHealth();
+        try {
+            const res = await fetch('/api/system/status');
+            const data = await res.json();
+            if (data && data.orchestrator) {
+                logVoice('System status: ' + JSON.stringify(data.orchestrator));
+            }
+        } catch (e) { logVoice('System status check failed (backend may be offline).'); }
         try {
             const res = await fetch('/api/session/current');
             const data = await res.json();
@@ -1288,11 +2056,13 @@ document.addEventListener('DOMContentLoaded', () => {
         } catch (e) { console.log('No existing session, will create on first message.'); }
     })();
 
-    // ===== TODO: Future API hooks =====
-    // POST /api/chat — unified chat endpoint (currently using /api/interaction/message)
-    // POST /api/voice/stt — send audio blob, get transcript
-    // POST /api/voice/tts — send text + voice_name, get audio
-    // POST /api/session/summary — get session summary
+    // ===== Connected Backend APIs =====
+    // GET  /api/health           — backend health check (used on init + voice mode start + 15s interval)
+    // GET  /api/system/status    — system status on init
+    // POST /api/voice/transcript — save finalized transcript
+    // POST /api/voice/state      — sync frontend voice state to backend
+    // POST /api/voice/playback   — arm/disarm EchoGuard around TTS
+    // POST /api/chat             — get ZARA response via Orchestrator
 
     // ── Accuracy Dashboard ──────────────────────────────────────
     const accuracyRunBtn = document.getElementById('accuracyRunBtn');

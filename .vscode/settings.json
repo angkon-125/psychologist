@@ -1,0 +1,7 @@
+{
+    "python.testing.pytestArgs": [
+        "psychologist"
+    ],
+    "python.testing.unittestEnabled": false,
+    "python.testing.pytestEnabled": true
+}

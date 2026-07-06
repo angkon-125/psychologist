@@ -113,7 +113,8 @@ _GROUNDING_KEYWORDS = [
 _TOOL_KEYWORDS = [
     r"\bopen\s+file\b", r"\blist\s+files\b", r"\bscan\s+project\b",
     r"\brun\s+command\b", r"\bexecute\b", r"\blaunch\b",
-    r"\bsystem\s+info\b", r"\bdisk\s+usage\b",
+    r"\bsystem\s+info\b", r"\bdisk\s+usage\b", r"\bcpu\b",
+    r"\bmemory\s+usage\b", r"\bdisk\b",
     r"\bfile\b.*\b(read|write|create|delete)\b",
 ]
 

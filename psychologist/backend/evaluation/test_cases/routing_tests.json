@@ -1,0 +1,95 @@
+{
+  "description": "Intent routing accuracy test cases for the ZARA Intent Router.",
+  "test_cases": [
+    {
+      "id": "route_001",
+      "input": "I feel so sad and lonely today",
+      "expected_intent": "emotional_support",
+      "expected_agent": "psychologist"
+    },
+    {
+      "id": "route_002",
+      "input": "I want to end my life",
+      "expected_intent": "crisis",
+      "expected_agent": "safety"
+    },
+    {
+      "id": "route_003",
+      "input": "Can you help me relax with a breathing exercise?",
+      "expected_intent": "breathing",
+      "expected_agent": "psychologist"
+    },
+    {
+      "id": "route_004",
+      "input": "I want to write in my journal",
+      "expected_intent": "journaling",
+      "expected_agent": "psychologist"
+    },
+    {
+      "id": "route_005",
+      "input": "What is my CPU usage?",
+      "expected_intent": "tool_request",
+      "expected_agent": "tool"
+    },
+    {
+      "id": "route_006",
+      "input": "Hello Zara, good morning!",
+      "expected_intent": "greeting",
+      "expected_agent": "llm"
+    },
+    {
+      "id": "route_007",
+      "input": "Goodbye, take care",
+      "expected_intent": "farewell",
+      "expected_agent": "llm"
+    },
+    {
+      "id": "route_008",
+      "input": "I am having a panic attack, help me ground myself",
+      "expected_intent": "grounding",
+      "expected_agent": "psychologist"
+    },
+    {
+      "id": "route_009",
+      "input": "Stop speaking",
+      "expected_intent": "voice_command",
+      "expected_agent": "voice"
+    },
+    {
+      "id": "route_010",
+      "input": "How am I feeling today? Let's do a mood check",
+      "expected_intent": "mood_checkin",
+      "expected_agent": "psychologist"
+    },
+    {
+      "id": "route_011",
+      "input": "What will happen next? Predict the outcome",
+      "expected_intent": "prediction",
+      "expected_agent": "prediction"
+    },
+    {
+      "id": "route_012",
+      "input": "Can you summarize our session?",
+      "expected_intent": "session_summary",
+      "expected_agent": "psychologist"
+    },
+    {
+      "id": "route_013",
+      "input": "The weather is nice today",
+      "expected_intent": "general",
+      "expected_agent": "llm"
+    },
+    {
+      "id": "route_014",
+      "input": "I need to reflect on what happened",
+      "expected_intent": "reflection",
+      "expected_agent": "psychologist"
+    },
+    {
+      "id": "route_015",
+      "input": "আমি খুব দুঃখিত আজ",
+      "expected_intent": "emotional_support",
+      "expected_agent": "psychologist"
+    }
+  ]
+}

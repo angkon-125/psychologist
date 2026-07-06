@@ -17,6 +17,7 @@ def chat():
     session_id = data.get("session_id", "")
     language = data.get("language", "en")
     user_mood = data.get("user_mood")
+    agent_mode = data.get("mode", "assistant")
     
     if not text:
         return jsonify({"success": False, "errors": ["Text field is required."]}), 400
@@ -25,7 +26,8 @@ def chat():
         text=text,
         session_id=session_id,
         language=language,
-        user_mood=user_mood
+        user_mood=user_mood,
+        agent_mode=agent_mode,
     )
     
     res = orchestrator.safe_process(req)

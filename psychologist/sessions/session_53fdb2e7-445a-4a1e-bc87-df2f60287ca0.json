@@ -1,0 +1,51 @@
+{
+  "session_id": "53fdb2e7-445a-4a1e-bc87-df2f60287ca0",
+  "active_mode": "hybrid",
+  "start_time": "2026-07-06T18:00:49.946256",
+  "end_time": null,
+  "last_interaction_time": "2026-07-06T18:00:50.118135",
+  "current_emotion_state": {},
+  "mood_timeline": [
+    {
+      "emotion": "sadness",
+      "confidence": 0.0,
+      "timestamp": "2026-07-06T18:00:49.965845",
+      "input_type": "text"
+    }
+  ],
+  "safety_flags": [],
+  "user_messages": [
+    {
+      "message_id": "6e10f366-28e0-4e3c-8f8a-a22d833ec631",
+      "session_id": "53fdb2e7-445a-4a1e-bc87-df2f60287ca0",
+      "input_type": "text",
+      "raw_text": "hello babe",
+      "normalized_text": "hello babe",
+      "language": "en",
+      "timestamp": "2026-07-06T18:00:49.965845",
+      "detected_emotion": "sadness",
+      "confidence": 0.0,
+      "user_selected_mood": null
+    }
+  ],
+  "assistant_messages": [
+    {
+      "message_id": "42a5d650-7597-4574-98a5-6dbcb343fbf6",
+      "session_id": "53fdb2e7-445a-4a1e-bc87-df2f60287ca0",
+      "response_text": "I understand. Tell me more about that.",
+      "response_language": "en",
+      "response_type": "neutral",
+      "spoken": true,
+      "audio_path": "E:\\psychologist\\audio_outputs\\tts_13.wav",
+      "safety_level": "none",
+      "timestamp": "2026-07-06T18:00:49.965873"
+    }
+  ],
+  "detected_emotions": [
+    "sadness"
+  ],
+  "summary": "",
+  "follow_up_suggestions": [],
+  "user_preference_snapshot": {},
+  "language": "en"
+}

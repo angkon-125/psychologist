@@ -345,6 +345,7 @@ def interaction_message():
     language = data.get('language', 'en')
     user_mood = data.get('user_mood', None)
     speak_response = data.get('speak_response', False)
+    agent_mode = data.get('mode', 'assistant')
     
     current_mode = mode_manager.get_mode_name()
     
@@ -361,7 +362,8 @@ def interaction_message():
                 language=language,
                 user_mood=user_mood,
                 speak_response=speak_response,
-                session_id=session_id
+                session_id=session_id,
+                agent_mode=agent_mode,
             )
         elif current_mode == "voice":
             result = voice_handler.process_voice_input(
@@ -375,7 +377,8 @@ def interaction_message():
                 language=language,
                 user_mood=user_mood,
                 speak_response=speak_response,
-                session_id=session_id
+                session_id=session_id,
+                agent_mode=agent_mode,
             )
 
         # ── Confidence scoring + accuracy logging ──────────────

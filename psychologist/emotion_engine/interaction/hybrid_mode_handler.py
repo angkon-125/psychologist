@@ -52,6 +52,7 @@ class HybridModeHandler:
         user_mood: Optional[str] = None,
         speak_response: bool = False,
         session_id: str = "",
+        agent_mode: str = "assistant",
     ) -> Dict:
         """Process text input while preserving hybrid session context."""
         self._log_activity("Text input in hybrid mode")
@@ -64,6 +65,7 @@ class HybridModeHandler:
             user_mood=user_mood,
             speak_response=speak_response,
             session_id=session_id,
+            agent_mode=agent_mode,
         )
 
     # ── Voice input in hybrid mode ───────────────────────────────
