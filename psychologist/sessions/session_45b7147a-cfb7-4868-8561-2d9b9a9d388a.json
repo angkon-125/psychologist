@@ -1,0 +1,118 @@
+{
+  "session_id": "45b7147a-cfb7-4868-8561-2d9b9a9d388a",
+  "active_mode": "hybrid",
+  "start_time": "2026-07-07T13:49:26.140427",
+  "end_time": null,
+  "last_interaction_time": "2026-07-07T13:49:26.146503",
+  "current_emotion_state": {
+    "timestamp": "2026-07-07T13:49:26.141534",
+    "primary_emotions": {
+      "happiness": 0.5,
+      "sadness": 0.0255,
+      "anger": 0.0,
+      "fear": 0.0,
+      "surprise": 0.0,
+      "disgust": 0.0
+    },
+    "secondary_emotions": {
+      "excitement": 0.01275,
+      "anxiety": 0.01275,
+      "frustration": 0.006375,
+      "curiosity": 0.0,
+      "hope": 0.0,
+      "confidence": 0.0,
+      "embarrassment": 0.0,
+      "pride": 0.0,
+      "jealousy": 0.0,
+      "gratitude": 0.0,
+      "sympathy": 0.0,
+      "empathy": 0.0
+    },
+    "advanced_emotions": {
+      "burnout": 0.0,
+      "motivation": 0.0,
+      "stress": 0.0,
+      "loneliness": 0.0,
+      "trust": 0.0,
+      "distrust": 0.0,
+      "attachment": 0.0,
+      "nostalgia": 0.0,
+      "emotional_fatigue": 0.0,
+      "emotional_recovery": 0.0
+    },
+    "intensity": 0.0
+  },
+  "mood_timeline": [
+    {
+      "emotion": "sadness",
+      "confidence": 0.0,
+      "timestamp": "2026-07-07T13:49:26.141586",
+      "input_type": "text"
+    },
+    {
+      "emotion": "happiness",
+      "confidence": 0.425,
+      "timestamp": "2026-07-07T13:49:26.146473",
+      "input_type": "text"
+    }
+  ],
+  "safety_flags": [],
+  "user_messages": [
+    {
+      "message_id": "f36b7dfd-32fe-463b-b2e7-1b3403488e89",
+      "session_id": "45b7147a-cfb7-4868-8561-2d9b9a9d388a",
+      "input_type": "text",
+      "raw_text": "Hello there",
+      "normalized_text": "Hello there",
+      "language": "en",
+      "timestamp": "2026-07-07T13:49:26.141586",
+      "detected_emotion": "sadness",
+      "confidence": 0.0,
+      "user_selected_mood": null
+    },
+    {
+      "message_id": "3de6683a-7bc2-4dbf-84df-1bc328742c16",
+      "session_id": "45b7147a-cfb7-4868-8561-2d9b9a9d388a",
+      "input_type": "text",
+      "raw_text": "I'm feeling happy today",
+      "normalized_text": "I'm feeling happy today",
+      "language": "en",
+      "timestamp": "2026-07-07T13:49:26.146473",
+      "detected_emotion": "happiness",
+      "confidence": 0.425,
+      "user_selected_mood": null
+    }
+  ],
+  "assistant_messages": [
+    {
+      "message_id": "9f9798fb-286f-417e-a5c9-0c41dac04ae6",
+      "session_id": "45b7147a-cfb7-4868-8561-2d9b9a9d388a",
+      "response_text": "I appreciate you opening up.",
+      "response_language": "en",
+      "response_type": "neutral",
+      "spoken": false,
+      "audio_path": null,
+      "safety_level": "none",
+      "timestamp": "2026-07-07T13:49:26.141608"
+    },
+    {
+      "message_id": "0e77c2a4-456b-4470-ae96-7de64673f6fe",
+      "session_id": "45b7147a-cfb7-4868-8561-2d9b9a9d388a",
+      "response_text": "I'm listening. What else is on your mind?",
+      "response_language": "en",
+      "response_type": "neutral",
+      "spoken": false,
+      "audio_path": null,
+      "safety_level": "none",
+      "timestamp": "2026-07-07T13:49:26.146495"
+    }
+  ],
+  "detected_emotions": [
+    "sadness",
+    "happiness"
+  ],
+  "summary": "",
+  "follow_up_suggestions": [],
+  "user_preference_snapshot": {},
+  "language": "en"
+}

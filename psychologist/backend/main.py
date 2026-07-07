@@ -23,6 +23,9 @@ from backend.api.routes_voice import voice_bp
 from backend.api.routes_memory import memory_bp
 from backend.api.routes_tools import tools_bp
 from backend.api.routes_evaluation import evaluation_bp
+from backend.api.routes_episodes import episodes_bp
+from backend.api.routes_system_health import system_health_bp
+from backend.api.routes_workspace import workspace_bp
 
 # Set up logging format
 logging.basicConfig(
@@ -46,6 +49,9 @@ def create_app() -> Flask:
     app.register_blueprint(memory_bp)
     app.register_blueprint(tools_bp)
     app.register_blueprint(evaluation_bp)
+    app.register_blueprint(episodes_bp)
+    app.register_blueprint(system_health_bp)
+    app.register_blueprint(workspace_bp)
     
     # 3. Static frontend routes
     @app.route("/")

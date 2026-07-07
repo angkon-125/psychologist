@@ -20,6 +20,7 @@ from backend.agent.mode_context import (
     is_valid_mode,
     DEFAULT_MODE,
 )
+from backend.agent.executive import ExecutiveController
 
 logger = logging.getLogger("zara.orchestrator")
 
@@ -34,6 +35,7 @@ class OrchestratorAgent(BaseAgent):
         self.router = IntentRouter()
         self.state_manager = ConversationStateManager()
         self.specialists: Dict[str, BaseAgent] = {}
+        self.executive_controller: Optional[ExecutiveController] = None
 
     def _get_agent_name(self) -> str:
         return "orchestrator"
@@ -44,14 +46,32 @@ class OrchestratorAgent(BaseAgent):
         logger.info("Registered specialist agent: %s", name)
 
     def initialize(self) -> bool:
+        # Initialize Executive Controller with all specialists
+        self.executive_controller = ExecutiveController(
+            specialists=self.specialists,
+            debug_mode=False,
+            session_dir=None,
+        )
         self._initialized = True
         return True
 
     def process(self, request: AgentRequest) -> AgentResponse:
         """
-        Receives user request, performs safety checks, routes to specialist,
-        optionally generates response via LLM agent, checks safety again,
-        updates memory, and logs evaluation metrics.
+        Receives user request, delegates to Executive Controller for cognitive processing.
+        The Executive Controller handles the full pipeline: safety, planning, agent selection,
+        reflection, and response generation.
+        """
+        # If executive controller is initialized, delegate to it
+        if self.executive_controller:
+            return self.executive_controller.execute(request)
+        
+        # Fallback: legacy orchestrator pipeline (for backward compatibility)
+        return self._process_legacy(request)
+    
+    def _process_legacy(self, request: AgentRequest) -> AgentResponse:
+        """
+        Legacy orchestrator pipeline (deprecated). Used only if executive controller
+        is not initialized.
         """
         start_time = time.perf_counter()
         

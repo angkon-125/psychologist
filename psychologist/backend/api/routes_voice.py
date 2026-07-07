@@ -217,6 +217,13 @@ def voice_tts():
     emotion_context = data.get("emotion_context", None)
     language = data.get("language", "en")
     speed = float(data.get("speed", 1.0))
+    volume = data.get("volume", None)
+    if volume is not None:
+        try:
+            volume = float(volume)
+        except (TypeError, ValueError):
+            volume = None
+    night_mode = bool(data.get("night_mode", False))
 
     # Validate text
     if not text or not text.strip():
@@ -242,6 +249,8 @@ def voice_tts():
         voice_profile=voice_profile,
         speaking_style=speaking_style,
         emotion_context=emotion_context,
+        volume=volume,
+        night_mode=night_mode,
     )
 
     if result["success"] and result.get("audio_path"):
@@ -259,6 +268,11 @@ def voice_tts():
             response.headers["X-TTS-Cached"] = str(result.get("cached", False)).lower()
             response.headers["X-TTS-Profile"] = result.get("profile", "zara_soft")
             response.headers["X-TTS-Style"] = result.get("style", "calm_support")
+            response.headers["X-Zara-Voice-Profile"] = result.get("profile", "zara_soft")
+            response.headers["X-Zara-Speaking-Style"] = result.get("style", "calm_support")
+            response.headers["X-Zara-Applied-Volume"] = str(result.get("applied_volume", 0.9))
+            response.headers["X-Zara-Applied-Speed"] = str(result.get("applied_speed", 1.0))
+            response.headers["X-Zara-Night-Mode"] = str(result.get("night_mode", False)).lower()
             # Include chunks info as JSON header
             import json
             chunks = result.get("chunks", [])

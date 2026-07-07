@@ -20,9 +20,19 @@
                 </div>
             </div>
             <div class="header-right">
-                <div class="mode-indicator" id="modeIndicator" style="display:none;">
-                    <span class="mode-label" id="modeLabel">Mode: Assistant</span>
+                <div class="mode-selector-wrapper" id="modeSelectorWrapper">
+                    <select class="mode-selector" id="modeSelector" aria-label="Select mode">
+                        <option value="assistant">Assistant</option>
+                        <option value="psychologist">Support</option>
+                        <option value="coding">Coding</option>
+                        <option value="project">Project</option>
+                        <option value="prediction">Prediction</option>
+                        <option value="night">Night</option>
+                    </select>
                 </div>
+                <button class="header-btn night-toggle" id="nightModeToggle" title="Night Mode" aria-label="Toggle Night Mode">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+                </button>
                 <button class="header-btn" id="voiceModeBtn" title="Voice Mode" aria-label="Voice Mode" data-i18n-title="btn_voice_mode">
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3zm5.91-3c-.49 0-.9.36-.98.85C16.52 14.66 14.47 17 12 17s-4.52-2.34-4.93-5.15c-.08-.49-.49-.85-.98-.85-.61 0-1.09.54-1 1.14.49 3 2.89 5.35 5.91 5.78V20c0 .55.45 1 1 1s1-.45 1-1v-2.08c3.02-.43 5.42-2.78 5.91-5.78.1-.6-.39-1.14-1-1.14z"/></svg>
                 </button>
@@ -196,6 +206,23 @@
                             <span class="slider round"></span>
                         </label>
                     </div>
+                    <div class="voice-setting-row">
+                        <span class="setting-label" data-i18n="voice_volume_label">Voice Volume</span>
+                        <div class="voice-slider-row">
+                            <input type="range" class="setting-slider" id="voiceVolumeSetting" min="10" max="100" value="90" step="5">
+                            <span class="setting-slider-value" id="voiceVolumeValue">90%</span>
+                        </div>
+                    </div>
+                    <div class="voice-setting-row">
+                        <span class="setting-label" data-i18n="voice_speed_label">Voice Speed</span>
+                        <div class="voice-slider-row">
+                            <input type="range" class="setting-slider" id="voiceSpeedSetting" min="50" max="200" value="100" step="5">
+                            <span class="setting-slider-value" id="voiceSpeedValue">1.0x</span>
+                        </div>
+                    </div>
+                    <div class="voice-setting-row night-voice-status" id="nightVoiceStatus" style="display:none;">
+                        <span class="night-voice-label" data-i18n="night_voice_active">Night voice active</span>
+                    </div>
                     <div class="voice-speaking-indicator" id="voiceSpeakingIndicator" style="display:none;">
                         <span class="speaking-status-text" id="speakingStatusText"></span>
                         <span class="speaking-sentence-text" id="speakingSentenceText"></span>
@@ -241,6 +268,8 @@
                             <button class="adv-nav-btn" data-section="adv-history" data-i18n="nav_history">Message Zara</button>
                             <button class="adv-nav-btn" data-section="adv-thoughts" data-i18n="nav_thoughts">Zara Thinking</button>
                             <button class="adv-nav-btn" data-section="adv-accuracy" data-i18n="accuracy_title">System Accuracy</button>
+                            <button class="adv-nav-btn" data-section="adv-timeline" data-i18n="nav_timeline">Timeline</button>
+                            <button class="adv-nav-btn" data-section="adv-health" data-i18n="nav_system_health">System Health</button>
                         </nav>
                     </aside>
 
@@ -410,6 +439,49 @@
                             <div class="thought-stream-advanced" id="thoughtStream"></div>
                         </section>
 
+                        <!-- Timeline -->
+                        <section id="adv-timeline" class="adv-section">
+                            <h2 class="section-title" data-i18n="title_timeline">Episodic Timeline</h2>
+
+                            <!-- Period Tabs -->
+                            <div class="period-tabs" id="timelinePeriodTabs">
+                                <button class="period-tab active" data-period="today" data-i18n="timeline_today">Today</button>
+                                <button class="period-tab" data-period="yesterday" data-i18n="timeline_yesterday">Yesterday</button>
+                                <button class="period-tab" data-period="week" data-i18n="timeline_week">This Week</button>
+                                <button class="period-tab" data-period="all" data-i18n="timeline_all">All</button>
+                            </div>
+
+                            <!-- Search Bar -->
+                            <div class="timeline-search">
+                                <input type="text" class="search-input" id="timelineSearchInput"
+                                       data-i18n-placeholder="timeline_search_placeholder" placeholder="Search episodes...">
+                            </div>
+
+                            <!-- Sub-sections -->
+                            <div class="timeline-sections">
+                                <div class="timeline-section" id="timelineEpisodes">
+                                    <h3 class="timeline-sub-title" data-i18n="timeline_episodes">Episodes</h3>
+                                    <div class="timeline-episodes-list" id="timelineEpisodesList"></div>
+                                </div>
+                                <div class="timeline-section" id="timelineProjects">
+                                    <h3 class="timeline-sub-title" data-i18n="timeline_projects">Projects</h3>
+                                    <div class="timeline-projects-list" id="timelineProjectsList"></div>
+                                </div>
+                                <div class="timeline-section" id="timelineEmotions">
+                                    <h3 class="timeline-sub-title" data-i18n="timeline_emotions">Emotional Journey</h3>
+                                    <div class="timeline-emotion-list" id="timelineEmotionList"></div>
+                                </div>
+                                <div class="timeline-section" id="timelineAchievements">
+                                    <h3 class="timeline-sub-title" data-i18n="timeline_achievements">Achievements</h3>
+                                    <div class="timeline-achievements-list" id="timelineAchievementsList"></div>
+                                </div>
+                                <div class="timeline-section" id="timelinePending">
+                                    <h3 class="timeline-sub-title" data-i18n="timeline_pending">Pending Goals</h3>
+                                    <div class="timeline-pending-list" id="timelinePendingList"></div>
+                                </div>
+                            </div>
+                        </section>
+
                         <!-- Accuracy Dashboard -->
                         <section id="adv-accuracy" class="adv-section">
                             <h2 class="section-title" data-i18n="accuracy_title">System Accuracy</h2>
@@ -460,6 +532,65 @@
                                 <!-- Run Tests button -->
                                 <button class="accuracy-run-btn" id="accuracyRunBtn" data-i18n="accuracy_run_tests">Run Tests</button>
                                 <div class="accuracy-status" id="accuracyStatus"></div>
+                            </div>
+                        </section>
+
+                        <!-- System Health -->
+                        <section id="adv-health" class="adv-section">
+                            <h2 class="section-title" data-i18n="title_system_health">System Health</h2>
+
+                            <!-- Overall Health Indicator -->
+                            <div class="health-overview" id="healthOverview">
+                                <div class="health-status-circle status-unknown" id="healthStatusCircle">
+                                    <span class="health-status-icon" id="healthStatusIcon">●</span>
+                                </div>
+                                <div class="health-status-text">
+                                    <div class="health-status-label" id="healthStatusLabel" data-i18n="health_overall">Overall Health</div>
+                                    <div class="health-status-value" id="healthStatusValue">--</div>
+                                </div>
+                            </div>
+
+                            <!-- Subsystem Cards Grid -->
+                            <div class="health-subsystems">
+                                <h3 class="health-sub-title" data-i18n="health_subsystems">Subsystems</h3>
+                                <div class="subsystem-cards-grid" id="subsystemCardsGrid"></div>
+                            </div>
+
+                            <!-- Resource Usage -->
+                            <div class="health-resources">
+                                <h3 class="health-sub-title" data-i18n="health_resources">Resources</h3>
+                                <div class="resource-bars">
+                                    <div class="resource-bar-row">
+                                        <span class="resource-label" data-i18n="health_cpu">CPU</span>
+                                        <div class="resource-bar-track"><div class="resource-bar-fill" id="resourceBarCpu" style="width:0%"></div></div>
+                                        <span class="resource-value" id="resourceValCpu">--</span>
+                                    </div>
+                                    <div class="resource-bar-row">
+                                        <span class="resource-label" data-i18n="health_ram">RAM</span>
+                                        <div class="resource-bar-track"><div class="resource-bar-fill" id="resourceBarRam" style="width:0%"></div></div>
+                                        <span class="resource-value" id="resourceValRam">--</span>
+                                    </div>
+                                    <div class="resource-bar-row">
+                                        <span class="resource-label" data-i18n="health_disk">Disk</span>
+                                        <div class="resource-bar-track"><div class="resource-bar-fill" id="resourceBarDisk" style="width:0%"></div></div>
+                                        <span class="resource-value" id="resourceValDisk">--</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Degraded Features -->
+                            <div class="health-degraded">
+                                <h3 class="health-sub-title" data-i18n="health_degraded">Degraded Features</h3>
+                                <div class="degraded-warnings-list" id="degradedWarningsList"></div>
+                            </div>
+
+                            <!-- Auto-refresh Toggle -->
+                            <div class="health-auto-refresh">
+                                <label class="toggle-switch">
+                                    <input type="checkbox" id="healthAutoRefreshToggle">
+                                    <span class="slider round"></span>
+                                </label>
+                                <span class="toggle-label" data-i18n="health_auto_refresh">Auto-refresh (10s)</span>
                             </div>
                         </section>
                     </div>

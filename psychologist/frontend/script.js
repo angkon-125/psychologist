@@ -163,6 +163,35 @@ document.addEventListener('DOMContentLoaded', () => {
             "voice_backend_unavailable": "Backend voice unavailable. Using browser.",
             "voice_browser_unavailable": "Browser voice unavailable. Text-only mode.",
             "voice_stt_failed": "Speech recognition failed. Try again.",
+            "nav_timeline": "Timeline", "title_timeline": "Episodic Timeline",
+            "timeline_today": "Today", "timeline_yesterday": "Yesterday",
+            "timeline_week": "This Week", "timeline_all": "All",
+            "timeline_episodes": "Episodes", "timeline_projects": "Projects",
+            "timeline_emotions": "Emotional Journey", "timeline_achievements": "Achievements",
+            "timeline_pending": "Pending Goals", "timeline_search_placeholder": "Search episodes...",
+            "timeline_no_episodes": "No episodes for this period", "timeline_loading": "Loading...",
+            "nav_system_health": "System Health", "title_system_health": "System Health",
+            "health_overall": "Overall Health", "health_subsystems": "Subsystems",
+            "health_resources": "Resources", "health_degraded": "Degraded Features",
+            "health_healthy": "Healthy", "health_degraded_status": "Degraded",
+            "health_unavailable": "Unavailable", "health_unknown": "Unknown",
+            "health_cpu": "CPU", "health_ram": "RAM", "health_disk": "Disk",
+            "health_auto_refresh": "Auto-refresh (10s)", "health_no_degraded": "All systems operational",
+            "health_fix_suggestion": "Fix: ", "health_loading": "Loading...", "health_error": "Unable to load",
+            "nav_workspace": "Workspace", "title_workspace": "Cognitive Workspace",
+            "workspace_active_project": "Active Project", "workspace_tasks": "Tasks",
+            "workspace_milestones": "Milestones", "workspace_blocked": "Blocked",
+            "workspace_next_action": "Next Action", "workspace_search_placeholder": "Search projects, tasks...",
+            "workspace_create_project": "Create Project", "workspace_create_task": "Create Task",
+            "workspace_quick_resume": "Quick Resume", "workspace_progress": "Progress",
+            "workspace_completed_today": "Completed Today", "workspace_velocity": "Velocity",
+            "workspace_health": "Health", "workspace_no_projects": "No active project",
+            "workspace_no_tasks": "No tasks ready", "card_header_workspace": "WORKSPACE",
+            "workspace_col_pending": "Pending", "workspace_col_in_progress": "In Progress",
+            "workspace_col_blocked": "Blocked", "workspace_col_completed": "Completed",
+            "workspace_project_name_ph": "Project name", "workspace_project_desc_ph": "Description (optional)",
+            "workspace_task_title_ph": "Task title", "workspace_task_desc_ph": "Description (optional)",
+            "priority_critical": "Critical",
         },
         bn_bd: {
             "app_name": "ঝারা",
@@ -285,6 +314,55 @@ document.addEventListener('DOMContentLoaded', () => {
             "voice_backend_unavailable": "\u09ac\u09cd\u09af\u09be\u0995\u098f\u0982\u09a1 \u09ad\u09af\u09bc\u09b8 \u09aa\u09be\u0993\u09af\u09bc\u09be \u09af\u09be\u099a\u09cd\u099b\u09c7 \u09a8\u09be\u0964 \u09ac\u09cd\u09b0\u09be\u0989\u099c\u09be\u09b0 \u09ac\u09cd\u09af\u09ac\u09b9\u09be\u09b0 \u0995\u09b0\u09be \u09b9\u099a\u09cd\u099b\u09c7\u0964",
             "voice_browser_unavailable": "\u09ac\u09cd\u09b0\u09be\u0989\u099c\u09be\u09b0 \u09ad\u09af\u09bc\u09b8 \u09aa\u09be\u0993\u09af\u09bc\u09be \u09af\u09be\u099a\u09cd\u099b\u09c7 \u09a8\u09be\u0964 \u0995\u09c7\u09ac\u09b2 \u099f\u09c7\u0995\u09cd\u09b8\u099f \u09ae\u09cb\u09a1\u0964",
             "voice_stt_failed": "\u09b8\u09cd\u09aa\u09c0\u099a \u09b8\u09cd\u09ac\u09c0\u0995\u09c3\u09a4\u09bf \u09ac\u09cd\u09af\u09b0\u09cd\u09a5\u0964 \u0986\u09ac\u09be\u09b0 \u099a\u09c7\u09b7\u09cd\u099f\u09be \u0995\u09b0\u09c1\u09a8\u0964",
+            "nav_timeline": "\u099f\u09be\u0987\u09ae\u09b2\u09be\u0987\u09a8", "title_timeline": "\u09aa\u09be\u09b0\u09cd\u09ac\u09a8\u09bf\u0995 \u099f\u09be\u0987\u09ae\u09b2\u09be\u0987\u09a8",
+            "timeline_today": "\u0986\u099c", "timeline_yesterday": "\u0997\u09a4\u0995\u09be\u09b2",
+            "timeline_week": "\u098f\u0987 \u09b8\u09aa\u09cd\u09a4\u09be\u09b9", "timeline_all": "\u09b8\u09ac",
+            "timeline_episodes": "\u09aa\u09b0\u09cd\u09ac", "timeline_projects": "\u09aa\u09cd\u09b0\u099c\u09c7\u0995\u09cd\u099f",
+            "timeline_emotions": "\u0986\u09ac\u09c7\u0997\u09bf\u0995 \u09af\u09be\u09a4\u09cd\u09b0\u09be", "timeline_achievements": "\u0985\u09b0\u09cd\u099c\u09a8",
+            "timeline_pending": "\u09ac\u09be\u0995\u09bf \u09b2\u0995\u09cd\u09b7\u09cd\u09af", "timeline_search_placeholder": "\u09aa\u09b0\u09cd\u09ac \u0985\u09a8\u09c1\u09b8\u09a8\u09cd\u09a7\u09be\u09a8...",
+            "timeline_no_episodes": "\u098f\u0987 \u09b8\u09ae\u09af\u09bc\u09c7\u09b0 \u0995\u09c7\u09be\u09a8 \u09aa\u09b0\u09cd\u09ac \u09a8\u09c7\u0987", "timeline_loading": "\u09b2\u09c7\u09be\u09a1 \u09b9\u099a\u09cd\u099b\u09c7...",
+            "nav_system_health": "\u09b8\u09bf\u09b8\u09cd\u099f\u09c7\u09ae \u09b8\u09cd\u09ac\u09be\u09b8\u09cd\u09a5\u09cd\u09af",
+            "title_system_health": "\u09b8\u09bf\u09b8\u09cd\u099f\u09c7\u09ae \u09b8\u09cd\u09ac\u09be\u09b8\u09cd\u09a5\u09cd\u09af",
+            "health_overall": "\u09b8\u09be\u09ae\u0997\u09cd\u09b0\u09bf\u0995 \u09b8\u09cd\u09ac\u09be\u09b8\u09cd\u09a5\u09cd\u09af",
+            "health_subsystems": "\u09b8\u09be\u09ac\u09b8\u09bf\u09b8\u09cd\u099f\u09c7\u09ae",
+            "health_resources": "\u09b8\u09ae\u09cd\u09aa\u09a6",
+            "health_degraded": "\u0985\u09ac\u09a8\u09ae\u09bf\u09a4 \u09ac\u09c8\u09b6\u09bf\u09b7\u09cd\u099f\u09cd\u09af",
+            "health_healthy": "\u09b8\u09c1\u09b8\u09cd\u09a5",
+            "health_degraded_status": "\u0985\u09ac\u09a8\u09ae\u09bf\u09a4",
+            "health_unavailable": "\u0985\u09a8\u09c1\u09aa\u09b2\u09ac\u09cd\u09a7",
+            "health_unknown": "\u0985\u099c\u09be\u09a8\u09be",
+            "health_cpu": "\u09b8\u09bf\u09aa\u09bf\u0987\u0989",
+            "health_ram": "\u09b0\u09cd\u09af\u09be\u09ae",
+            "health_disk": "\u09a1\u09bf\u09b8\u09cd\u0995",
+            "health_auto_refresh": "\u09b8\u09cd\u09ac\u09af\u09bc\u0982\u0995\u09cd\u09b0\u09bf\u09af\u09bc \u09b0\u09bf\u09ab\u09cd\u09b0\u09c7\u09b6 (\u09e7\u09e6\u09b8\u09c7)",
+            "health_no_degraded": "\u09b8\u09ac \u09b8\u09bf\u09b8\u09cd\u099f\u09c7\u09ae \u09b8\u09cd\u09ac\u09be\u09ad\u09be\u09ac\u09bf\u0995",
+            "health_fix_suggestion": "\u09b8\u09ae\u09be\u09a7\u09be\u09a8: ",
+            "health_loading": "\u09b2\u09c7\u09be\u09a1 \u09b9\u099a\u09cd\u099b\u09c7...",
+            "health_error": "\u09b2\u09c7\u09be\u09a1 \u0995\u09b0\u09be \u09af\u09be\u099a\u09cd\u099b\u09c7 \u09a8\u09be",
+            "nav_workspace": "\u0993\u09af\u09bc\u09be\u09b0\u09cd\u0995\u09b8\u09cd\u09aa\u09c7\u09b8",
+            "title_workspace": "\u0995\u0997\u09a8\u09bf\u099f\u09bf\u09ad \u0993\u09af\u09bc\u09be\u09b0\u09cd\u0995\u09b8\u09cd\u09aa\u09c7\u09b8",
+            "workspace_active_project": "\u09b8\u0995\u09cd\u09b0\u09bf\u09af\u09bc \u09aa\u09cd\u09b0\u099c\u09c7\u0995\u09cd\u099f",
+            "workspace_tasks": "\u0995\u09be\u099c", "workspace_milestones": "\u09ae\u09be\u0987\u09b2\u09ab\u09b2\u0995",
+            "workspace_blocked": "\u0986\u099f\u0995\u09be\u09a8\u09c7", "workspace_next_action": "\u09aa\u09b0\u09ac\u09b0\u09cd\u09a4\u09c0 \u0995\u09be\u099c",
+            "workspace_search_placeholder": "\u09aa\u09cd\u09b0\u099c\u09c7\u0995\u09cd\u099f, \u0995\u09be\u099c \u0985\u09a8\u09c1\u09b8\u09a8\u09cd\u09a7\u09be\u09a8...",
+            "workspace_create_project": "\u09aa\u09cd\u09b0\u099c\u09c7\u0995\u09cd\u099f \u09a4\u09c8\u09b0\u09bf",
+            "workspace_create_task": "\u0995\u09be\u099c \u09a4\u09c8\u09b0\u09bf",
+            "workspace_quick_resume": "\u09a6\u09cd\u09b0\u09c1\u09a4 \u09aa\u09c1\u09a8\u09b0\u09be\u09af\u09bc",
+            "workspace_progress": "\u0985\u0997\u09cd\u09b0\u0997\u09a4\u09bf",
+            "workspace_completed_today": "\u0986\u099c \u09b8\u09ae\u09cd\u09aa\u09a8\u09cd\u09a8",
+            "workspace_velocity": "\u0997\u09a4\u09bf", "workspace_health": "\u09b8\u09cd\u09ac\u09be\u09b8\u09cd\u09a5\u09cd\u09af",
+            "workspace_no_projects": "\u0995\u09c7\u09be\u09a8 \u09b8\u0995\u09cd\u09b0\u09bf\u09af\u09bc \u09aa\u09cd\u09b0\u099c\u09c7\u0995\u09cd\u099f \u09a8\u09c7\u0987",
+            "workspace_no_tasks": "\u0995\u09c7\u09be\u09a8 \u0995\u09be\u099c \u09aa\u09cd\u09b0\u09b8\u09cd\u09a4\u09c1\u09a4 \u09a8\u09c7\u0987",
+            "card_header_workspace": "\u0993\u09af\u09bc\u09be\u09b0\u09cd\u0995\u09b8\u09cd\u09aa\u09c7\u09b8",
+            "workspace_col_pending": "\u0985\u09aa\u09c7\u0995\u09cd\u09b7\u09be\u09ae\u09be\u09a8",
+            "workspace_col_in_progress": "\u099a\u09b2\u099b\u09c7",
+            "workspace_col_blocked": "\u0986\u099f\u0995\u09be\u09a8\u09c7",
+            "workspace_col_completed": "\u09b8\u09ae\u09cd\u09aa\u09a8\u09cd\u09a8",
+            "workspace_project_name_ph": "\u09aa\u09cd\u09b0\u099c\u09c7\u0995\u09cd\u099f\u09c7\u09b0 \u09a8\u09be\u09ae",
+            "workspace_project_desc_ph": "\u09ac\u09bf\u09ac\u09b0\u09a3 (\u0990\u099a\u09cd\u099b\u09bf\u0995)",
+            "workspace_task_title_ph": "\u0995\u09be\u099c\u09c7\u09b0 \u09b6\u09bf\u09b0\u09c7\u09be\u09a8\u09be\u09ae",
+            "workspace_task_desc_ph": "\u09ac\u09bf\u09ac\u09b0\u09a3 (\u0990\u099a\u09cd\u099b\u09bf\u0995)",
+            "priority_critical": "\u099c\u09b0\u09c1\u09b0\u09bf",
         }
     };
 
@@ -310,6 +388,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Agent mode state
     const VALID_AGENT_MODES = ['assistant', 'psychologist', 'coding', 'project', 'prediction', 'safety', 'night'];
+    const MANUAL_MODES = ['assistant', 'psychologist', 'coding', 'project', 'prediction', 'night'];
     const MODE_LABELS = {
         assistant: 'Assistant',
         psychologist: 'Support',
@@ -320,19 +399,69 @@ document.addEventListener('DOMContentLoaded', () => {
         night: 'Night',
     };
 
+    const modeSelector = document.getElementById('modeSelector');
+    const nightModeToggle = document.getElementById('nightModeToggle');
+
+    // Night mode state
+    let nightModeActive = localStorage.getItem('zaraNightMode') === 'true';
+
     function setAgentMode(mode) {
         if (!VALID_AGENT_MODES.includes(mode)) mode = 'assistant';
+        // Safety mode cannot be manually set
+        if (mode === 'safety') return;
         currentMode = mode;
         localStorage.setItem('zaraAgentMode', mode);
-        updateModeIndicator();
+        updateModeSelector();
         updateProfileForMode();
+        applyNightMode(mode === 'night');
     }
 
-    function updateModeIndicator() {
-        const modeIndicator = document.getElementById('modeIndicator');
-        const modeLabel = document.getElementById('modeLabel');
-        if (modeIndicator) modeIndicator.style.display = 'block';
-        if (modeLabel) modeLabel.textContent = 'Mode: ' + (MODE_LABELS[currentMode] || currentMode);
+    function updateModeSelector() {
+        if (modeSelector) {
+            modeSelector.value = MANUAL_MODES.includes(currentMode) ? currentMode : 'assistant';
+        }
+    }
+
+    function applyNightMode(enable) {
+        nightModeActive = enable;
+        localStorage.setItem('zaraNightMode', String(enable));
+        if (enable) {
+            document.body.classList.add('night-mode');
+        } else {
+            document.body.classList.remove('night-mode');
+        }
+        if (nightModeToggle) {
+            nightModeToggle.classList.toggle('active', enable);
+        }
+        // Update night voice status in settings panel
+        if (typeof updateNightVoiceStatus === 'function') {
+            updateNightVoiceStatus();
+        }
+    }
+
+    // Mode selector dropdown change
+    if (modeSelector) {
+        modeSelector.addEventListener('change', () => {
+            const selected = modeSelector.value;
+            setAgentMode(selected);
+        });
+    }
+
+    // Night mode toggle button
+    if (nightModeToggle) {
+        nightModeToggle.addEventListener('click', () => {
+            if (nightModeActive) {
+                // Turn off night mode — revert to previous non-night mode
+                const prevMode = localStorage.getItem('zaraPrevMode') || 'assistant';
+                setAgentMode(prevMode);
+            } else {
+                // Save current mode, switch to night
+                if (currentMode !== 'night') {
+                    localStorage.setItem('zaraPrevMode', currentMode);
+                }
+                setAgentMode('night');
+            }
+        });
     }
 
     function updateProfileForMode() {
@@ -352,6 +481,29 @@ document.addEventListener('DOMContentLoaded', () => {
             voiceProfileSelect.value = newProfile;
             updateProfileDescription();
         }
+    }
+
+    // --- Volume & Speed Helpers ---
+    function getEffectiveVolume() {
+        // Base volume from slider (default 0.9)
+        const slider = document.getElementById('voiceVolumeSlider');
+        let base = slider ? (slider.value / 100) : 0.9;
+        // Night mode caps at 0.7
+        if (nightModeActive) {
+            base = Math.min(base, 0.7);
+        }
+        return Math.max(0.1, Math.min(1.0, base));
+    }
+
+    function getEffectiveSpeed() {
+        // Speed from speed buttons or slider (default 1.0)
+        const speedBtn = document.querySelector('.speed-btn.active');
+        let base = speedBtn ? parseFloat(speedBtn.dataset.speed) : 1.0;
+        // Night mode slows down
+        if (nightModeActive) {
+            base = Math.min(base, 0.85);
+        }
+        return Math.max(0.5, Math.min(2.0, base));
     }
 
     function showView(name) {
@@ -442,7 +594,15 @@ document.addEventListener('DOMContentLoaded', () => {
             removeTypingIndicator();
             // Update mode from backend response if resolved differently
             if (result.resolved_mode && result.resolved_mode !== currentMode) {
-                setAgentMode(result.resolved_mode);
+                // Safety mode is automatic only — don't persist it
+                if (result.resolved_mode === 'safety') {
+                    // Temporarily show safety but don't change saved mode
+                    currentMode = 'safety';
+                    updateModeSelector();
+                    updateProfileForMode();
+                } else {
+                    setAgentMode(result.resolved_mode);
+                }
             }
             if (result.assistant_message) {
                 appendMessage('assistant', result.assistant_message.response_text, result.assistant_message.response_type);
@@ -612,6 +772,23 @@ document.addEventListener('DOMContentLoaded', () => {
         'zara_professional': 'Clear, professional voice',
         'zara_night': 'Soft, quiet voice for night use',
     };
+
+    // --- Initialize mode + night mode from localStorage ---
+    (function initModeState() {
+        // Restore saved agent mode
+        const savedMode = localStorage.getItem('zaraAgentMode') || 'assistant';
+        if (VALID_AGENT_MODES.includes(savedMode) && savedMode !== 'safety') {
+            currentMode = savedMode;
+        }
+        // Restore night mode
+        const savedNight = localStorage.getItem('zaraNightMode') === 'true';
+        if (savedNight || currentMode === 'night') {
+            applyNightMode(true);
+        }
+        // Sync dropdown
+        updateModeSelector();
+        updateProfileForMode();
+    })();
 
     // --- Backend Connectivity ---
     async function checkBackendHealth() {
@@ -808,7 +985,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 voice: 'female',
                 voice_profile: currentVoiceProfile,
                 language: currentLanguage,
-                speed: parseFloat(document.querySelector('.speed-btn.active')?.dataset.speed || '1.0')
+                speed: getEffectiveSpeed(),
+                volume: getEffectiveVolume(),
+                night_mode: nightModeActive
             };
             if (emotionCtx) ttsPayload.emotion_context = emotionCtx;
             if (speakingStyle) ttsPayload.speaking_style = speakingStyle;
@@ -837,6 +1016,9 @@ document.addEventListener('DOMContentLoaded', () => {
                     URL.revokeObjectURL(backendAudioElement.src);
                 }
                 backendAudioElement = new Audio(audioUrl);
+                // Apply volume from backend metadata or frontend effective volume
+                const appliedVolHeader = res.headers.get('X-Zara-Applied-Volume');
+                backendAudioElement.volume = appliedVolHeader ? parseFloat(appliedVolHeader) : getEffectiveVolume();
                 backendAudioPlaying = true;
                 setVoiceState(VoiceState.SPEAKING);
 
@@ -1243,7 +1425,13 @@ document.addEventListener('DOMContentLoaded', () => {
             }
             // Update mode from backend response
             if (result.metadata && result.metadata.resolved_mode && result.metadata.resolved_mode !== currentMode) {
-                setAgentMode(result.metadata.resolved_mode);
+                if (result.metadata.resolved_mode === 'safety') {
+                    currentMode = 'safety';
+                    updateModeSelector();
+                    updateProfileForMode();
+                } else {
+                    setAgentMode(result.metadata.resolved_mode);
+                }
             }
             if (!responseText) {
                 responseText = currentLanguage === 'bn_bd'
@@ -1329,8 +1517,8 @@ document.addEventListener('DOMContentLoaded', () => {
         window.speechSynthesis.cancel();
         synthUtterance = new SpeechSynthesisUtterance(text);
         synthUtterance.lang = currentLanguage === 'bn_bd' ? 'bn-BD' : 'en-US';
-        const activeSpeedBtn = document.querySelector('.speed-btn.active');
-        synthUtterance.rate = activeSpeedBtn ? parseFloat(activeSpeedBtn.dataset.speed) : 1.0;
+        synthUtterance.rate = getEffectiveSpeed();
+        synthUtterance.volume = getEffectiveVolume();
         // Try to pick a female voice
         const voices = window.speechSynthesis.getVoices();
         if (voices.length) {
@@ -1599,6 +1787,57 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    // --- Voice Volume & Speed Setting Sliders ---
+    const voiceVolumeSetting = document.getElementById('voiceVolumeSetting');
+    const voiceVolumeValue = document.getElementById('voiceVolumeValue');
+    const voiceSpeedSetting = document.getElementById('voiceSpeedSetting');
+    const voiceSpeedValue = document.getElementById('voiceSpeedValue');
+    const nightVoiceStatus = document.getElementById('nightVoiceStatus');
+
+    // Restore saved values
+    const savedVol = localStorage.getItem('zaraVoiceVolume');
+    if (savedVol && voiceVolumeSetting) voiceVolumeSetting.value = savedVol;
+    const savedSpd = localStorage.getItem('zaraVoiceSpeed');
+    if (savedSpd && voiceSpeedSetting) voiceSpeedSetting.value = savedSpd;
+
+    function updateVolumeDisplay() {
+        if (voiceVolumeValue) {
+            const effective = getEffectiveVolume();
+            voiceVolumeValue.textContent = Math.round(effective * 100) + '%';
+        }
+    }
+    function updateSpeedDisplay() {
+        if (voiceSpeedValue) {
+            const effective = getEffectiveSpeed();
+            voiceSpeedValue.textContent = effective.toFixed(1) + 'x';
+        }
+    }
+
+    if (voiceVolumeSetting) {
+        voiceVolumeSetting.addEventListener('input', () => {
+            localStorage.setItem('zaraVoiceVolume', voiceVolumeSetting.value);
+            updateVolumeDisplay();
+        });
+        updateVolumeDisplay();
+    }
+    if (voiceSpeedSetting) {
+        voiceSpeedSetting.addEventListener('input', () => {
+            localStorage.setItem('zaraVoiceSpeed', voiceSpeedSetting.value);
+            updateSpeedDisplay();
+        });
+        updateSpeedDisplay();
+    }
+
+    // Update night voice status visibility
+    function updateNightVoiceStatus() {
+        if (nightVoiceStatus) {
+            nightVoiceStatus.style.display = nightModeActive ? 'flex' : 'none';
+        }
+        updateVolumeDisplay();
+        updateSpeedDisplay();
+    }
+    updateNightVoiceStatus();
+
     function updateProfileDescription() {
         if (voiceProfileDesc) {
             voiceProfileDesc.textContent = voiceProfileDescriptions[currentVoiceProfile] || '';
@@ -1645,7 +1884,9 @@ document.addEventListener('DOMContentLoaded', () => {
                             voice: 'female',
                             voice_profile: currentVoiceProfile,
                             language: 'en',
-                            speed: 1.0
+                            speed: getEffectiveSpeed(),
+                            volume: getEffectiveVolume(),
+                            night_mode: nightModeActive
                         })
                     });
                     if (res.ok) {
@@ -1653,6 +1894,8 @@ document.addEventListener('DOMContentLoaded', () => {
                         if (contentType.includes('audio')) {
                             const audioUrl = URL.createObjectURL(await res.blob());
                             const previewAudio = new Audio(audioUrl);
+                            const appliedVol = res.headers.get('X-Zara-Applied-Volume');
+                            previewAudio.volume = appliedVol ? parseFloat(appliedVol) : getEffectiveVolume();
                             previewAudio.onended = () => {
                                 URL.revokeObjectURL(audioUrl);
                                 voicePreviewBtn.disabled = false;
@@ -1817,6 +2060,9 @@ document.addEventListener('DOMContentLoaded', () => {
             btn.classList.add('active');
             document.getElementById(btn.dataset.section).classList.add('active');
             if (btn.dataset.section === 'adv-graph') setTimeout(drawKnowledgeGraph, 100);
+            if (btn.dataset.section === 'adv-timeline') initTimeline();
+            if (btn.dataset.section === 'adv-health') initHealthPage();
+            if (btn.dataset.section === 'adv-workspace') initWorkspace();
         });
     });
 
@@ -2200,4 +2446,708 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         if (val) val.textContent = pct + '%';
     }
+
+    // ===== TIMELINE (Episodic Memory) =====
+    let _timelineInitialized = false;
+    let _timelineSearchTimer = null;
+
+    function initTimeline() {
+        if (_timelineInitialized) return;
+        _timelineInitialized = true;
+
+        // Period tab clicks
+        document.querySelectorAll('#timelinePeriodTabs .period-tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                document.querySelectorAll('#timelinePeriodTabs .period-tab').forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+                loadTimeline(tab.dataset.period || 'today');
+            });
+        });
+
+        // Search input with debounce
+        const searchInput = document.getElementById('timelineSearchInput');
+        if (searchInput) {
+            searchInput.addEventListener('input', () => {
+                clearTimeout(_timelineSearchTimer);
+                _timelineSearchTimer = setTimeout(() => {
+                    const q = searchInput.value.trim();
+                    if (q.length >= 2) {
+                        loadTimelineSearch(q);
+                    } else {
+                        loadTimeline('today');
+                    }
+                }, 300);
+            });
+        }
+
+        loadTimeline('today');
+        loadTimelineProjects();
+        loadTimelineEmotions();
+    }
+
+    function loadTimeline(period) {
+        const listEl = document.getElementById('timelineEpisodesList');
+        if (!listEl) return;
+        const t = translations[currentLang] || translations.en;
+        listEl.innerHTML = '<div class="empty-state">' + (t['timeline_loading'] || 'Loading...') + '</div>';
+
+        fetch('/api/episodes/timeline')
+            .then(r => r.json())
+            .then(data => {
+                if (!data.success) { listEl.innerHTML = '<div class="empty-state">Timeline unavailable</div>'; return; }
+                const episodes = data[period] || [];
+                if (episodes.length === 0) {
+                    listEl.innerHTML = '<div class="empty-state">' + (t['timeline_no_episodes'] || 'No episodes') + '</div>';
+                    return;
+                }
+                listEl.innerHTML = '';
+                episodes.forEach(ep => listEl.appendChild(renderEpisodeCard(ep)));
+
+                // Also populate achievements and pending from the same response
+                const achList = document.getElementById('timelineAchievementsList');
+                if (achList && data.achievements) {
+                    achList.innerHTML = '';
+                    if (data.achievements.length === 0) {
+                        achList.innerHTML = '<div class="empty-state">' + (t['timeline_no_episodes'] || 'None') + '</div>';
+                    } else {
+                        data.achievements.forEach(ep => achList.appendChild(renderEpisodeCard(ep)));
+                    }
+                }
+                const pendList = document.getElementById('timelinePendingList');
+                if (pendList && data.pending) {
+                    pendList.innerHTML = '';
+                    if (data.pending.length === 0) {
+                        pendList.innerHTML = '<div class="empty-state">' + (t['timeline_no_episodes'] || 'None') + '</div>';
+                    } else {
+                        data.pending.forEach(ep => pendList.appendChild(renderEpisodeCard(ep)));
+                    }
+                }
+            })
+            .catch(() => { listEl.innerHTML = '<div class="empty-state">Timeline unavailable</div>'; });
+    }
+
+    function renderEpisodeCard(ep) {
+        const card = document.createElement('div');
+        card.className = 'episode-card';
+
+        const emotion = (ep.emotion || 'neutral').toLowerCase();
+        const importancePct = Math.round((ep.importance || 0) * 100);
+        const dateStr = ep.started_at ? new Date(ep.started_at).toLocaleDateString() : '';
+
+        let topicsHtml = '';
+        if (ep.topics && ep.topics.length > 0) {
+            topicsHtml = '<div class="episode-topics">' +
+                ep.topics.map(t => '<span class="episode-topic-tag">' + t + '</span>').join('') + '</div>';
+        }
+
+        let pendingHtml = '';
+        if (ep.pending_tasks && ep.pending_tasks.length > 0) {
+            pendingHtml = '<div class="episode-pending">Pending: ' + ep.pending_tasks.join(', ') + '</div>';
+        }
+
+        card.innerHTML =
+            '<div class="episode-card-header">' +
+                '<span class="episode-title">' + (ep.title || 'Untitled') + '</span>' +
+                '<span class="episode-date">' + dateStr + '</span>' +
+            '</div>' +
+            '<div class="episode-summary">' + (ep.summary || '') + '</div>' +
+            '<div class="episode-meta">' +
+                '<span class="emotion-badge ' + emotion + '">' + emotion + '</span>' +
+            '</div>' +
+            '<div class="importance-bar"><div class="importance-bar-fill" style="width:' + importancePct + '%"></div></div>' +
+            topicsHtml + pendingHtml;
+
+        return card;
+    }
+
+    function loadTimelineProjects() {
+        const listEl = document.getElementById('timelineProjectsList');
+        if (!listEl) return;
+        const t = translations[currentLang] || translations.en;
+
+        fetch('/api/episodes/projects')
+            .then(r => r.json())
+            .then(data => {
+                if (!data.success || !data.projects) { listEl.innerHTML = '<div class="empty-state">Unavailable</div>'; return; }
+                const keys = Object.keys(data.projects);
+                if (keys.length === 0) {
+                    listEl.innerHTML = '<div class="empty-state">' + (t['timeline_no_episodes'] || 'None') + '</div>';
+                    return;
+                }
+                listEl.innerHTML = '';
+                keys.forEach(topic => {
+                    const group = document.createElement('div');
+                    group.className = 'project-group';
+                    group.innerHTML = '<div class="project-group-title">' + topic + '</div>';
+                    data.projects[topic].forEach(ep => group.appendChild(renderEpisodeCard(ep)));
+                    listEl.appendChild(group);
+                });
+            })
+            .catch(() => { listEl.innerHTML = '<div class="empty-state">Unavailable</div>'; });
+    }
+
+    function loadTimelineEmotions() {
+        const listEl = document.getElementById('timelineEmotionList');
+        if (!listEl) return;
+        const t = translations[currentLang] || translations.en;
+
+        fetch('/api/episodes/emotions')
+            .then(r => r.json())
+            .then(data => {
+                if (!data.success || !data.journey) { listEl.innerHTML = '<div class="empty-state">Unavailable</div>'; return; }
+                if (data.journey.length === 0) {
+                    listEl.innerHTML = '<div class="empty-state">' + (t['timeline_no_episodes'] || 'None') + '</div>';
+                    return;
+                }
+                listEl.innerHTML = '';
+                data.journey.forEach(snap => {
+                    const card = document.createElement('div');
+                    card.className = 'episode-card';
+                    const emotion = (snap.emotion || 'neutral').toLowerCase();
+                    const intensityPct = Math.round((snap.intensity || 0) * 100);
+                    const dateStr = snap.timestamp ? new Date(snap.timestamp).toLocaleDateString() : '';
+                    card.innerHTML =
+                        '<div class="episode-card-header">' +
+                            '<span class="emotion-badge ' + emotion + '">' + emotion + '</span>' +
+                            '<span class="episode-date">' + dateStr + '</span>' +
+                        '</div>' +
+                        '<div class="importance-bar"><div class="importance-bar-fill" style="width:' + intensityPct + '%"></div></div>' +
+                        (snap.notes ? '<div class="episode-summary">' + snap.notes + '</div>' : '');
+                    listEl.appendChild(card);
+                });
+            })
+            .catch(() => { listEl.innerHTML = '<div class="empty-state">Unavailable</div>'; });
+    }
+
+    function loadTimelineSearch(query) {
+        const listEl = document.getElementById('timelineEpisodesList');
+        if (!listEl) return;
+        const t = translations[currentLang] || translations.en;
+        listEl.innerHTML = '<div class="empty-state">' + (t['timeline_loading'] || 'Loading...') + '</div>';
+
+        fetch('/api/episodes/search?q=' + encodeURIComponent(query))
+            .then(r => r.json())
+            .then(data => {
+                if (!data.success) { listEl.innerHTML = '<div class="empty-state">Search unavailable</div>'; return; }
+                if (!data.episodes || data.episodes.length === 0) {
+                    listEl.innerHTML = '<div class="empty-state">' + (t['timeline_no_episodes'] || 'No results') + '</div>';
+                    return;
+                }
+                listEl.innerHTML = '';
+                data.episodes.forEach(ep => listEl.appendChild(renderEpisodeCard(ep)));
+            })
+            .catch(() => { listEl.innerHTML = '<div class="empty-state">Search unavailable</div>'; });
+    }
+
+    // ===== SYSTEM HEALTH PAGE =====
+    let healthRefreshInterval = null;
+
+    function initHealthPage() {
+        loadSystemHealth();
+        const toggle = document.getElementById('healthAutoRefreshToggle');
+        if (toggle) {
+            toggle.addEventListener('change', () => {
+                if (toggle.checked) {
+                    healthRefreshInterval = setInterval(loadSystemHealth, 10000);
+                } else {
+                    if (healthRefreshInterval) {
+                        clearInterval(healthRefreshInterval);
+                        healthRefreshInterval = null;
+                    }
+                }
+            });
+        }
+    }
+
+    function loadSystemHealth() {
+        const t = translations[currentLang] || translations.en;
+        const statusCircle = document.getElementById('healthStatusCircle');
+        const statusValue = document.getElementById('healthStatusValue');
+        const subsystemGrid = document.getElementById('subsystemCardsGrid');
+        const degradedList = document.getElementById('degradedWarningsList');
+
+        if (!statusCircle || !statusValue) return;
+
+        statusCircle.className = 'health-status-circle status-unknown';
+        statusValue.textContent = t['health_loading'] || 'Loading...';
+
+        fetch('/api/system/health/full')
+            .then(r => r.json())
+            .then(data => {
+                if (!data.success) {
+                    statusValue.textContent = t['health_error'] || 'Unable to load';
+                    return;
+                }
+
+                // Overall status
+                const status = data.status || 'unknown';
+                statusCircle.className = 'health-status-circle status-' + status;
+                statusValue.textContent = (t['health_' + status] || status);
+
+                // Subsystem cards
+                if (subsystemGrid && data.subsystems) {
+                    subsystemGrid.innerHTML = '';
+                    data.subsystems.forEach(sub => {
+                        subsystemGrid.appendChild(renderSubsystemCard(sub, t));
+                    });
+                }
+
+                // Degraded features
+                if (degradedList && data.degraded_features) {
+                    if (data.degraded_features.length === 0) {
+                        degradedList.innerHTML = '<div class="empty-state">' + (t['health_no_degraded'] || 'All systems operational') + '</div>';
+                    } else {
+                        degradedList.innerHTML = '';
+                        data.degraded_features.forEach(feat => {
+                            const div = document.createElement('div');
+                            div.className = 'degraded-warning';
+                            div.innerHTML = '<div class="degraded-warning-advice">' + feat + '</div>';
+                            degradedList.appendChild(div);
+                        });
+                    }
+                }
+
+                // Recommendations
+                if (data.recommendations && data.recommendations.length > 0) {
+                    data.recommendations.forEach(rec => {
+                        const div = document.createElement('div');
+                        div.className = 'degraded-warning-fix';
+                        div.textContent = rec;
+                        degradedList.appendChild(div);
+                    });
+                }
+
+                // Load resources
+                loadHealthResources(t);
+            })
+            .catch(() => {
+                statusValue.textContent = t['health_error'] || 'Unable to load';
+            });
+    }
+
+    function renderSubsystemCard(sub, t) {
+        const card = document.createElement('div');
+        card.className = 'subsystem-card status-' + (sub.status || 'unknown');
+
+        const header = document.createElement('div');
+        header.className = 'subsystem-card-header';
+
+        const name = document.createElement('div');
+        name.className = 'subsystem-card-name';
+        name.textContent = sub.name || 'Unknown';
+
+        const badge = document.createElement('span');
+        badge.className = 'status-badge status-' + (sub.status || 'unknown');
+        badge.textContent = t['health_' + (sub.status || 'unknown')] || sub.status;
+
+        header.appendChild(name);
+        header.appendChild(badge);
+        card.appendChild(header);
+
+        if (sub.latency_ms && sub.latency_ms > 0) {
+            const latency = document.createElement('div');
+            latency.className = 'subsystem-card-latency';
+            latency.textContent = Math.round(sub.latency_ms) + 'ms';
+            card.appendChild(latency);
+        }
+
+        if (sub.message) {
+            const msg = document.createElement('div');
+            msg.className = 'subsystem-card-message';
+            msg.textContent = sub.message;
+            card.appendChild(msg);
+        }
+
+        if (sub.fix) {
+            const fix = document.createElement('div');
+            fix.className = 'subsystem-card-fix';
+            fix.textContent = (t['health_fix_suggestion'] || 'Fix: ') + sub.fix;
+            card.appendChild(fix);
+        }
+
+        return card;
+    }
+
+    function loadHealthResources(t) {
+        fetch('/api/system/health/resources')
+            .then(r => r.json())
+            .then(data => {
+                if (!data.success) return;
+
+                const cpuBar = document.getElementById('resourceBarCpu');
+                const cpuVal = document.getElementById('resourceValCpu');
+                const ramBar = document.getElementById('resourceBarRam');
+                const ramVal = document.getElementById('resourceValRam');
+                const diskBar = document.getElementById('resourceBarDisk');
+                const diskVal = document.getElementById('resourceValDisk');
+
+                if (cpuBar && cpuVal && data.cpu_percent !== undefined) {
+                    cpuBar.style.width = data.cpu_percent + '%';
+                    cpuVal.textContent = data.cpu_percent.toFixed(1) + '%';
+                }
+
+                if (ramBar && ramVal && data.ram_percent !== undefined) {
+                    ramBar.style.width = data.ram_percent + '%';
+                    ramVal.textContent = data.ram_percent.toFixed(1) + '%';
+                }
+
+                if (diskBar && diskVal && data.disk_percent !== undefined) {
+                    diskBar.style.width = data.disk_percent + '%';
+                    diskVal.textContent = data.disk_percent.toFixed(1) + '%';
+                }
+            })
+            .catch(() => {});
+    }
+
+    // ===== COGNITIVE WORKSPACE PAGE =====
+
+    function initWorkspace() {
+        loadWorkspaceSummary();
+        loadWorkspaceProjects();
+        loadWorkspaceTasks();
+        loadWorkspaceMilestones();
+        loadWorkspaceBlocked();
+        setupWorkspaceForms();
+    }
+
+    function loadWorkspaceSummary() {
+        const t = translations[currentLang] || translations.en;
+        fetch('/api/workspace')
+            .then(r => r.json())
+            .then(data => {
+                if (!data.success) return;
+                // Stats
+                const el = (id) => document.getElementById(id);
+                if (el('wsCompletedToday')) el('wsCompletedToday').textContent = data.completed_today || 0;
+                if (el('wsProgressPct')) el('wsProgressPct').textContent = Math.round(data.progress_pct || 0) + '%';
+                if (el('wsBlocked')) el('wsBlocked').textContent = data.total_blocked_tasks || 0;
+
+                // Active project card
+                const projBody = el('workspaceProjectBody');
+                if (projBody && data.active_project) {
+                    const ap = data.active_project;
+                    projBody.innerHTML = '';
+                    const name = document.createElement('div');
+                    name.className = 'project-name';
+                    name.textContent = ap.name || '--';
+                    projBody.appendChild(name);
+
+                    const bar = document.createElement('div');
+                    bar.className = 'project-progress-bar';
+                    const fill = document.createElement('div');
+                    fill.className = 'project-progress-fill';
+                    fill.style.width = (ap.progress_pct || 0) + '%';
+                    bar.appendChild(fill);
+                    projBody.appendChild(bar);
+
+                    const pct = document.createElement('div');
+                    pct.style.cssText = 'font-size:var(--font-xs);color:var(--text-secondary);margin-bottom:6px;';
+                    pct.textContent = Math.round(ap.progress_pct || 0) + '% — ' + (ap.completed_tasks || 0) + '/' + (ap.total_tasks || 0);
+                    projBody.appendChild(pct);
+
+                    if (ap.health) {
+                        const badge = document.createElement('span');
+                        badge.className = 'project-health-badge health-' + ap.health;
+                        badge.textContent = ap.health.replace('_', ' ').toUpperCase();
+                        projBody.appendChild(badge);
+                    }
+
+                    // Dashboard widget
+                    const dashProj = el('wsDashProject');
+                    const dashFill = el('wsDashFill');
+                    const dashPct = el('wsDashPct');
+                    if (dashProj) dashProj.textContent = ap.name;
+                    if (dashFill) dashFill.style.width = (ap.progress_pct || 0) + '%';
+                    if (dashPct) dashPct.textContent = Math.round(ap.progress_pct || 0) + '%';
+
+                    // Health stat
+                    const wsHealth = el('wsHealth');
+                    if (wsHealth) wsHealth.textContent = ap.health ? ap.health.replace('_', ' ').toUpperCase() : '--';
+                }
+
+                // Next task
+                const nextBody = el('workspaceNextBody');
+                if (nextBody && data.next_task) {
+                    const nt = data.next_task;
+                    nextBody.innerHTML = '';
+                    const title = document.createElement('div');
+                    title.className = 'next-task-title';
+                    title.textContent = nt.title || '--';
+                    nextBody.appendChild(title);
+                    const prio = document.createElement('div');
+                    prio.className = 'next-task-priority';
+                    prio.textContent = (t['priority_' + (nt.priority || 'medium')] || nt.priority || '').toUpperCase();
+                    nextBody.appendChild(prio);
+                    const btn = document.createElement('button');
+                    btn.className = 'ws-quick-resume-btn';
+                    btn.textContent = t['workspace_quick_resume'] || 'Quick Resume';
+                    btn.onclick = () => updateTaskStatus(nt.task_id, 'start');
+                    nextBody.appendChild(btn);
+
+                    // Dashboard widget next
+                    const dashNext = el('wsDashNext');
+                    if (dashNext) dashNext.textContent = nt.title || '--';
+                }
+            })
+            .catch(() => {});
+    }
+
+    function loadWorkspaceProjects() {
+        fetch('/api/workspace/projects')
+            .then(r => r.json())
+            .then(data => {
+                if (!data.success) return;
+                // Populate project selector for task creation
+                const sel = document.getElementById('wsTaskProject');
+                if (sel) {
+                    sel.innerHTML = '';
+                    data.projects.forEach(p => {
+                        const opt = document.createElement('option');
+                        opt.value = p.project_id;
+                        opt.textContent = p.name;
+                        sel.appendChild(opt);
+                    });
+                }
+            })
+            .catch(() => {});
+    }
+
+    function loadWorkspaceTasks() {
+        const projectId = null; // all tasks
+        let url = '/api/workspace/tasks';
+        if (projectId) url += '?project_id=' + projectId;
+        fetch(url)
+            .then(r => r.json())
+            .then(data => {
+                if (!data.success) return;
+                const cols = { pending: 'wsTasksPending', in_progress: 'wsTasksInProgress', blocked: 'wsTasksBlocked', completed: 'wsTasksCompleted' };
+                Object.values(cols).forEach(id => { const el = document.getElementById(id); if (el) el.innerHTML = ''; });
+                data.tasks.forEach(task => {
+                    const colId = cols[task.status];
+                    if (!colId) return;
+                    const col = document.getElementById(colId);
+                    if (!col) return;
+                    col.appendChild(renderTaskCard(task));
+                });
+            })
+            .catch(() => {});
+    }
+
+    function renderTaskCard(task) {
+        const card = document.createElement('div');
+        card.className = 'task-card';
+        const title = document.createElement('div');
+        title.className = 'task-card-title';
+        title.textContent = task.title;
+        card.appendChild(title);
+
+        const meta = document.createElement('div');
+        meta.className = 'task-card-meta';
+        const prio = document.createElement('span');
+        prio.className = 'task-card-priority prio-' + (task.priority || 'medium');
+        prio.textContent = (task.priority || 'medium').toUpperCase();
+        meta.appendChild(prio);
+        card.appendChild(meta);
+
+        if (task.status !== 'completed' && task.status !== 'cancelled') {
+            const actions = document.createElement('div');
+            actions.className = 'task-card-actions';
+            if (task.status === 'pending') {
+                const startBtn = document.createElement('button');
+                startBtn.className = 'task-card-action-btn';
+                startBtn.textContent = 'Start';
+                startBtn.onclick = (e) => { e.stopPropagation(); updateTaskStatus(task.task_id, 'start'); };
+                actions.appendChild(startBtn);
+            }
+            if (task.status !== 'completed') {
+                const doneBtn = document.createElement('button');
+                doneBtn.className = 'task-card-action-btn';
+                doneBtn.textContent = 'Done';
+                doneBtn.onclick = (e) => { e.stopPropagation(); updateTaskStatus(task.task_id, 'complete'); };
+                actions.appendChild(doneBtn);
+            }
+            card.appendChild(actions);
+        }
+        return card;
+    }
+
+    function loadWorkspaceMilestones() {
+        fetch('/api/workspace/milestones')
+            .then(r => r.json())
+            .then(data => {
+                if (!data.success) return;
+                const list = document.getElementById('workspaceMilestonesList');
+                if (!list) return;
+                list.innerHTML = '';
+                if (data.milestones.length === 0) {
+                    list.innerHTML = '<div class="empty-state">No milestones yet</div>';
+                    return;
+                }
+                data.milestones.forEach(ms => {
+                    const item = document.createElement('div');
+                    item.className = 'milestone-item';
+                    const name = document.createElement('div');
+                    name.className = 'milestone-name';
+                    name.textContent = ms.name;
+                    item.appendChild(name);
+                    const bar = document.createElement('div');
+                    bar.className = 'milestone-progress-bar';
+                    const fill = document.createElement('div');
+                    fill.className = 'milestone-progress-fill';
+                    fill.style.width = (ms.progress_pct || 0) + '%';
+                    bar.appendChild(fill);
+                    item.appendChild(bar);
+                    const status = document.createElement('div');
+                    status.className = 'milestone-status';
+                    status.textContent = ms.status.toUpperCase() + ' — ' + (ms.task_ids ? ms.task_ids.length : 0) + ' tasks';
+                    item.appendChild(status);
+                    list.appendChild(item);
+                });
+            })
+            .catch(() => {});
+    }
+
+    function loadWorkspaceBlocked() {
+        fetch('/api/workspace/blocked')
+            .then(r => r.json())
+            .then(data => {
+                if (!data.success) return;
+                const panel = document.getElementById('workspaceBlockedPanel');
+                const list = document.getElementById('workspaceBlockedList');
+                if (!panel || !list) return;
+                if (data.tasks.length === 0) {
+                    panel.style.display = 'none';
+                    return;
+                }
+                panel.style.display = '';
+                list.innerHTML = '';
+                data.tasks.forEach(task => {
+                    const div = document.createElement('div');
+                    div.className = 'blocked-task-item';
+                    div.textContent = task.title;
+                    list.appendChild(div);
+                });
+            })
+            .catch(() => {});
+    }
+
+    function updateTaskStatus(taskId, action) {
+        fetch('/api/workspace/task/' + taskId, {
+            method: 'PATCH',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ action: action })
+        })
+        .then(r => r.json())
+        .then(() => {
+            loadWorkspaceTasks();
+            loadWorkspaceSummary();
+        })
+        .catch(() => {});
+    }
+
+    function setupWorkspaceForms() {
+        const toggle = document.getElementById('wsFormToggle');
+        const body = document.getElementById('wsFormsBody');
+        if (toggle && body) {
+            toggle.addEventListener('click', () => {
+                body.style.display = body.style.display === 'none' ? '' : 'none';
+            });
+        }
+
+        const createProjBtn = document.getElementById('wsCreateProjectBtn');
+        if (createProjBtn) {
+            createProjBtn.addEventListener('click', () => {
+                const name = (document.getElementById('wsProjectName') || {}).value || '';
+                const desc = (document.getElementById('wsProjectDesc') || {}).value || '';
+                const prio = (document.getElementById('wsProjectPriority') || {}).value || 'medium';
+                if (!name.trim()) return;
+                fetch('/api/workspace/project', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ name: name.trim(), description: desc, priority: prio })
+                })
+                .then(r => r.json())
+                .then(() => {
+                    document.getElementById('wsProjectName').value = '';
+                    document.getElementById('wsProjectDesc').value = '';
+                    loadWorkspaceProjects();
+                    loadWorkspaceSummary();
+                })
+                .catch(() => {});
+            });
+        }
+
+        const createTaskBtn = document.getElementById('wsCreateTaskBtn');
+        if (createTaskBtn) {
+            createTaskBtn.addEventListener('click', () => {
+                const projectId = (document.getElementById('wsTaskProject') || {}).value || '';
+                const title = (document.getElementById('wsTaskTitle') || {}).value || '';
+                const desc = (document.getElementById('wsTaskDesc') || {}).value || '';
+                const prio = (document.getElementById('wsTaskPriority') || {}).value || 'medium';
+                if (!projectId || !title.trim()) return;
+                fetch('/api/workspace/task', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ project_id: projectId, title: title.trim(), description: desc, priority: prio })
+                })
+                .then(r => r.json())
+                .then(() => {
+                    document.getElementById('wsTaskTitle').value = '';
+                    document.getElementById('wsTaskDesc').value = '';
+                    loadWorkspaceTasks();
+                    loadWorkspaceSummary();
+                })
+                .catch(() => {});
+            });
+        }
+
+        // Search handler
+        const searchInput = document.getElementById('workspaceSearchInput');
+        if (searchInput) {
+            searchInput.addEventListener('input', debounce(() => {
+                const q = searchInput.value.trim();
+                if (!q) { loadWorkspaceTasks(); return; }
+                fetch('/api/workspace/search?q=' + encodeURIComponent(q))
+                    .then(r => r.json())
+                    .then(data => {
+                        if (!data.success) return;
+                        const cols = { pending: 'wsTasksPending', in_progress: 'wsTasksInProgress', blocked: 'wsTasksBlocked', completed: 'wsTasksCompleted' };
+                        Object.values(cols).forEach(id => { const el = document.getElementById(id); if (el) el.innerHTML = ''; });
+                        (data.tasks || []).forEach(task => {
+                            const colId = cols[task.status];
+                            if (!colId) return;
+                            const col = document.getElementById(colId);
+                            if (!col) return;
+                            col.appendChild(renderTaskCard(task));
+                        });
+                    })
+                    .catch(() => {});
+            }, 300));
+        }
+    }
+
+    // Load workspace dashboard widget on page load
+    function loadWorkspaceDashWidget() {
+        fetch('/api/workspace')
+            .then(r => r.json())
+            .then(data => {
+                if (!data.success) return;
+                const el = (id) => document.getElementById(id);
+                if (data.active_project) {
+                    const dashProj = el('wsDashProject');
+                    const dashFill = el('wsDashFill');
+                    const dashPct = el('wsDashPct');
+                    if (dashProj) dashProj.textContent = data.active_project.name || '--';
+                    if (dashFill) dashFill.style.width = (data.active_project.progress_pct || 0) + '%';
+                    if (dashPct) dashPct.textContent = Math.round(data.active_project.progress_pct || 0) + '%';
+                }
+                if (data.next_task) {
+                    const dashNext = el('wsDashNext');
+                    if (dashNext) dashNext.textContent = data.next_task.title || '--';
+                }
+            })
+            .catch(() => {});
+    }
+    // Load dashboard widget once on init
+    setTimeout(loadWorkspaceDashWidget, 1500);
 });

@@ -79,6 +79,8 @@ class TTSEngine:
         speaking_style: Optional[str] = None,
         emotion_context: Optional[str] = None,
         normalize: bool = True,
+        volume: Optional[float] = None,
+        night_mode: bool = False,
     ) -> Dict[str, Any]:
         """
         Synthesize text to audio.
@@ -103,6 +105,7 @@ class TTSEngine:
         profile = resolve_profile_with_overrides(
             profile_key=voice_profile,
             user_speed=speed if speed != 1.0 else None,
+            user_volume=volume,
         )
 
         # Resolve speaking style
@@ -120,6 +123,15 @@ class TTSEngine:
         profile_pitch = profile["pitch"]
         profile_name = voice_profile or "zara_soft"
         style_name = speaking_style or (get_style_for_emotion(emotion_context) if emotion_context else "calm_support")
+
+        # Night mode: enforce softer volume and slower speed
+        if night_mode:
+            profile_volume = min(profile_volume, 0.7)
+            profile_speed = min(profile_speed, 0.9)
+
+        # Clamp final values
+        applied_volume = max(0.1, min(1.0, profile_volume))
+        applied_speed = max(0.5, min(2.0, profile_speed))
 
         # Normalize text for speech
         normalized_text = text
@@ -144,6 +156,9 @@ class TTSEngine:
                 "cached": False,
                 "profile": profile_name,
                 "style": style_name,
+                "applied_volume": applied_volume,
+                "applied_speed": applied_speed,
+                "night_mode": night_mode,
                 "normalized_text": normalized_text,
                 "chunks": chunks,
                 "errors": ["Text is empty after normalization."],
@@ -158,13 +173,16 @@ class TTSEngine:
                 "cached": False,
                 "profile": profile_name,
                 "style": style_name,
+                "applied_volume": applied_volume,
+                "applied_speed": applied_speed,
+                "night_mode": night_mode,
                 "normalized_text": normalized_text,
                 "chunks": chunks,
                 "errors": ["TTS engine not available."],
             }
 
         # Check cache for repeated short responses
-        text_hash = self._make_cache_key(normalized_text, language, profile_speed, profile_name, style_name)
+        text_hash = self._make_cache_key(normalized_text, language, applied_speed, profile_name, style_name, applied_volume)
         if use_cache and text_hash in self._cache:
             cached_path = self._cache[text_hash]
             if os.path.isfile(cached_path):
@@ -178,6 +196,9 @@ class TTSEngine:
                     "cached": True,
                     "profile": profile_name,
                     "style": style_name,
+                    "applied_volume": applied_volume,
+                    "applied_speed": applied_speed,
+                    "night_mode": night_mode,
                     "normalized_text": normalized_text,
                     "chunks": chunks,
                 }
@@ -192,8 +213,8 @@ class TTSEngine:
                 text=normalized_text.strip(),
                 language=language,
                 voice_id="female" if voice == "female" else None,
-                speed=max(0.5, min(2.0, profile_speed)),
-                volume=max(0.0, min(1.0, profile_volume)),
+                speed=applied_speed,
+                volume=applied_volume,
                 pitch=max(0.5, min(2.0, profile_pitch)),
                 save_to_file=True,
             )
@@ -215,6 +236,9 @@ class TTSEngine:
                     "cached": False,
                     "profile": profile_name,
                     "style": style_name,
+                    "applied_volume": applied_volume,
+                    "applied_speed": applied_speed,
+                    "night_mode": night_mode,
                     "normalized_text": normalized_text,
                     "chunks": chunks,
                 }
@@ -228,6 +252,9 @@ class TTSEngine:
                     "cached": False,
                     "profile": profile_name,
                     "style": style_name,
+                    "applied_volume": applied_volume,
+                    "applied_speed": applied_speed,
+                    "night_mode": night_mode,
                     "normalized_text": normalized_text,
                     "chunks": chunks,
                     "errors": [error_msg],
@@ -244,14 +271,17 @@ class TTSEngine:
                 "cached": False,
                 "profile": profile_name,
                 "style": style_name,
+                "applied_volume": applied_volume,
+                "applied_speed": applied_speed,
+                "night_mode": night_mode,
                 "normalized_text": normalized_text,
                 "chunks": chunks,
                 "errors": [str(e)],
             }
 
-    def _make_cache_key(self, text: str, language: str, speed: float, profile: str = "", style: str = "") -> str:
+    def _make_cache_key(self, text: str, language: str, speed: float, profile: str = "", style: str = "", volume: float = 1.0) -> str:
         """Generate a cache key for the given synthesis parameters."""
-        key_str = f"{text.strip().lower()}|{language}|{speed}|{profile}|{style}"
+        key_str = f"{text.strip().lower()}|{language}|{speed}|{profile}|{style}|{volume:.2f}"
         return hashlib.md5(key_str.encode()).hexdigest()
 
     def _manage_cache(self, key: str, audio_path: str):

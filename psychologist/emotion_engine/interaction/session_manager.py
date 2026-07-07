@@ -276,6 +276,22 @@ class SessionManager:
 
     # ── Persistence ──────────────────────────────────────────────
 
+    def save_session(self, session: SessionState):
+        """Public API to save a session to disk."""
+        self._save_session(session)
+
+    def load_session(self, session_id: str) -> Optional[SessionState]:
+        """Load a session from disk by its ID."""
+        filepath = self._sessions_dir / f"session_{session_id}.json"
+        if not filepath.exists():
+            return None
+        try:
+            data = json.loads(filepath.read_text(encoding="utf-8"))
+            return SessionState.from_dict(data)
+        except (json.JSONDecodeError, OSError) as e:
+            logger.error("Failed to load session %s: %s", session_id, e)
+            return None
+
     def _save_session(self, session: SessionState):
         """Save session to a JSON file on disk."""
         filename = f"session_{session.session_id}.json"

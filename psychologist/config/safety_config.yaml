@@ -65,6 +65,7 @@ crisis_keywords:
 
 diagnosis_block_patterns:
   - "you have depression"
+  - "you have clinical depression"
   - "you have anxiety"
   - "you are bipolar"
   - "you have PTSD"
